@@ -22,6 +22,14 @@ jobs:
         working-directory: ./web
         run: npm ci
 
+      - name: Lint
+        working-directory: ./web
+        run: npm run lint
+
+      - name: Check formatting
+        working-directory: ./web
+        run: npm run format:check
+
       - name: Build web
         working-directory: ./web
         run: npm run build
