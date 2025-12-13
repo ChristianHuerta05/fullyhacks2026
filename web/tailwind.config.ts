@@ -18,6 +18,9 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["system-ui", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        nemo: ["FindingNemo", "sans-serif"],
+        picture: ["BlackAndWhitePicture", "sans-serif"],
+        bagel: ["BagelFatOne", "sans-serif"],
       },
       borderRadius: {
         xl2: "1.25rem",

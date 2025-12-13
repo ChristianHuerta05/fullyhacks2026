@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+@theme {
+  --font-nemo: "FindingNemo", sans-serif;
+  --font-picture: "BlackAndWhitePicture", sans-serif;
+  --font-bagel: "BagelFatOne", sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-15deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(-14deg);
+    }
+  }
+}
+
 :root {
   --bg: #020617;
   --bg-elevated: #020817;
@@ -11,6 +29,27 @@
   --radius-lg: 16px;
   --radius-full: 999px;
   --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.9);
+}
+
+@font-face {
+  font-family: "FindingNemo";
+  src: url("./assets/fonts/FindetNemo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BlackAndWhitePicture";
+  src: url("./assets/fonts/BlackAndWhitePicture-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BagelFatOne";
+  src: url("./assets/fonts/BagelFatOne-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 *,
