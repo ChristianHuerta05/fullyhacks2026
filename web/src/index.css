@@ -124,10 +124,6 @@ a {
   text-decoration: none;
 }
 
-button {
-  font: inherit;
-}
-
 img {
   max-width: 100%;
   display: block;
