@@ -9,7 +9,7 @@ export function Rolls() {
       <img src={Octopus} alt="Octopus" className="w-1/3" />
       <img src={Capybara} alt="Capybara" className="w-1/3" />
       <img src={Fish} alt="Fish" className="w-1/3" />
-      <img src={Turtles} alt="Turtles" className="w-1/3" />
+      <img src={Turtles} alt="Turtles" className="w-1/3 w-[10px] h-[10px]" />
     </div>
   );
 }
