@@ -1,47 +1,44 @@
-name: CI/CD
+name: CI
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
+    branches: [main]
+  push:
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  ci:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: Install web deps
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run build
+
+  deploy:
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - run: npm ci
         working-directory: ./web
-        run: npm ci
 
-      - name: Lint
-        working-directory: ./web
-        run: npm run lint
-
-      - name: Check formatting
-        working-directory: ./web
-        run: npm run format:check
-
-      - name: Build web
-        working-directory: ./web
-        run: npm run build
-
-      - name: Install Firebase Tools
-        run: npm install -g firebase-tools
-
-      - name: Deploy to Firebase
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - run: npm install -g firebase-tools
+      - run: firebase deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only hosting
