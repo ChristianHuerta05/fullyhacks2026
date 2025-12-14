@@ -31,14 +31,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - run: npm ci
+      - name: Install web deps
         working-directory: ./web
+        run: npm ci
 
-      - run: npm install -g firebase-tools
-      - run: firebase deploy --only hosting
+      - name: Build web
+        working-directory: ./web
+        run: npm run build
+
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting
