@@ -4,6 +4,13 @@ import Discord from "../../assets/LandingPage/Footer/Discord.svg";
 import LinkedIn from "../../assets/LandingPage/Footer/LinkedIn.svg";
 import Instagram from "../../assets/LandingPage/Footer/Instagram.svg";
 
+const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
 export function Footer() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-end text-slate-100 w-full relative mt-5 mb-2">
@@ -43,7 +50,9 @@ export function Footer() {
           <p className="text-[1rem] text-[#BEF3FC] font-nemo text-shadow-sm">Back to Top</p>
         </div>
         <div className="relative inline-block">
-          <img src={Arrow} alt="Arrow" className="top-0 z-[-1] w-[1em] h-[1em]" />
+          <button onClick={scrollToTop}>
+            <img src={Arrow} alt="Arrow" className="top-0 z-[-1] w-[1em] h-[1em]" />
+          </button>
         </div>
       </div>
 
