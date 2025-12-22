@@ -4,7 +4,6 @@ import Frame from "../../assets/LandingPage/AboutUs/Frame.svg";
 export function AboutUs() {
   return (
     <div className="relative w-full mt-24 sm:mt-40 lg:mt-60max-w-screen overflow-hidden">
-
       <h1
         className="
           font-nemo
@@ -20,18 +19,14 @@ export function AboutUs() {
         about us
       </h1>
 
-
       <img
         src={JellyFishGroup}
         alt="JellyFishGroup"
         className="w-full h-auto block  opacity-0  md:opacity-100"
-
       />
-
 
       <div className="absolute inset-0 flex items-center justify-center px-4">
         <div className="relative text-center font-bagel w-full ">
-
           <h2
             className="
               relative z-10
@@ -42,11 +37,10 @@ export function AboutUs() {
             We are Cal State University <br />
             Fullerton&apos;s (CSUF) <br />
             student-run hackathon. <br />
-            We plan to host 600 <br/>
+            We plan to host 600 <br />
             students for a 24-hour <br />
             coding event in April 2026.
           </h2>
-
 
           <img
             src={Frame}
