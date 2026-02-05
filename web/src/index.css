@@ -1,11 +1,130 @@
 @import "tailwindcss";
 
 @theme {
+  /* ============================================
+   * FONT FAMILIES
+   * ============================================ */
   --font-nemo: "FindingNemo", sans-serif;
   --font-picture: "BlackAndWhitePicture", sans-serif;
   --font-bagel: "BagelFatOne", sans-serif;
 
+  /* ============================================
+   * CUSTOM COLORS
+   * Ocean/underwater theme palette
+   * ============================================ */
+  /* Primary cyan accent */
+  --color-fh-cyan: #bef3fc;
+  --color-fh-cyan-light: #d4f7fd;
+  --color-fh-cyan-dark: #6ef1fa;
+
+  /* Deep ocean blues */
+  --color-fh-ocean-lightest: #317bb3;
+  --color-fh-ocean-light: #2768a8;
+  --color-fh-ocean: #245495;
+  --color-fh-ocean-dark: #1b3b80;
+  --color-fh-ocean-darker: #102b66;
+  --color-fh-ocean-darkest: #14165c;
+
+  /* Teal accent */
+  --color-fh-teal: #14b8a6;
+  --color-fh-teal-dark: #0d9488;
+
+  /* Sky blue */
+  --color-fh-sky: #7dd3fc;
+  --color-fh-sky-light: #bae6fd;
+
+  /* Card colors */
+  --color-fh-card-purple: #8e69ce;
+  --color-fh-card-blue: #6991ce;
+  --color-fh-card-teal: #69cec3;
+
+  /* Title colors */
+  --color-fh-title-purple: #3b087d;
+  --color-fh-title-blue: #080e7d;
+  --color-fh-title-teal: #08717d;
+
+  /* Blue accent (for buttons, etc.) */
+  --color-blue-200: #bfdbfe;
+
+  /* ============================================
+   * TYPOGRAPHY SCALE
+   * Consistent sizing for headings & body
+   * ============================================ */
+  /* Display sizes */
+  --text-display-2xl: 9.25rem;
+  --text-display-2xl--line-height: 1;
+  --text-display-xl: 7rem;
+  --text-display-xl--line-height: 1;
+  --text-display-lg: 6rem;
+  --text-display-lg--line-height: 1.1;
+  --text-display-md: 5.25rem;
+  --text-display-md--line-height: 1.1;
+  --text-display-sm: 4.5rem;
+  --text-display-sm--line-height: 1.2;
+
+  /* Heading sizes */
+  --text-heading-xl: 3.75rem;
+  --text-heading-xl--line-height: 1.2;
+  --text-heading-lg: 3rem;
+  --text-heading-lg--line-height: 1.25;
+  --text-heading-md: 2.25rem;
+  --text-heading-md--line-height: 1.3;
+  --text-heading-sm: 1.875rem;
+  --text-heading-sm--line-height: 1.4;
+  --text-heading-xs: 1.5rem;
+  --text-heading-xs--line-height: 1.4;
+
+  /* Body text */
+  --text-body-xl: 1.5rem;
+  --text-body-xl--line-height: 1.5;
+  --text-body-lg: 1.25rem;
+  --text-body-lg--line-height: 1.6;
+  --text-body-md: 1.125rem;
+  --text-body-md--line-height: 1.6;
+  --text-body-sm: 1rem;
+  --text-body-sm--line-height: 1.6;
+  --text-body-xs: 0.875rem;
+  --text-body-xs--line-height: 1.5;
+
+  /* Caption */
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.5;
+  --text-caption-sm: 0.625rem;
+  --text-caption-sm--line-height: 1.4;
+
+  /* ============================================
+   * SPACING SCALE
+   * Section & content gaps
+   * ============================================ */
+  --spacing-section-sm: 3rem;
+  --spacing-section-md: 5rem;
+  --spacing-section-lg: 7.5rem;
+  --spacing-section-xl: 10rem;
+
+  --spacing-gap-xs: 0.5rem;
+  --spacing-gap-sm: 1rem;
+  --spacing-gap-md: 1.5rem;
+  --spacing-gap-lg: 2.5rem;
+  --spacing-gap-xl: 4rem;
+
+  /* Large hero-specific values */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-25: 6.25rem;
+  --spacing-30: 7.5rem;
+  --spacing-55: 13.75rem;
+  --spacing-100: 25rem;
+  --spacing-110: 27.5rem;
+  --spacing-120: 30rem;
+  --spacing-145: 36.25rem;
+  --spacing-155: 38.75rem;
+  --spacing-254: 63.5rem;
+
+  /* ============================================
+   * ANIMATIONS
+   * ============================================ */
   --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
 
   @keyframes float {
     0%,
@@ -16,6 +135,43 @@
       transform: translateY(-20px) rotate(-14deg);
     }
   }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ============================================
+   * SHADOWS
+   * ============================================ */
+  --shadow-button: 0px 4px 4px rgba(255, 255, 255, 0.25);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.9);
+
+  /* ============================================
+   * BORDER RADIUS
+   * ============================================ */
+  --radius-xl2: 1.25rem;
+  --radius-4xl: 2rem;
+
+  /* ============================================
+   * MAX WIDTH
+   * ============================================ */
+  --max-width-content: 1200px;
+  --max-width-content-sm: 800px;
+  --max-width-content-lg: 1400px;
+  --max-width-400: 100rem;
+
+  /* ============================================
+   * BACKDROP BLUR
+   * ============================================ */
+  --backdrop-blur-heavy: 100px;
 }
 
 :root {
@@ -28,7 +184,6 @@
   --border-subtle: rgba(148, 163, 184, 0.35);
   --radius-lg: 16px;
   --radius-full: 999px;
-  --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.9);
 }
 
 @font-face {
