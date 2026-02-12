@@ -3,10 +3,13 @@ import HeroMountains from "../../assets/LandingPage/Hero/HeroMountains.svg";
 import SchoolOfFish from "../../assets/LandingPage/Hero/SchoolofFish.svg";
 import FullyHacksText from "../../assets/LandingPage/Hero/FullyHacksText.svg";
 import Bottle from "../../assets/LandingPage/Hero/Bottle.svg";
+import Bubbles1 from "../../assets/LandingPage/Hero/Bubbles1.svg";
+import Bubbles2 from "../../assets/LandingPage/Hero/Bubbles2.svg";
+import Bubbles3 from "../../assets/LandingPage/Hero/Bubbles3.svg";
 
 export function Hero() {
   const calculateTimeLeft = () => {
-    const difference = +new Date("2026-01-31T23:59:59") - +new Date();
+    const difference = +new Date("2026-04-05T23:59:59") - +new Date();
     if (difference > 0) {
       return {
         d: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -29,7 +32,27 @@ export function Hero() {
   return (
     <div className="min-h-screen flex flex-col items-center text-slate-100 w-full relative mt-5">
       <img src={HeroMountains} alt="Hero Mountains" className="w-full absolute top-0 -z-20" />
-      <img src={SchoolOfFish} alt="School of Fish" className="absolute top-10 right-10" />
+      <img
+        src={Bubbles1}
+        alt="Bubbles 1"
+        className="absolute top-[50vh] right-[80%]  z-[1] animate-bubbles1"
+      />
+      <img
+        src={Bubbles2}
+        alt="Bubbles 2"
+        className="absolute top-[30vh] right-[10%] z-[1] animate-bubbles2"
+      />
+      <img
+        src={Bubbles3}
+        alt="Bubbles 3"
+        className="absolute top-[10vh] right-[90%] z-[1] animate-bubbles3"
+      />
+      <img
+        src={SchoolOfFish}
+        alt="School of Fish"
+        className="absolute top-10 right-[-40%] animate-swim z-[-1]"
+      />
+
       <img src={FullyHacksText} alt="Fully Hacks Text" className="w-2/3 mb-25" />
 
       <div className="relative flex flex-col items-center justify-center animate-float mb-30">

@@ -125,6 +125,11 @@
    * ============================================ */
   --animate-float: float 6s ease-in-out infinite;
   --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-swim: swim 10s linear infinite;
+  --animate-bubbles1: bubbles1 8s linear infinite;
+  --animate-bubbles2: bubbles2 10s linear infinite;
+  --animate-bubbles3: bubbles3 7s linear infinite;
+  --animate-sunrays: sunrays 12s linear infinite;
 
   @keyframes float {
     0%,
@@ -147,6 +152,96 @@
     }
   }
 
+  @keyframes swim {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    40% {
+      transform: translate(-200vw, 500%) rotate(-25deg);
+    }
+
+    100% {
+      transform: translate(-200vw, 500%) rotate(-25deg);
+    }
+  }
+
+  @keyframes bubbles1 {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    80% {
+      transform: translate(0, -50vh) rotate(-25deg);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translate(0, -50vh) rotate(-25deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes bubbles2 {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    90% {
+      transform: translate(0, -50vh) rotate(-25deg);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translate(0, -50vh) rotate(-25deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes bubbles3 {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    80% {
+      transform: translate(0, -50vh) rotate(-25deg);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translate(0, -50vh) rotate(-25deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes sunrays {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+      transform: translate(0, 0) rotate(8deg);
+    }
+
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
   /* ============================================
    * SHADOWS
    * ============================================ */
