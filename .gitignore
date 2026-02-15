@@ -62,3 +62,7 @@ node_modules/
 .dataconnect
 
 .env.*
+
+# IDE
+.vscode
+.idea

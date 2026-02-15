@@ -50,8 +50,11 @@ export function FAQ() {
   const [openedFAQ, setOpenedFAQ] = useState<number | null>(null);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-slate-100 w-full relative mt-5 gap-12">
-      <h2 className="justify-start text-sky-200 text-9xl font-normal font-nemo lowercase"> FAQ</h2>
+    <div className="min-h-screen flex flex-col items-center justify-center text-slate-100 w-full relative mt-5 gap-12 ">
+      <h2 className="justify-start text-sky-200 xl:text-9xl md:text-7xl text-[56px] font-normal font-nemo lowercase">
+        {" "}
+        FAQ
+      </h2>
       <div className="flex flex-col gap-6 w-full max-w-400 px-4">
         {faqList.map((faqListItem, index) => (
           <FAQDropdown
@@ -88,7 +91,7 @@ function FAQDropdown({
   return (
     <button
       onClick={handleClick}
-      className="flex justify-between items-start gap-4 py-4 px-5 sm:px-8 w-full rounded-2xl sm:rounded-[30px] border-2 sm:border-[5px] border-white text-left cursor-pointer hover:bg-white/10 transition-colors duration-200"
+      className="flex justify-between items-start gap-4 py-4 px-5 sm:px-8 w-full rounded-2xl sm:rounded-[30px] border-2 sm:border-[5px] border-white text-left cursor-pointer hover:bg-white/10 transition-colors duration-200 "
     >
       <div className="flex flex-col max-w-[calc(100%-40px)]">
         {/* displays the question */}

@@ -131,6 +131,23 @@
   --animate-bubbles3: bubbles3 7s linear infinite;
   --animate-sunrays: sunrays 12s linear infinite;
 
+  /* Sponsors Game Bubbles */
+  --animate-bubble-float: bubble-float 4s ease-out forwards;
+
+  @keyframes bubble-float {
+    0% {
+      transform: translateY(100px); /* Start slightly below */
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-600px); /* Travel up past the top */
+      opacity: 0;
+    }
+  }
+
   @keyframes float {
     0%,
     100% {
@@ -312,8 +329,16 @@ html,
 body,
 #root {
   height: 100%;
-  min-height: 11000px;
+  min-height: 10000px;
   height: fit-content;
+}
+
+@media (max-width: 786px) {
+  html,
+  body,
+  #root {
+    min-height: 8000px;
+  }
 }
 
 body {
