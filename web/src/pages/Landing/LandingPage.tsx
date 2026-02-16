@@ -11,7 +11,7 @@ import SunRays from "../../assets/LandingPage/Header/SunRays.svg";
 import Atlantis from "../../assets/LandingPage/Background/Atlantis.svg";
 export function LandingPage() {
   return (
-    <div className="min-h-screen flex flex-col w-full items-center justify-center text-slate-100 relative overflow-x-hidden">
+    <div className="landing-page min-h-screen flex flex-col w-full items-center justify-center text-slate-100 relative overflow-x-hidden">
       <img
         src={SunRays}
         alt="SunRays"
@@ -33,7 +33,7 @@ export function LandingPage() {
       <div id="faq" className="w-full">
         <FAQ />
       </div>
-      <div className="xl:h-[3400px] lg:h-[2000px] md:h-[1000px] h-[500px]"></div>
+      <div className="xl:h-[3400px] lg:h-[2000px] md:h-[1000px] h-[200px]"></div>
       <Footer />
       <img src={Atlantis} alt="Atlantis" className="absolute bottom-0 z-[-200] w-full" />
     </div>

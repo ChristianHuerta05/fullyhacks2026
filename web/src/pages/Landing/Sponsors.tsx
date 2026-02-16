@@ -297,8 +297,8 @@ export function Sponsors() {
       </div>
 
       <div className="flex justify-between w-full md:px-30 px-6">
-        <img src={PufferFish} alt="PufferFish" className="md:w-1/7 w-1/5" />
-        <img src={Fush} alt="Fish" className="md:w-1/2 w-2/5" />
+        <img src={PufferFish} alt="PufferFish" className="md:w-1/7 sm:w-1/5 w-0" />
+        <img src={Fush} alt="Fish" className="md:w-1/2 sm:w-2/5 w-[1100px]" />
       </div>
     </div>
   );

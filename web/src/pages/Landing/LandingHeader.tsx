@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import Ceiling from "../../assets/LandingPage/Header/Ceiling.svg";
 import Logo from "../../assets/FullyHacksLogo.svg";
 import Submarine from "../../assets/LandingPage/Hero/Submarine.svg";
+import Hamburger from "../../assets/LandingPage/Header/Hamburger.svg";
 
 const NAV_ITEMS = [
   { id: "about", label: "about" },
@@ -15,6 +17,7 @@ export function Header() {
   const [isHovered, setIsHovered] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [isResetting, setIsResetting] = useState(false);
 
@@ -85,13 +88,14 @@ export function Header() {
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMobileMenuOpen(false);
   };
 
   const isCollapsed = !isMobile && isScrolled && !isHovered;
 
   const getSubmarineClass = () => {
     const baseClasses =
-      "absolute sm:top-60 top-25 z-[-1] xl:w-[700px] md:w-[500px] sm:w-[300px] w-[200px] ease-in-out";
+      "absolute sm:top-60 top-15 z-[-1] xl:w-[700px] md:w-[500px] sm:w-[300px] w-[200px] ease-in-out";
 
     if (isResetting) {
       return `${baseClasses} translate-x-[120vw] duration-0 ease-out`;
@@ -116,57 +120,108 @@ export function Header() {
 
       <img src={Submarine} alt="Submarine" className={getSubmarineClass()} />
 
-      <div
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className={` 
-          fixed z-50 left-1/2 -translate-x-1/2 transition-all duration-[2ms] ease-in-out w-fit
-          flex items-center justify-center rounded-full bg-[#2EB2EF]/30 backdrop-blur-[100px] border border-[#6EF1FA] font-nemo
-          
-          ${
-            isCollapsed
-              ? "top-4 w-16 h-16 p-3 rounded-full cursor-pointer"
-              : "sm:top-15 top-5 w-[95%] md:w-auto py-2 md:py-3 px-2 md:px-8 sm:gap-2 gap-0 md:gap-10 lg:text-3xl md:text-md sm:text-sm text-[12px]"
-          }
-        `}
-      >
-        <div
-          className={`absolute bg-transparent -z-10 ${isCollapsed ? "-inset-4" : "-inset-[-2]"}`}
-        />
-
-        <div
-          className={`transition-all duration-300 ${
-            isCollapsed
-              ? "opacity-100 scale-100"
-              : "opacity-0 scale-50 absolute pointer-events-none"
-          }`}
+      {isMobile && (
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="fixed top-4 right-4 z-50 p-2 cursor-pointer"
         >
-          <img src={Logo} alt="Menu" className="w-10 h-10 object-contain" />
-        </div>
+          <img src={Hamburger} alt="Menu" className="w-8 h-8" />
+        </button>
+      )}
 
-        <div
-          className={`flex gap-1 md:gap-10 transition-all duration-300 ${
-            isCollapsed
-              ? "opacity-0 translate-y-2 absolute pointer-events-none"
-              : "opacity-100 translate-y-0"
-          }`}
-        >
-          {NAV_ITEMS.map((item) => (
+      {isMobile && mobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] flex items-start justify-end p-4">
+          <div className="absolute inset-0 bg-black/30" onClick={() => setMobileMenuOpen(false)} />
+          <div
+            className="relative rounded-2xl p-6 pt-12 flex flex-col gap-4 min-w-[300px] mt-2"
+            style={{ backgroundColor: "#004284" }}
+          >
             <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className={`rounded-full py-2 px-3 md:py-3 md:px-6 whitespace-nowrap hover:scale-105 transition-all cursor-pointer ${
-                activeSection === item.id ? "bg-[#BEF3FC]/37 backdrop-blur-2xl" : ""
-              }`}
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-3 right-4 font-nemo text-2xl cursor-pointer"
+              style={{ color: "#BEF3FC" }}
             >
-              {item.label}
+              ✕
             </button>
-          ))}
-          <button className="rounded-full py-2 px-3 md:py-3 md:px-6 font-nemo whitespace-nowrap hover:scale-105 transition-transform cursor-pointer">
-            user portal
-          </button>
+            {NAV_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="font-nemo text-4xl text-left cursor-pointer lowercase"
+                style={{ color: "#BEF3FC" }}
+              >
+                {item.label}
+              </button>
+            ))}
+            <Link
+              to="/apply"
+              onClick={() => setMobileMenuOpen(false)}
+              className="font-nemo text-4xl lowercase"
+              style={{ color: "#BEF3FC" }}
+            >
+              user portal
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Desktop nav */}
+      {!isMobile && (
+        <div
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={` 
+            fixed z-50 left-1/2 -translate-x-1/2 transition-all duration-[2ms] ease-in-out w-fit
+            flex items-center justify-center rounded-full bg-[#2EB2EF]/30 backdrop-blur-[100px] border border-[#6EF1FA] font-nemo
+            
+            ${
+              isCollapsed
+                ? "top-4 w-16 h-16 p-3 rounded-full cursor-pointer"
+                : "sm:top-15 top-5 w-[95%] md:w-auto py-2 md:py-3 px-2 md:px-8 sm:gap-2 gap-0 md:gap-10 lg:text-3xl md:text-md sm:text-sm text-[12px]"
+            }
+          `}
+        >
+          <div
+            className={`absolute bg-transparent -z-10 ${isCollapsed ? "-inset-4" : "-inset-[-2]"}`}
+          />
+
+          <div
+            className={`transition-all duration-300 ${
+              isCollapsed
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-50 absolute pointer-events-none"
+            }`}
+          >
+            <img src={Logo} alt="Menu" className="w-10 h-10 object-contain" />
+          </div>
+
+          <div
+            className={`flex gap-1 md:gap-10 transition-all duration-300 ${
+              isCollapsed
+                ? "opacity-0 translate-y-2 absolute pointer-events-none"
+                : "opacity-100 translate-y-0"
+            }`}
+          >
+            {NAV_ITEMS.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className={`rounded-full py-2 px-3 md:py-3 md:px-6 whitespace-nowrap hover:scale-105 transition-all cursor-pointer ${
+                  activeSection === item.id ? "bg-[#BEF3FC]/37 backdrop-blur-2xl" : ""
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <Link
+              to="/apply"
+              className="rounded-full py-2 px-3 md:py-3 md:px-6 font-nemo whitespace-nowrap hover:scale-105 transition-transform cursor-pointer"
+            >
+              user portal
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

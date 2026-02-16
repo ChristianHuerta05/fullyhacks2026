@@ -73,17 +73,17 @@ export function Teams() {
       <img
         src={Fish}
         alt="Fish"
-        className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-[65%] -translate-y-1/2 w-16 sm:w-20 md:w-24 lg:w-18 z-0"
+        className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-[65%] -translate-y-1/2 w-0 sm:w-20 md:w-24 lg:w-18 z-0 "
       />
       <img
         src={Fish}
         alt="Fish"
-        className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-[65%] -translate-y-1/2 w-16 sm:w-20 md:w-24 lg:w-18 scale-x-[-1] z-0"
+        className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-[65%] -translate-y-1/2 w-0 sm:w-20 md:w-24 lg:w-18 scale-x-[-1] z-0"
       />
 
       {/* Title */}
-      <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-nemo text-[#BEF3FC] mb-8 sm:mb-10 md:mb-12 lg:mb-16 text-center tracking-wider uppercase">
-        Our Team
+      <h1 className="text-[56px] md:text-7xl lg:text-8xl xl:text-9xl font-nemo text-[#BEF3FC] mb-8 sm:mb-10 md:mb-12 lg:mb-16 text-center tracking-wider lowercase">
+        our team
       </h1>
 
       {/* Team category buttons */}
@@ -111,7 +111,7 @@ export function Teams() {
       {/* Team members display*/}
       <div
         key={activeTeam}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-6xl z-10 px-2 sm:px-4"
+        className="grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-6xl z-10 px-2 sm:px-4"
       >
         {teamData[activeTeam].map((member, index) => (
           <div

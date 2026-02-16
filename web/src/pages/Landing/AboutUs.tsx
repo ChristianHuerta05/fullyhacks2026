@@ -3,7 +3,7 @@ import Frame from "../../assets/LandingPage/AboutUs/Frame.svg";
 
 export function AboutUs() {
   return (
-    <div className="relative w-full -mt-0 sm:mt-40  lg:mt-60 max-w-screen  ">
+    <div className="relative w-full mt-50 sm:mt-40  lg:mt-60 max-w-screen  ">
       <h1
         className="
           font-nemo

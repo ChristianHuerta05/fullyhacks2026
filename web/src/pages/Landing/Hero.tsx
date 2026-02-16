@@ -6,6 +6,7 @@ import Bottle from "../../assets/LandingPage/Hero/Bottle.svg";
 import Bubbles1 from "../../assets/LandingPage/Hero/Bubbles1.svg";
 import Bubbles2 from "../../assets/LandingPage/Hero/Bubbles2.svg";
 import Bubbles3 from "../../assets/LandingPage/Hero/Bubbles3.svg";
+import { Link } from "react-router-dom";
 
 export function Hero() {
   const calculateTimeLeft = () => {
@@ -35,17 +36,17 @@ export function Hero() {
       <img
         src={Bubbles1}
         alt="Bubbles 1"
-        className="absolute top-[50vh] right-[80%]  z-[1] animate-bubbles1"
+        className="absolute top-[50vh] right-[80%]  z-[1] animate-bubbles1 sm:w-auto w-[40px]"
       />
       <img
         src={Bubbles2}
         alt="Bubbles 2"
-        className="absolute top-[30vh] right-[10%] z-[1] animate-bubbles2"
+        className="absolute top-[30vh] right-[10%] z-[1] animate-bubbles2 sm:w-auto w-[40px]"
       />
       <img
         src={Bubbles3}
         alt="Bubbles 3"
-        className="absolute top-[10vh] right-[90%] z-[1] animate-bubbles3"
+        className="absolute top-[10vh] right-[90%] z-[1] animate-bubbles3 sm:w-auto w-[40px]"
       />
       <img
         src={SchoolOfFish}
@@ -56,7 +57,7 @@ export function Hero() {
       <img
         src={FullyHacksText}
         alt="Fully Hacks Text"
-        className="sm:w-2/3 md:mb-25 mb-10 sm:mt-0 -mt-30 w-[90%] "
+        className="sm:w-2/3 md:mb-25 mb-10 sm:mt-0 -mt-40 w-[90%] "
       />
 
       <div className="relative flex flex-col items-center justify-center animate-float xl:mb-30 sm:mb-20 mb-10">
@@ -84,26 +85,28 @@ export function Hero() {
         <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[-1deg]">
           Sponsor Us
         </button>
-        <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[30deg]">
-          Apply
-        </button>
+        <Link to="/apply">
+          <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[30deg]">
+            Apply
+          </button>
+        </Link>
       </div>
 
-      <div className="flex xl:space-x-40 md:space-x-20 space-x-10">
+      <div className="flex flex-col sm:flex-row items-center xl:space-x-40 md:space-x-20 sm:space-x-10 space-y-8 sm:space-y-0">
         <div className="flex flex-col items-center text-[#BEF3FC]">
-          <h1 className="xl:text-[146px] md:text-[86px] text-[56px] font-nemo leading-none">20K</h1>
-          <h1 className="xl:text-[84px] md:text-[46px] text-[28px] font-bagel">Hackers</h1>
+          <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">20K</h1>
+          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel">Hackers</h1>
         </div>
         <div className="flex flex-col items-center text-[#BEF3FC]">
-          <h1 className="xl:text-[146px] md:text-[86px] text-[56px] font-nemo leading-none">
+          <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">
             100k
           </h1>
-          <h1 className="xl:text-[84px] md:text-[46px] text-[28px] font-bagel">Prizes</h1>
+          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel">Prizes</h1>
         </div>
-      </div>
-      <div className="flex flex-col items-center text-[#BEF3FC] md:mt-20 mt-10">
-        <h1 className="xl:text-[146px] md:text-[86px] text-[56px] font-nemo leading-none">24</h1>
-        <h1 className="xl:text-[84px] md:text-[46px] text-[28px] font-bagel">Hours</h1>
+        <div className="flex flex-col items-center text-[#BEF3FC]">
+          <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">24</h1>
+          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel">Hours</h1>
+        </div>
       </div>
     </div>
   );

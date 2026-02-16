@@ -7,6 +7,7 @@
   --font-nemo: "FindingNemo", sans-serif;
   --font-picture: "BlackAndWhitePicture", sans-serif;
   --font-bagel: "BagelFatOne", sans-serif;
+  --font-baloo: "Baloo", sans-serif;
 
   /* ============================================
    * CUSTOM COLORS
@@ -130,6 +131,8 @@
   --animate-bubbles2: bubbles2 10s linear infinite;
   --animate-bubbles3: bubbles3 7s linear infinite;
   --animate-sunrays: sunrays 12s linear infinite;
+  --animate-swim-left: SwimLeft 10s linear infinite;
+  --animate-swim-right: SwimRight 10s linear infinite;
 
   /* Sponsors Game Bubbles */
   --animate-bubble-float: bubble-float 4s ease-out forwards;
@@ -259,6 +262,34 @@
       transform: translate(0, 0) rotate(0deg);
     }
   }
+
+  @keyframes SwimLeft {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    70% {
+      transform: translate(150vw, 0);
+    }
+
+    100% {
+      transform: translate(150vw, 0);
+    }
+  }
+
+  @keyframes SwimRight {
+    0% {
+      transform: translate(0, 0);
+    }
+
+    30% {
+      transform: translate(0, 0);
+    }
+
+    100% {
+      transform: translate(-150vw, 0);
+    }
+  }
   /* ============================================
    * SHADOWS
    * ============================================ */
@@ -319,6 +350,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Baloo";
+  src: url("./assets/fonts/Baloo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 *,
 *::before,
 *::after {
@@ -329,15 +367,18 @@ html,
 body,
 #root {
   height: 100%;
-  min-height: 10000px;
+
   height: fit-content;
+  overflow-x: hidden;
+}
+
+.landing-page {
+  min-height: 10000px;
 }
 
 @media (max-width: 786px) {
-  html,
-  body,
-  #root {
-    min-height: 8000px;
+  .landing-page {
+    min-height: 5000px;
   }
 }
 
