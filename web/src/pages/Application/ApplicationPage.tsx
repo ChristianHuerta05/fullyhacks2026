@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/useAuth";
 import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
 
@@ -267,12 +267,12 @@ export function ApplicationPage() {
     checkExisting();
   }, [user, loading, navigate]);
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState(() => ({
     fullName: "",
     schoolEmail: "",
     school: "",
     schoolOther: "",
-    githubUrl: "",
+    githubUrl: githubUsername ? `https://github.com/${githubUsername}` : "",
     pronouns: "",
     phone: "",
     major: "",
@@ -284,7 +284,7 @@ export function ApplicationPage() {
     foodChoice: "",
     foodOther: "",
     isAdult: false,
-  });
+  }));
 
   const [isSchoolOther, setIsSchoolOther] = useState(false);
   const [isMajorOther, setIsMajorOther] = useState(false);
@@ -369,15 +369,6 @@ export function ApplicationPage() {
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
-
-  useEffect(() => {
-    if (githubUsername && !form.githubUrl) {
-      setForm((prev) => ({
-        ...prev,
-        githubUrl: `https://github.com/${githubUsername}`,
-      }));
-    }
-  }, [githubUsername]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

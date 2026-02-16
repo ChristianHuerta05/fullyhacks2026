@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/useAuth";
 import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
 

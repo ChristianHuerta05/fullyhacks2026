@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import RightArrow from "../../assets/ApplyPage/RightArrow.svg";
 import FishLeft from "../../assets/ApplyPage/FishLeft.svg";
 import FishRight from "../../assets/ApplyPage/FishRight.svg";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/useAuth";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
