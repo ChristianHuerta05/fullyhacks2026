@@ -1,4 +1,4 @@
-# 🚀 FullyHacks 2026
+# 🐟 FullyHacks 2026
 
 Welcome to the **FullyHacks 2026** web repository! This project contains the official website for CSUF's annual hackathon.
 
