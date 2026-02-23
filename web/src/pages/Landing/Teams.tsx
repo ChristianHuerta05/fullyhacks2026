@@ -66,7 +66,7 @@ const teamData: TeamData = {
 };
 
 export function Teams() {
-  const [activeTeam, setActiveTeam] = useState("Design");
+  const [activeTeam, setActiveTeam] = useState("Director");
   const teams = ["Director", "Web", "Design", "Finance", "Marketing", "Operations"];
 
   return (

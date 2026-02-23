@@ -807,7 +807,7 @@ export function ApplicationPage() {
               )}
             </div>
             <span className="font-baloo text-xl text-[#EFEFEF]">
-              I'm 18 or older by April 12th, 2026
+              I'm 18 or older by April 18th, 2026
             </span>
           </label>
           {errors.isAdult && (
