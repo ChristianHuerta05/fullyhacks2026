@@ -46,6 +46,8 @@ const teamData: TeamData = {
     { name: "Yuriko", role: "Marketing", photo: PhotoPlaceholder },
     { name: "Joel", role: "Marketing", photo: PhotoPlaceholder },
     { name: "Sofia Guillen", role: "Marketing", photo: PhotoPlaceholder },
+    { name: "Daisy Martinez", role: "Marketing", photo: PhotoPlaceholder },
+    { name: "Julie Yun", role: "Marketing", photo: PhotoPlaceholder },
   ],
   Operations: [
     { name: "Casey Dane", role: "Operations TL", photo: PhotoPlaceholder },
