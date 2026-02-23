@@ -9,11 +9,10 @@ export function AboutUs() {
           font-nemo
           absolute left-1/2 -translate-x-1/2
           -top-20 sm:top-0 md:top-0 lg:-top-10 2xl:top-0
-          text-[64px] sm:text-[66px] md:text-[72px] lg:text-[104px]
+          text-[56px] md:text-7xl lg:text-8xl xl:text-9xl
           text-[#BEF3FC]
           whitespace-nowrap
           pointer-events-none
-          
         "
       >
         about us

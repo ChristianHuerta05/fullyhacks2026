@@ -37,7 +37,7 @@ const rollList: Roll[] = [
 export function Rolls() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-slate-100 w-full relative mt-5">
-      <h2 className="font-nemo text-[#BEF3FC] text-center px-10 text-6xl lg:text-7xl xl:text-9xl font-normal lowercase my-12">
+      <h2 className="font-nemo text-[#BEF3FC] text-center px-10 text-[56px] md:text-7xl lg:text-8xl xl:text-9xl font-normal lowercase my-12">
         Choose Your Roll
       </h2>
       <div className="w-full flex items-center flex-col lg:flex-row gap-13 justify-center lg:px-5">

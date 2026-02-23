@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../../firebase";
 import { useAuth } from "../../contexts/useAuth";
 import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
@@ -289,6 +290,32 @@ export function ApplicationPage() {
   const [isSchoolOther, setIsSchoolOther] = useState(false);
   const [isMajorOther, setIsMajorOther] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [resumeError, setResumeError] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const resumeInputRef = useRef<HTMLInputElement>(null);
+
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setResumeError("");
+    if (!file) {
+      setResumeFile(null);
+      return;
+    }
+    if (file.type !== "application/pdf") {
+      setResumeError("Only PDF files are accepted.");
+      setResumeFile(null);
+      e.target.value = "";
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setResumeError("File must be under 5 MB.");
+      setResumeFile(null);
+      e.target.value = "";
+      return;
+    }
+    setResumeFile(file);
+  };
 
   const wordCount = form.whyJoin
     .trim()
@@ -366,6 +393,8 @@ export function ApplicationPage() {
 
     if (!form.isAdult) errs.isAdult = "You must be 18 or older by April 12th, 2026";
 
+    if (!resumeFile) errs.resume = "Please attach your resume (PDF)";
+
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -373,6 +402,12 @@ export function ApplicationPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate() || !user) return;
+    if (!resumeFile) {
+      setResumeError("Please attach your resume (PDF)");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     const finalForm = {
       ...form,
@@ -381,8 +416,13 @@ export function ApplicationPage() {
     };
 
     try {
+      const resumeRef = ref(storage, `resumes/${user.uid}/resume.pdf`);
+      await uploadBytes(resumeRef, resumeFile, { contentType: "application/pdf" });
+      const resumeUrl = await getDownloadURL(resumeRef);
+
       await setDoc(doc(db, "applications", user.uid), {
         ...finalForm,
+        resumeUrl,
         status: "pending",
         userId: user.uid,
         displayName: user.displayName || form.fullName,
@@ -392,6 +432,8 @@ export function ApplicationPage() {
     } catch (err) {
       console.error("Failed to submit application:", err);
       alert("Something went wrong submitting your application. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -665,6 +707,37 @@ export function ApplicationPage() {
           )}
         </div>
 
+        {/* Resume Upload */}
+        <div className="flex flex-col gap-2">
+          <label className="font-baloo text-xl text-[#EFEFEF]">
+            Resume <span className="text-[#EFEFEF]/50 text-base">(PDF only, max 5 MB)</span>
+          </label>
+          <button
+            type="button"
+            onClick={() => resumeInputRef.current?.click()}
+            className={`w-full px-4 py-3 md:px-6 md:py-5 rounded-[16px] md:rounded-[23px] text-left font-baloo text-base md:text-lg transition-colors cursor-pointer ${
+              resumeError
+                ? "bg-[#072010] border-2 border-red-400 text-red-400"
+                : resumeFile
+                  ? "bg-[#072010] border-2 border-[#72D6E6] text-[#72D6E6]"
+                  : "bg-[#070710] border-4 md:border-[7px] border-[#D9D9D9] text-[#EFEFEF]/50"
+            }`}
+          >
+            {resumeFile ? `✓ ${resumeFile.name}` : "Click to upload resume..."}
+          </button>
+          <input
+            ref={resumeInputRef}
+            type="file"
+            accept="application/pdf"
+            onChange={handleResumeChange}
+            className="hidden"
+          />
+          {resumeError && <span className="font-baloo text-sm text-red-400">{resumeError}</span>}
+          {errors.resume && !resumeError && (
+            <span className="font-baloo text-sm text-red-400">{errors.resume}</span>
+          )}
+        </div>
+
         <div className="flex flex-col gap-2">
           <label className="font-baloo text-xl text-[#EFEFEF]">Food Choice</label>
           <select
@@ -744,9 +817,10 @@ export function ApplicationPage() {
 
         <button
           type="submit"
-          className="mt-6 mx-auto px-10 md:px-16 py-3 md:py-4 rounded-2xl md:rounded-[23px] bg-[#72D6E6] text-[#246B8A] font-baloo text-xl md:text-2xl hover:bg-[#5bc0d0] transition-colors cursor-pointer"
+          disabled={isSubmitting}
+          className="mt-6 mx-auto px-10 md:px-16 py-3 md:py-4 rounded-2xl md:rounded-[23px] bg-[#72D6E6] text-[#246B8A] font-baloo text-xl md:text-2xl hover:bg-[#5bc0d0] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Submit Application
+          {isSubmitting ? "Uploading & Submitting..." : "Submit Application"}
         </button>
       </form>
 

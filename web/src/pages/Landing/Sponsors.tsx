@@ -7,26 +7,75 @@ import Hoop from "../../assets/LandingPage/Sponsors/Hoop.svg";
 import Bubbles from "../../assets/LandingPage/Sponsors/Bubbles.svg";
 import Fush from "../../assets/LandingPage/Sponsors/Fush.svg";
 import PufferFish from "../../assets/LandingPage/Sponsors/PufferFish.svg";
-import biga from "../../assets/LandingPage/Sponsors/sponsors/biga.svg";
-import bigf from "../../assets/LandingPage/Sponsors/sponsors/bigf.svg";
-import chase from "../../assets/LandingPage/Sponsors/sponsors/chase.svg";
-import cloude from "../../assets/LandingPage/Sponsors/sponsors/cloude.svg";
+
+import dittoai from "../../assets/LandingPage/Sponsors/sponsors/dittoai.svg";
+import figma from "../../assets/LandingPage/Sponsors/sponsors/figma.svg";
+import incogni from "../../assets/LandingPage/Sponsors/sponsors/incogni.svg";
+import nexosai from "../../assets/LandingPage/Sponsors/sponsors/nexosai.svg";
 import google from "../../assets/LandingPage/Sponsors/sponsors/google.svg";
-import mongo from "../../assets/LandingPage/Sponsors/sponsors/mongo.svg";
-import penguin from "../../assets/LandingPage/Sponsors/sponsors/penguin.svg";
-import tiktok2 from "../../assets/LandingPage/Sponsors/sponsors/tiktok2.svg";
-import meta from "../../assets/LandingPage/Sponsors/sponsors/meta.svg";
+import nordpass from "../../assets/LandingPage/Sponsors/sponsors/nordpass.svg";
+import nordprotect from "../../assets/LandingPage/Sponsors/sponsors/nordprotect.svg";
+import nordvpn from "../../assets/LandingPage/Sponsors/sponsors/nordvpn.svg";
+import saily from "../../assets/LandingPage/Sponsors/sponsors/saily.svg";
 
 const sponsors = [
-  { label: "biga", texture: biga },
-  { label: "bigf", texture: bigf },
-  { label: "chase", texture: chase },
-  { label: "cloude", texture: cloude },
-  { label: "google", texture: google },
-  { label: "mongo", texture: mongo },
-  { label: "penguin", texture: penguin },
-  { label: "tiktok2", texture: tiktok2 },
-  { label: "meta", texture: meta },
+  {
+    label: "dittoai",
+    texture: dittoai,
+    alt: "Ditto AI",
+    href: "https://ditto.ai/",
+    rel: "nofollow",
+  },
+  { label: "figma", texture: figma, alt: "Figma", href: "https://www.figma.com/", rel: "nofollow" },
+  {
+    label: "incogni",
+    texture: incogni,
+    alt: "Incogni – Data Broker Removal Service",
+    href: "https://incogni.com/",
+    rel: "nofollow",
+  },
+  {
+    label: "nexosai",
+    texture: nexosai,
+    alt: "nexos.ai – All-in-one AI Platform",
+    href: "https://nexos.ai/",
+    rel: "nofollow",
+  },
+  {
+    label: "google",
+    texture: google,
+    alt: "Google",
+    href: "https://www.google.com/",
+    rel: "nofollow",
+  },
+  {
+    label: "nordpass",
+    texture: nordpass,
+    alt: "NordPass – Password Manager",
+    href: "https://nordpass.com/",
+    rel: "nofollow",
+  },
+  {
+    label: "nordprotect",
+    texture: nordprotect,
+    alt: "NordProtect – Identity Theft Protection",
+    href: "https://nordprotect.com/",
+    rel: "nofollow",
+  },
+  {
+    label: "nordvpn",
+    texture: nordvpn,
+    alt: "NordVPN – Secure VPN Service",
+    href: "https://nordvpn.com/hackathons",
+    rel: "nofollow sponsored",
+  },
+  {
+    label: "saily",
+    texture: saily,
+    alt: "Saily – eSIM Data for Travel",
+    href: "https://saily.com/",
+    rel: "nofollow",
+  },
 ];
 
 export function Sponsors() {
@@ -120,13 +169,16 @@ export function Sponsors() {
     const hoop1Bodies = createHoop(width * 0.25, height * 0.3, "hoop1");
     const hoop2Bodies = createHoop(width * 0.75, height * 0.5, "hoop2");
 
-    const sponsorBodies = sponsors.map((sponsor) => {
+    const physicsSize = bodySize * 1.35;
+
+    const sponsorBodies = sponsors.map((sponsor, idx) => {
       const x = Math.random() * (width - 100) + 50;
       const y = Math.random() * (height / 2) + height / 2;
 
-      return Bodies.rectangle(x, y, bodySize, bodySize, {
+      return Bodies.rectangle(x, y, physicsSize, physicsSize, {
         restitution: 0.5,
         frictionAir: 0.05,
+        label: `sponsor_${idx}`,
         render: {
           sprite: {
             texture: sponsor.texture,
@@ -173,6 +225,33 @@ export function Sponsors() {
     Render.run(render);
     const runner = Runner.create();
     Runner.run(runner, engine);
+
+    const handleCanvasClick = (e: MouseEvent) => {
+      const rect = render.canvas.getBoundingClientRect();
+      const scaleX = render.canvas.width / rect.width;
+      const scaleY = render.canvas.height / rect.height;
+      const point = {
+        x: (e.clientX - rect.left) * scaleX,
+        y: (e.clientY - rect.top) * scaleY,
+      };
+      const bodies = Matter.Composite.allBodies(engine.world);
+      const hit = Matter.Query.point(bodies, point);
+      for (const body of hit) {
+        if (body.label?.startsWith("sponsor_")) {
+          const idx = parseInt(body.label.split("_")[1], 10);
+          const sponsor = sponsors[idx];
+          if (sponsor?.href) {
+            const a = document.createElement("a");
+            a.href = sponsor.href;
+            a.target = "_blank";
+            if (sponsor.rel) a.rel = sponsor.rel;
+            a.click();
+          }
+          break;
+        }
+      }
+    };
+    render.canvas.addEventListener("click", handleCanvasClick);
 
     const handleResize = () => {
       if (!sceneRef.current) return;
@@ -243,7 +322,6 @@ export function Sponsors() {
         />
 
         <div className="relative w-fit mx-auto ">
-          <div className="absolute w-full h-full z-20"></div>
           <div className="relative">
             <img
               src={GameMachineGlass}

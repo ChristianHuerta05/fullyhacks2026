@@ -62,7 +62,7 @@ export function FAQ() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-slate-100 w-full relative mt-5 gap-12 ">
-      <h2 className="justify-start text-sky-200 xl:text-9xl md:text-7xl text-[56px] font-normal font-nemo lowercase">
+      <h2 className="justify-start text-sky-200 text-[56px] md:text-7xl lg:text-8xl xl:text-9xl font-normal font-nemo lowercase">
         {" "}
         FAQ
       </h2>

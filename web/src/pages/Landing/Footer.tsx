@@ -45,7 +45,7 @@ export function Footer() {
         </div>
 
         <div className="relative inline-block">
-          <a target="_blank" href="https://acmcsuf.com/">
+          <a target="_blank" href="https://acmcsuf.com/discord">
             <img
               src={Discord}
               alt="Discord"

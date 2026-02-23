@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export function Hero() {
   const calculateTimeLeft = () => {
-    const difference = +new Date("2026-04-05T23:59:59") - +new Date();
+    const difference = +new Date("2026-03-27T23:59:59-08:00") - +new Date();
     if (difference > 0) {
       return {
         d: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -92,20 +92,30 @@ export function Hero() {
         </Link>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center xl:space-x-40 md:space-x-20 sm:space-x-10 space-y-8 sm:space-y-0">
-        <div className="flex flex-col items-center text-[#BEF3FC]">
-          <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">20K</h1>
-          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel">Hackers</h1>
-        </div>
-        <div className="flex flex-col items-center text-[#BEF3FC]">
-          <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">
-            100k
-          </h1>
-          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel">Prizes</h1>
+      <div className="flex flex-col items-center space-y-8">
+        <div className="flex flex-col sm:flex-row items-center xl:space-x-40 md:space-x-20 sm:space-x-10 space-y-8 sm:space-y-0">
+          <div className="flex flex-col items-center text-[#BEF3FC]">
+            <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none flex">
+              600 <h1 className="font-bagel">+</h1>
+            </h1>
+            <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel text-center">
+              Hackers
+            </h1>
+          </div>
+          <div className="flex flex-col items-center text-[#BEF3FC]">
+            <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">
+              2k
+            </h1>
+            <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel text-center">
+              Prizes
+            </h1>
+          </div>
         </div>
         <div className="flex flex-col items-center text-[#BEF3FC]">
           <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">24</h1>
-          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel">Hours</h1>
+          <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel text-center">
+            Hours
+          </h1>
         </div>
       </div>
     </div>

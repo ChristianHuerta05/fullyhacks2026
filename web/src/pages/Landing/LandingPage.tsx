@@ -33,7 +33,7 @@ export function LandingPage() {
       <div id="faq" className="w-full">
         <FAQ />
       </div>
-      <div className="xl:h-[3400px] lg:h-[2000px] md:h-[1000px] h-[200px]"></div>
+      <div className=" 2xl:h-[2400px] xl:h-[2000px] lg:h-[1350px] md:h-[855px] sm:h-[390px] h-[200px]"></div>
       <Footer />
       <img src={Atlantis} alt="Atlantis" className="absolute bottom-0 z-[-200] w-full" />
     </div>
