@@ -349,28 +349,28 @@
 
 @font-face {
   font-family: "FindingNemo";
-  src: url("./assets/fonts/FindetNemo.ttf") format("truetype");
+  src: url("./assets/fonts/FindetNemo.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "BlackAndWhitePicture";
-  src: url("./assets/fonts/BlackAndWhitePicture-Regular.ttf") format("truetype");
+  src: url("./assets/fonts/BlackAndWhitePicture-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "BagelFatOne";
-  src: url("./assets/fonts/BagelFatOne-Regular.ttf") format("truetype");
+  src: url("./assets/fonts/BagelFatOne-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Baloo";
-  src: url("./assets/fonts/Baloo.ttf") format("truetype");
+  src: url("./assets/fonts/Baloo.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
