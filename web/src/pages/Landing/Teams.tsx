@@ -69,8 +69,12 @@ const teamData: TeamData = {
     },
   ],
   Finance: [
-    { name: "Elena Marquez", role: "Finance", photo: "/organizers/finance/elena-marquez.webp" },
-    { name: "Kelsey Tang", role: "Finance", photo: "/organizers/finance/KelseyTang.jpg" },
+    {
+      name: "Elena Marquez",
+      role: "Finance Co-Lead",
+      photo: "/organizers/finance/elena-marquez.webp",
+    },
+    { name: "Kelsey Tang", role: "Finance Co-Lead", photo: "/organizers/finance/KelseyTang.jpg" },
   ],
   Marketing: [
     { name: "Angel Gaspar", role: "Marketing TL", photo: "/organizers/marketing/AngelGaspar.jpeg" },
