@@ -74,21 +74,45 @@ const teamData: TeamData = {
       role: "Finance Co-Lead",
       photo: "/organizers/finance/elena-marquez.webp",
     },
-    { name: "Kelsey Tang", role: "Finance Co-Lead", photo: "/organizers/finance/KelseyTang.webp" },
+    {
+      name: "Kelsey Tang",
+      role: "Finance Co-Lead",
+      photo: "/organizers/finance/KelseyTang.webp",
+    },
   ],
   Marketing: [
-    { name: "Angel Gaspar", role: "Marketing TL", photo: "/organizers/marketing/AngelGaspar.webp" },
+    {
+      name: "Angel Gaspar",
+      role: "Marketing TL",
+      photo: "/organizers/marketing/AngelGaspar.webp",
+    },
     { name: "Timothy Ou", role: "Marketing", photo: "/organizers/marketing/TimothyOu.webp" },
-    { name: "Karina Garcia", role: "Marketing", photo: "/organizers/marketing/KarinaGarcia.webp" },
+    {
+      name: "Karina Garcia",
+      role: "Marketing",
+      photo: "/organizers/marketing/KarinaGarcia.webp",
+    },
     { name: "Yuriko", role: "Marketing", photo: "/organizers/marketing/YurikoYsique.webp" },
     { name: "Joel", role: "Marketing", photo: PhotoPlaceholder },
-    { name: "Sofia Guillen", role: "Marketing", photo: "/organizers/marketing/SofiaGuillen.webp" },
+    {
+      name: "Sofia Guillen",
+      role: "Marketing",
+      photo: "/organizers/marketing/SofiaGuillen.webp",
+    },
     { name: "Daisy Martinez", role: "Marketing", photo: "/organizers/marketing/Daisy.webp" },
     { name: "Julie Yun", role: "Marketing", photo: PhotoPlaceholder },
   ],
   Operations: [
-    { name: "Casey Dane", role: "Operations TL", photo: "/organizers/operations/CaseyDane.webp" },
-    { name: "Adam Secrest", role: "Operations", photo: "/organizers/operations/AdamSecrest.webp" },
+    {
+      name: "Casey Dane",
+      role: "Operations TL",
+      photo: "/organizers/operations/CaseyDane.webp",
+    },
+    {
+      name: "Adam Secrest",
+      role: "Operations",
+      photo: "/organizers/operations/AdamSecrest.webp",
+    },
     { name: "Demi Chen", role: "Operations", photo: "/organizers/operations/DemiChen.webp" },
     {
       name: "Adrian Vazquez",
@@ -101,7 +125,11 @@ const teamData: TeamData = {
       role: "Operations",
       photo: "/organizers/operations/JoelDanielRico.webp",
     },
-    { name: "Lexie Riley", role: "Operations", photo: "/organizers/operations/LexieRiley.webp" },
+    {
+      name: "Lexie Riley",
+      role: "Operations",
+      photo: "/organizers/operations/LexieRiley.webp",
+    },
     {
       name: "Kayla Gutierrez",
       role: "Operations",
