@@ -111,7 +111,6 @@ function FAQDropdown({
           {question}
         </p>
 
-        {/* will only display the answer if the FAQ's index matches the openedFAQ index */}
         {openedFAQ === idx && (
           <p className="text-base sm:text-xl md:text-4xl font-baloo wrap-break-word text-left">
             {answer}
