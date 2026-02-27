@@ -751,6 +751,9 @@ export function ApplicationPage() {
             <option value="no-preference" className="bg-[#1D244C] text-[#EFEFEF]">
               No Preference
             </option>
+            <option value="vegetarian" className="bg-[#1D244C] text-[#EFEFEF]">
+              vegetarian
+            </option>
             <option value="vegan" className="bg-[#1D244C] text-[#EFEFEF]">
               Vegan
             </option>

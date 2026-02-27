@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PhotoPlaceholder from "../../assets/LandingPage/Teams/PhotoPlaceholder.svg";
 import Fish from "../../assets/LandingPage/Teams/Fish.svg";
+import Bubble from "../../assets/LandingPage/Teams/Bubble.svg";
 
 interface TeamMember {
   name: string;
@@ -14,56 +15,112 @@ interface TeamData {
 
 const teamData: TeamData = {
   Director: [
-    { name: "Max Rivas", role: "Director", photo: PhotoPlaceholder },
-    { name: "Mark Garcia", role: "Director", photo: PhotoPlaceholder },
+    { name: "Max Rivas", role: "Director", photo: "/organizers/director/MaximilianoRivas.png" },
+    { name: "Mark Garcia", role: "Director", photo: "/organizers/director/MarkGarcia.png" },
   ],
   Web: [
-    { name: "Christian Huerta", role: "Web TL", photo: PhotoPlaceholder },
-    { name: "Kenny Garcia", role: "Developer", photo: PhotoPlaceholder },
-    { name: "Dhara Panchal", role: "Developer", photo: PhotoPlaceholder },
-    { name: "Hannah Minji Park", role: "Developer", photo: PhotoPlaceholder },
-    { name: "Elena Marquez", role: "Developer", photo: PhotoPlaceholder },
-    { name: "Siddharth Vasu", role: "Developer", photo: PhotoPlaceholder },
+    { name: "Christian Huerta", role: "Web TL", photo: "/organizers/web/ChristianHuerta.jpeg" },
+    { name: "Kenny Garcia", role: "Developer", photo: "/organizers/web/KennyGarcia.png" },
+    { name: "Dhara Panchal", role: "Developer", photo: "/organizers/web/DharaPanchal.JPEG" },
+    { name: "Hannah Minji Park", role: "Developer", photo: "/organizers/web/HannahMinjiPark.jpeg" },
+    { name: "Elena Marquez", role: "Developer", photo: "/organizers/finance/elena-marquez.webp" },
+    { name: "Siddharth Vasu", role: "Developer", photo: "/organizers/web/SiddharthVasu.jpg" },
   ],
   Design: [
-    { name: "Richard Hoang", role: "Design TL", photo: PhotoPlaceholder },
-    { name: "Shane Smeaton", role: "Designer", photo: PhotoPlaceholder },
-    { name: "Sama Ahmed", role: "Designer", photo: PhotoPlaceholder },
-    { name: "Kristen Portillo", role: "Designer", photo: PhotoPlaceholder },
-    { name: "Kayla Witecki", role: "Designer", photo: PhotoPlaceholder },
-    { name: "Elzie Mazuca", role: "Designer", photo: PhotoPlaceholder },
-    { name: "Charmaine Joy Cabral", role: "Designer", photo: PhotoPlaceholder },
-    { name: "Chisom Okonkwo", role: "Designer", photo: PhotoPlaceholder },
+    {
+      name: "Richard Hoang",
+      role: "Design TL",
+      photo: "/organizers/design/RichardHoang.png",
+    },
+    {
+      name: "Shane Smeaton",
+      role: "Designer",
+      photo: "/organizers/design/ShaneSmeaton.jpeg",
+    },
+    {
+      name: "Sama Ahmed",
+      role: "Designer",
+      photo: "/organizers/design/SamaAhmed.jpg",
+    },
+    {
+      name: "Kristen Portillo",
+      role: "Designer",
+      photo: "/organizers/design/KristenPortillo.png",
+    },
+    {
+      name: "Kayla Witecki",
+      role: "Designer",
+      photo: "/organizers/design/KaylaWitecki.png",
+    },
+    {
+      name: "Elzie Mazuca",
+      role: "Designer",
+      photo: "/organizers/design/ElzieMazuca.jpeg",
+    },
+    {
+      name: "Charmaine Joy Cabral",
+      role: "Designer",
+      photo: "/organizers/design/CharmaineJoyCabral.jpg",
+    },
+    {
+      name: "Chisom Okonkwo",
+      role: "Designer",
+      photo: "/organizers/design/ChisomOkonkwo.jpeg",
+    },
   ],
   Finance: [
-    { name: "Elena Marquez", role: "Finance", photo: PhotoPlaceholder },
-    { name: "Kelsey Tang", role: "Finance", photo: PhotoPlaceholder },
+    { name: "Elena Marquez", role: "Finance", photo: "/organizers/finance/elena-marquez.webp" },
+    { name: "Kelsey Tang", role: "Finance", photo: "/organizers/finance/KelseyTang.jpg" },
   ],
   Marketing: [
-    { name: "Angel Gaspar", role: "Marketing TL", photo: PhotoPlaceholder },
-    { name: "Timothy Ou", role: "Marketing", photo: PhotoPlaceholder },
-    { name: "Karina Garcia", role: "Marketing", photo: PhotoPlaceholder },
-    { name: "Yuriko", role: "Marketing", photo: PhotoPlaceholder },
+    { name: "Angel Gaspar", role: "Marketing TL", photo: "/organizers/marketing/AngelGaspar.jpeg" },
+    { name: "Timothy Ou", role: "Marketing", photo: "/organizers/marketing/TimothyOu.jpg" },
+    { name: "Karina Garcia", role: "Marketing", photo: "/organizers/marketing/KarinaGarcia.jpg" },
+    { name: "Yuriko", role: "Marketing", photo: "/organizers/marketing/YurikoYsique.jpeg" },
     { name: "Joel", role: "Marketing", photo: PhotoPlaceholder },
-    { name: "Sofia Guillen", role: "Marketing", photo: PhotoPlaceholder },
-    { name: "Daisy Martinez", role: "Marketing", photo: PhotoPlaceholder },
+    { name: "Sofia Guillen", role: "Marketing", photo: "/organizers/marketing/SofiaGuillen.png" },
+    { name: "Daisy Martinez", role: "Marketing", photo: "/organizers/marketing/Daisy.jpeg" },
     { name: "Julie Yun", role: "Marketing", photo: PhotoPlaceholder },
   ],
   Operations: [
-    { name: "Casey Dane", role: "Operations TL", photo: PhotoPlaceholder },
-    { name: "Adam Secrest", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Demi Chen", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Adrian Vazquez", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Ngoc Tran", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Joel Daniel Rico", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Lexie Riley", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Kayla Gutierrez", role: "Operations", photo: PhotoPlaceholder },
+    { name: "Casey Dane", role: "Operations TL", photo: "/organizers/operations/CaseyDane.jpg" },
+    { name: "Adam Secrest", role: "Operations", photo: "/organizers/operations/AdamSecrest.jpg" },
+    { name: "Demi Chen", role: "Operations", photo: "/organizers/operations/DemiChen.jpg" },
+    {
+      name: "Adrian Vazquez",
+      role: "Operations",
+      photo: "/organizers/operations/AdrianVazquez.jpg",
+    },
+    { name: "Ngoc Tran", role: "Operations", photo: "/organizers/operations/NgocTran.jpeg" },
+    {
+      name: "Joel Daniel Rico",
+      role: "Operations",
+      photo: "/organizers/operations/JoelDanielRico.jpg",
+    },
+    { name: "Lexie Riley", role: "Operations", photo: "/organizers/operations/LexieRiley.jpg" },
+    {
+      name: "Kayla Gutierrez",
+      role: "Operations",
+      photo: "/organizers/operations/KaylaGutierrez.jpg",
+    },
     { name: "Erl-John Tauto-An", role: "Operations", photo: PhotoPlaceholder },
     { name: "Bernardo Cruz", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Brandon Parra", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Yves Velasquez Vega", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Jacob Sii", role: "Operations", photo: PhotoPlaceholder },
-    { name: "Cyril Youssef", role: "Operations", photo: PhotoPlaceholder },
+    {
+      name: "Brandon Parra",
+      role: "Operations",
+      photo: "/organizers/operations/BrandonParra.jpeg",
+    },
+    {
+      name: "Yves Velasquez Vega",
+      role: "Operations",
+      photo: "/organizers/operations/YvesVelasquezVega.jpg",
+    },
+    { name: "Jacob Sii", role: "Operations", photo: "/organizers/operations/JacobSii.png" },
+    {
+      name: "Cyril Youssef",
+      role: "Operations",
+      photo: "/organizers/operations/CyrilYoussef.jpeg",
+    },
   ],
 };
 
@@ -71,20 +128,18 @@ export function Teams() {
   const [activeTeam, setActiveTeam] = useState("Director");
   const teams = ["Director", "Web", "Design", "Finance", "Marketing", "Operations"];
 
+  const prevTeam = () => {
+    const idx = teams.indexOf(activeTeam);
+    setActiveTeam(teams[(idx - 1 + teams.length) % teams.length]);
+  };
+
+  const nextTeam = () => {
+    const idx = teams.indexOf(activeTeam);
+    setActiveTeam(teams[(idx + 1) % teams.length]);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-slate-100 w-full relative py-12 md:py-20 px-4">
-      {/* Background fish images */}
-      <img
-        src={Fish}
-        alt="Fish"
-        className="absolute left-2 sm:left-4 md:left-8 lg:left-12 top-[65%] -translate-y-1/2 w-0 sm:w-20 md:w-24 lg:w-18 z-0 "
-      />
-      <img
-        src={Fish}
-        alt="Fish"
-        className="absolute right-2 sm:right-4 md:right-8 lg:right-12 top-[65%] -translate-y-1/2 w-0 sm:w-20 md:w-24 lg:w-18 scale-x-[-1] z-0"
-      />
-
       {/* Title */}
       <h1 className="text-[56px] md:text-7xl lg:text-8xl xl:text-9xl font-nemo text-[#BEF3FC] mb-8 sm:mb-10 md:mb-12 lg:mb-16 text-center tracking-wider lowercase">
         our team
@@ -112,33 +167,59 @@ export function Teams() {
         ))}
       </div>
 
-      {/* Team members display*/}
-      <div
-        key={activeTeam}
-        className="grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-12 lg:gap-16 w-full max-w-6xl z-10 px-2 sm:px-4"
-      >
-        {teamData[activeTeam].map((member, index) => (
+      {/* Team members display — fish nav + fixed-height container */}
+      <div className="relative w-full flex items-start justify-center">
+        {/* Left fish — prev team */}
+        <button
+          onClick={prevTeam}
+          aria-label="Previous team"
+          className="hidden sm:flex absolute left-2 md:left-8 lg:left-12 top-1/2 -translate-y-1/2 z-20 bg-transparent border-none p-0 cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95"
+        >
+          <img src={Fish} alt="Previous team" className="w-20 md:w-24 lg:w-18" />
+        </button>
+
+        {/* Fixed-height wrapper — sized for Operations, the largest team */}
+        <div className="min-h-[700px] sm:min-h-[780px] md:min-h-[900px] lg:min-h-[1000px] flex items-start justify-center w-full max-w-6xl px-2 sm:px-20 md:px-28 lg:px-32">
           <div
-            key={`${activeTeam}-${index}`}
-            className="flex flex-col items-center animate-fade-in"
-            style={{ animationDelay: `${index * 100}ms` }}
+            key={activeTeam}
+            className="grid grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-12 lg:gap-16 w-full z-10 px-2 sm:px-4"
           >
-            {/* Heat photo */}
-            <img
-              src={member.photo}
-              alt={member.name}
-              className="w-32 h-32 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 xl:w-56 xl:h-56 mb-4 sm:mb-5 md:mb-6 transition-transform duration-300 hover:scale-110"
-            />
-            {/* Name */}
-            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-sans font-bold text-white text-center">
-              {member.name}
-            </h3>
-            {/* Role */}
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-sans text-[#BEF3FC] text-center">
-              {member.role}
-            </p>
+            {teamData[activeTeam].map((member, index) => (
+              <div
+                key={`${activeTeam}-${index}`}
+                className="flex flex-col items-center animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Bubble overlaying the photo */}
+                <div className="relative w-32 h-32 sm:w-36 sm:h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 xl:w-56 xl:h-56 mb-4 sm:mb-5 md:mb-6 transition-transform duration-300 hover:scale-110">
+                  <img
+                    src={member.photo}
+                    alt={member.name}
+                    className="absolute inset-0 m-auto w-[85%] h-[85%] rounded-full object-cover"
+                  />
+                  <img src={Bubble} alt="Bubble" className="absolute inset-0 w-full h-full" />
+                </div>
+                {/* Name */}
+                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-sans font-bold text-white text-center">
+                  {member.name}
+                </h3>
+                {/* Role */}
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-sans text-[#BEF3FC] text-center">
+                  {member.role}
+                </p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        {/* Right fish — next team */}
+        <button
+          onClick={nextTeam}
+          aria-label="Next team"
+          className="hidden sm:flex absolute right-2 md:right-8 lg:right-12 top-1/2 -translate-y-1/2 z-20 bg-transparent border-none p-0 cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-95"
+        >
+          <img src={Fish} alt="Next team" className="w-20 md:w-24 lg:w-18 scale-x-[-1]" />
+        </button>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Anchor from "../../assets/LandingPage/FAQ/Anchor.svg";
-
+import AnchorChain from "../../assets/LandingPage/FAQ/AnchorChain.svg";
 type FAQType = {
   question: string;
   answer: string;
@@ -15,7 +15,7 @@ const faqList: FAQType[] = [
   {
     question: "When is FullyHacks?",
     answer:
-      "FullyHacks will take place from April 12th to April 13th. The hackathon will be 100% in-person.",
+      "FullyHacks will take place from April 18th to April 19th. The hackathon will be 100% in-person.",
   },
   {
     question: "Who can participate?",
@@ -48,12 +48,12 @@ const faqList: FAQType[] = [
   },
   {
     question: "When are applications due?",
-    answer: "Applications are due by 11:59 PM (PDT) on March 31, 2025.",
+    answer: "Applications are due by 11:59 PM (PDT) on March 20, 2026.",
   },
   {
     question: "When will I know my application status?",
     answer:
-      "All applications will be reviewed on a rolling basis until March 31st, you can check application status in your user portal.",
+      "All applications will be reviewed on a rolling basis until April 3rd, you can check application status in your user portal.",
   },
 ];
 
@@ -66,7 +66,7 @@ export function FAQ() {
         {" "}
         FAQ
       </h2>
-      <div className="flex flex-col gap-6 w-full max-w-400 px-4">
+      <div className="flex flex-col gap-6 w-full max-w-400 px-4 ">
         {faqList.map((faqListItem, index) => (
           <FAQDropdown
             question={faqListItem.question}
@@ -113,15 +113,18 @@ function FAQDropdown({
 
         {/* will only display the answer if the FAQ's index matches the openedFAQ index */}
         {openedFAQ === idx && (
-          <p className="text-base sm:text-xl md:text-4xl font-bagel wrap-break-word text-left">
+          <p className="text-base sm:text-xl md:text-4xl font-baloo wrap-break-word text-left">
             {answer}
           </p>
         )}
       </div>
 
-      {/* displays the anchor  */}
-      <div className="w-10">
-        <img src={Anchor} alt="Anchor" className="w-full h-auto" />
+      <div className={openedFAQ === idx ? "w-12 sm:w-20 shrink-0" : "w-10 sm:w-16 shrink-0"}>
+        <img
+          src={openedFAQ === idx ? AnchorChain : Anchor}
+          alt={openedFAQ === idx ? "Anchor Chain" : "Anchor"}
+          className="w-full h-auto"
+        />
       </div>
     </button>
   );

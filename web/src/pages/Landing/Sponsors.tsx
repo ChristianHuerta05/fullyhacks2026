@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import Matter from "matter-js";
+import { useState } from "react";
 import GameMachineBase from "../../assets/LandingPage/Sponsors/GameMachineBase.svg";
 import GameMachineGlass from "../../assets/LandingPage/Sponsors/GameMachineGlass.svg";
 import GameMachineTop from "../../assets/LandingPage/Sponsors/GameMachineTop.svg";
@@ -8,70 +7,66 @@ import Bubbles from "../../assets/LandingPage/Sponsors/Bubbles.svg";
 import Fush from "../../assets/LandingPage/Sponsors/Fush.svg";
 import PufferFish from "../../assets/LandingPage/Sponsors/PufferFish.svg";
 
-import dittoai from "../../assets/LandingPage/Sponsors/sponsors/dittoai.svg";
-import figma from "../../assets/LandingPage/Sponsors/sponsors/figma.svg";
-import incogni from "../../assets/LandingPage/Sponsors/sponsors/incogni.svg";
-import nexosai from "../../assets/LandingPage/Sponsors/sponsors/nexosai.svg";
-import google from "../../assets/LandingPage/Sponsors/sponsors/google.svg";
-import nordpass from "../../assets/LandingPage/Sponsors/sponsors/nordpass.svg";
-import nordprotect from "../../assets/LandingPage/Sponsors/sponsors/nordprotect.svg";
-import nordvpn from "../../assets/LandingPage/Sponsors/sponsors/nordvpn.svg";
-import saily from "../../assets/LandingPage/Sponsors/sponsors/saily.svg";
-
 const sponsors = [
   {
     label: "dittoai",
-    texture: dittoai,
+    texture: "/sponsors/DittoAi.png",
     alt: "Ditto AI",
     href: "https://ditto.ai/",
     rel: "nofollow",
   },
-  { label: "figma", texture: figma, alt: "Figma", href: "https://www.figma.com/", rel: "nofollow" },
+  {
+    label: "figma",
+    texture: "/sponsors/Figma.png",
+    alt: "Figma",
+    href: "https://www.figma.com/",
+    rel: "nofollow",
+  },
   {
     label: "incogni",
-    texture: incogni,
+    texture: "/sponsors/incogni.png",
     alt: "Incogni – Data Broker Removal Service",
     href: "https://incogni.com/",
     rel: "nofollow",
   },
   {
     label: "nexosai",
-    texture: nexosai,
+    texture: "/sponsors/nexosai.png",
     alt: "nexos.ai – All-in-one AI Platform",
     href: "https://nexos.ai/",
     rel: "nofollow",
   },
   {
-    label: "google",
-    texture: google,
-    alt: "Google",
-    href: "https://www.google.com/",
+    label: "acm",
+    texture: "/sponsors/ACM.png",
+    alt: "ACM at CSUF",
+    href: "https://acmcsuf.com/",
     rel: "nofollow",
   },
   {
     label: "nordpass",
-    texture: nordpass,
+    texture: "/sponsors/NordPass.png",
     alt: "NordPass – Password Manager",
     href: "https://nordpass.com/",
     rel: "nofollow",
   },
   {
     label: "nordprotect",
-    texture: nordprotect,
+    texture: "/sponsors/NordProtect.png",
     alt: "NordProtect – Identity Theft Protection",
     href: "https://nordprotect.com/",
     rel: "nofollow",
   },
   {
     label: "nordvpn",
-    texture: nordvpn,
+    texture: "/sponsors/NordVPN.png",
     alt: "NordVPN – Secure VPN Service",
     href: "https://nordvpn.com/hackathons",
     rel: "nofollow sponsored",
   },
   {
     label: "saily",
-    texture: saily,
+    texture: "/sponsors/Saily.png",
     alt: "Saily – eSIM Data for Travel",
     href: "https://saily.com/",
     rel: "nofollow",
@@ -79,230 +74,14 @@ const sponsors = [
 ];
 
 export function Sponsors() {
-  const sceneRef = useRef<HTMLDivElement>(null);
-  const engineRef = useRef<Matter.Engine | null>(null);
-  const [score, setScore] = useState(0);
-
   const [bubblesTrigger, setBubblesTrigger] = useState(0);
-
   const [isCooldown, setIsCooldown] = useState(false);
-
-  useEffect(() => {
-    if (!sceneRef.current) return;
-
-    const Engine = Matter.Engine,
-      Render = Matter.Render,
-      Runner = Matter.Runner,
-      Bodies = Matter.Bodies,
-      Composite = Matter.Composite,
-      Mouse = Matter.Mouse,
-      MouseConstraint = Matter.MouseConstraint,
-      Events = Matter.Events;
-
-    const engine = Engine.create();
-    engineRef.current = engine;
-
-    const width = sceneRef.current.clientWidth;
-    const height = sceneRef.current.clientHeight;
-
-    const isMobile = window.innerWidth < 640;
-
-    const spriteScale = isMobile ? 0.7 : 1.2;
-
-    const bodySize = isMobile ? 40 : 60;
-
-    const render = Render.create({
-      element: sceneRef.current,
-      engine: engine,
-      options: {
-        width,
-        height,
-        background: "transparent",
-        wireframes: false,
-      },
-    });
-
-    engine.gravity.y = 0.15;
-
-    const ground = Bodies.rectangle(width / 2, height + 30, width, 60, {
-      isStatic: true,
-      render: { visible: false },
-    });
-    const leftWall = Bodies.rectangle(-30, height / 2, 60, height, {
-      isStatic: true,
-      render: { visible: false },
-    });
-    const rightWall = Bodies.rectangle(width + 30, height / 2, 60, height, {
-      isStatic: true,
-      render: { visible: false },
-    });
-    const ceiling = Bodies.rectangle(width / 2, -100, width, 60, {
-      isStatic: true,
-      render: { visible: false },
-    });
-
-    const createHoop = (x: number, y: number, labelPrefix: string) => {
-      const visualWidth = isMobile ? 100 : 160;
-      const rimRadius = 5;
-      const physicsY = y;
-
-      const rimL = Bodies.circle(x - visualWidth / 2 + rimRadius, physicsY, rimRadius, {
-        isStatic: true,
-        render: { visible: false },
-      });
-
-      const rimR = Bodies.circle(x + visualWidth / 2 - rimRadius, physicsY, rimRadius, {
-        isStatic: true,
-        render: { visible: false },
-      });
-
-      const sensor = Bodies.rectangle(x, physicsY, visualWidth - rimRadius * 4, 20, {
-        label: `${labelPrefix}_sensor`,
-        isStatic: true,
-        isSensor: true,
-        render: { visible: false },
-      });
-
-      return [rimL, rimR, sensor];
-    };
-
-    const hoop1Bodies = createHoop(width * 0.25, height * 0.3, "hoop1");
-    const hoop2Bodies = createHoop(width * 0.75, height * 0.5, "hoop2");
-
-    const physicsSize = bodySize * 1.35;
-
-    const sponsorBodies = sponsors.map((sponsor, idx) => {
-      const x = Math.random() * (width - 100) + 50;
-      const y = Math.random() * (height / 2) + height / 2;
-
-      return Bodies.rectangle(x, y, physicsSize, physicsSize, {
-        restitution: 0.5,
-        frictionAir: 0.05,
-        label: `sponsor_${idx}`,
-        render: {
-          sprite: {
-            texture: sponsor.texture,
-            xScale: spriteScale,
-            yScale: spriteScale,
-          },
-        },
-      });
-    });
-
-    Composite.add(engine.world, [
-      ground,
-      leftWall,
-      rightWall,
-      ceiling,
-      ...hoop1Bodies,
-      ...hoop2Bodies,
-      ...sponsorBodies,
-    ]);
-
-    const mouse = Mouse.create(render.canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
-        },
-      },
-    });
-    Composite.add(engine.world, mouseConstraint);
-
-    Events.on(engine, "collisionStart", (event) => {
-      const pairs = event.pairs;
-      for (let i = 0; i < pairs.length; i++) {
-        const bodyA = pairs[i].bodyA;
-        const bodyB = pairs[i].bodyB;
-        if (bodyA.label.includes("_sensor") || bodyB.label.includes("_sensor")) {
-          setScore((prev) => prev + 1);
-        }
-      }
-    });
-
-    Render.run(render);
-    const runner = Runner.create();
-    Runner.run(runner, engine);
-
-    const handleCanvasClick = (e: MouseEvent) => {
-      const rect = render.canvas.getBoundingClientRect();
-      const scaleX = render.canvas.width / rect.width;
-      const scaleY = render.canvas.height / rect.height;
-      const point = {
-        x: (e.clientX - rect.left) * scaleX,
-        y: (e.clientY - rect.top) * scaleY,
-      };
-      const bodies = Matter.Composite.allBodies(engine.world);
-      const hit = Matter.Query.point(bodies, point);
-      for (const body of hit) {
-        if (body.label?.startsWith("sponsor_")) {
-          const idx = parseInt(body.label.split("_")[1], 10);
-          const sponsor = sponsors[idx];
-          if (sponsor?.href) {
-            const a = document.createElement("a");
-            a.href = sponsor.href;
-            a.target = "_blank";
-            if (sponsor.rel) a.rel = sponsor.rel;
-            a.click();
-          }
-          break;
-        }
-      }
-    };
-    render.canvas.addEventListener("click", handleCanvasClick);
-
-    const handleResize = () => {
-      if (!sceneRef.current) return;
-      const newWidth = sceneRef.current.clientWidth;
-      const newHeight = sceneRef.current.clientHeight;
-
-      render.canvas.width = newWidth;
-      render.canvas.height = newHeight;
-
-      Matter.Body.setPosition(ground, { x: newWidth / 2, y: newHeight + 30 });
-      Matter.Body.setPosition(rightWall, { x: newWidth + 30, y: newHeight / 2 });
-      Matter.Body.setPosition(ceiling, { x: newWidth / 2, y: -30 });
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      Render.stop(render);
-      Runner.stop(runner);
-      if (engineRef.current) {
-        Engine.clear(engineRef.current);
-      }
-      render.canvas.remove();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render.canvas = null as any;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render.context = null as any;
-
-      render.textures = {};
-    };
-  }, []);
 
   const handleLaunch = () => {
     if (isCooldown) return;
-
     setBubblesTrigger((prev) => prev + 1);
-
     setIsCooldown(true);
     setTimeout(() => setIsCooldown(false), 3000);
-
-    if (!engineRef.current) return;
-    const bodies = Matter.Composite.allBodies(engineRef.current.world);
-    bodies.forEach((body) => {
-      if (!body.isStatic) {
-        Matter.Body.applyForce(body, body.position, {
-          x: (Math.random() - 0.5) * 0.05,
-          y: -0.15 - Math.random() * 0.2,
-        });
-      }
-    });
   };
 
   return (
@@ -310,18 +89,15 @@ export function Sponsors() {
       <h1 className="xl:text-[146px] md:text-[86px] text-[56px] font-nemo leading-none text-[#BEF3FC]">
         Sponsors
       </h1>
-      <h1 className="xl:text-[84px] md:text-[46px] text-[28px] font-bagel text-[#BEF3FC]">
-        Score: {score}
-      </h1>
 
       <div className="relative align-center justify-center flex flex-col w-full md:w-auto sm:px-4 px-8 md:px-10 mt-3 sm:mt-0">
         <img
           src={GameMachineTop}
           alt="Game Machine Top"
-          className="md:w-full  left-1/2 -translate-x-1/2 md:mx-auto absolute sm:-top-10 -top-5 z-20"
+          className="md:w-full left-1/2 -translate-x-1/2 md:mx-auto absolute sm:-top-10 -top-5 z-20"
         />
 
-        <div className="relative w-fit mx-auto ">
+        <div className="relative w-fit mx-auto">
           <div className="relative">
             <img
               src={GameMachineGlass}
@@ -329,31 +105,64 @@ export function Sponsors() {
               className="block mx-auto md:w-[600px] w-full h-auto pointer-events-none select-none relative -z-20"
             />
 
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-20 ">
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
               <img
                 src={Hoop}
-                alt="Hoop 1"
-                className="absolute sm:w-[160px] w-[90px]"
-                style={{
-                  top: "30%",
-                  left: "25%",
-
-                  transform: "translate(-50%, -10px)",
-                }}
+                alt="Hoop"
+                className="absolute animate-float-twist w-24 sm:w-32 md:w-40 opacity-70"
+                style={{ top: "25%", left: "15%", animationDelay: "0s", animationDuration: "10s" }}
               />
-
               <img
                 src={Hoop}
-                alt="Hoop 2"
-                className="absolute sm:w-[160px] w-[90px]"
-                style={{
-                  top: "50%",
-                  left: "75%",
-
-                  transform: "translate(-50%, -10px)",
-                }}
+                alt="Hoop"
+                className="absolute animate-float-twist w-20 sm:w-28 md:w-36 opacity-60"
+                style={{ top: "60%", left: "70%", animationDelay: "-3s", animationDuration: "12s" }}
+              />
+              <img
+                src={Hoop}
+                alt="Hoop"
+                className="absolute animate-float-twist w-16 sm:w-24 md:w-32 opacity-50"
+                style={{ top: "45%", left: "45%", animationDelay: "-7s", animationDuration: "14s" }}
               />
             </div>
+
+            {(() => {
+              const positions = [
+                { left: "8%", top: "12%", widthClass: "w-20 sm:w-28 md:w-36" },
+                { left: "55%", top: "9%", widthClass: "w-20 sm:w-28 md:w-36" },
+                { left: "30%", top: "24%", widthClass: "w-24 sm:w-32 md:w-40" },
+                { left: "62%", top: "25%", widthClass: "w-30 sm:w-32 md:w-50" },
+                { left: "5%", top: "46%", widthClass: "w-16 sm:w-20 md:w-28" },
+                { left: "42%", top: "44%", widthClass: "w-32 sm:w-40 md:w-52" },
+                { left: "12%", top: "68%", widthClass: "w-24 sm:w-32 md:w-40" },
+                { left: "60%", top: "68%", widthClass: "w-30 sm:w-40 md:w-52" },
+                { left: "38%", top: "80%", widthClass: "w-20 sm:w-28 md:w-36" },
+              ];
+              return (
+                <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none">
+                  {sponsors.map((sponsor, i) => (
+                    <a
+                      key={sponsor.label}
+                      href={sponsor.href}
+                      target="_blank"
+                      rel={sponsor.rel}
+                      className="pointer-events-auto absolute"
+                      style={{
+                        left: positions[i].left,
+                        top: positions[i].top,
+                        animationDelay: `${i * 0.35}s`,
+                      }}
+                    >
+                      <img
+                        src={sponsor.texture}
+                        alt={sponsor.alt}
+                        className={`h-auto object-contain animate-float drop-shadow-lg hover:scale-110 transition-transform duration-200 ${positions[i].widthClass}`}
+                      />
+                    </a>
+                  ))}
+                </div>
+              );
+            })()}
 
             <div className="absolute bottom-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
               {bubblesTrigger > 0 && (
@@ -361,15 +170,14 @@ export function Sponsors() {
                   key={bubblesTrigger}
                   src={Bubbles}
                   alt="Bubbles"
-                  className="absolute bottom-0 left-0 w-full animate-bubble-float opacity-0"
+                  className="absolute bottom-0 left-5 w-[90%] animate-bubble-float opacity-0"
                 />
               )}
             </div>
-
-            <div ref={sceneRef} className="absolute top-0 left-0 w-full h-full z-10" />
           </div>
         </div>
-        <div className={`cursor-pointer transition-all duration-300 `} onClick={handleLaunch}>
+
+        <div className={`cursor-pointer transition-all duration-300`} onClick={handleLaunch}>
           <img src={GameMachineBase} alt="Game Machine Base" className="full mx-auto" />
         </div>
       </div>

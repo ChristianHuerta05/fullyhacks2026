@@ -36,7 +36,7 @@ export function AboutUs() {
             We are Cal State University <br />
             Fullerton&apos;s (CSUF) <br />
             student-run hackathon. <br />
-            We plan to host 600 <br />
+            We plan to host 400 <br />
             students for a 24-hour <br />
             coding event in April 2026.
           </h2>

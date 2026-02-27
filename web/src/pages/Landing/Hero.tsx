@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export function Hero() {
   const calculateTimeLeft = () => {
-    const difference = +new Date("2026-03-27T23:59:59-08:00") - +new Date();
+    const difference = +new Date("2026-03-20T23:59:59-08:00") - +new Date();
     if (difference > 0) {
       return {
         d: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -82,9 +82,15 @@ export function Hero() {
         </div>
       </div>
       <div className="flex xl:space-x-40 md:space-x-10 space-x-6 xl:mb-20 mb-10">
-        <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[-1deg]">
-          Sponsor Us
-        </button>
+        <a
+          href="https://drive.google.com/file/d/142K7E9kJMZHQMLUtgq5r31YeC7XvNihP/view?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[-1deg]">
+            Sponsor Us
+          </button>
+        </a>
         <Link to="/apply">
           <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[30deg]">
             Apply
@@ -96,15 +102,15 @@ export function Hero() {
         <div className="flex flex-col sm:flex-row items-center xl:space-x-40 md:space-x-20 sm:space-x-10 space-y-8 sm:space-y-0">
           <div className="flex flex-col items-center text-[#BEF3FC]">
             <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none flex">
-              600 <h1 className="font-bagel">+</h1>
+              400 <h1 className="font-bagel">+</h1>
             </h1>
             <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel text-center">
               Hackers
             </h1>
           </div>
           <div className="flex flex-col items-center text-[#BEF3FC]">
-            <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none">
-              2k
+            <h1 className="xl:text-[146px] md:text-[86px] text-[96px] font-nemo leading-none flex">
+              1k<h1 className="font-bagel">+</h1>
             </h1>
             <h1 className="xl:text-[84px] md:text-[46px] text-[42px] font-bagel text-center">
               Prizes

@@ -157,7 +157,25 @@
       transform: translateY(0) rotate(-15deg);
     }
     50% {
-      transform: translateY(-20px) rotate(-14deg);
+      transform: translateY(-5px) rotate(-14deg);
+    }
+  }
+
+  --animate-float-twist: float-twist 10s ease-in-out infinite;
+
+  @keyframes float-twist {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-5deg) scaleX(1);
+    }
+    25% {
+      transform: translateY(-15px) rotate(0deg) scaleX(0.95);
+    }
+    50% {
+      transform: translateY(-25px) rotate(5deg) scaleX(0.9);
+    }
+    75% {
+      transform: translateY(-15px) rotate(0deg) scaleX(0.95);
     }
   }
 
