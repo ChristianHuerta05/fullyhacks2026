@@ -92,8 +92,12 @@ const teamData: TeamData = {
       role: "Marketing",
       photo: "/organizers/marketing/KarinaGarcia.webp",
     },
-    { name: "Yuriko", role: "Marketing", photo: "/organizers/marketing/YurikoYsique.webp" },
-    { name: "Joel", role: "Marketing", photo: PhotoPlaceholder },
+    {
+      name: "Yuriko Ysique Lopez ",
+      role: "Marketing",
+      photo: "/organizers/marketing/YurikoYsique.webp",
+    },
+    { name: "Joel Rejive", role: "Marketing", photo: PhotoPlaceholder },
     {
       name: "Sofia Guillen",
       role: "Marketing",
