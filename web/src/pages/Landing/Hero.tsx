@@ -61,8 +61,8 @@ export function Hero() {
       />
 
       <div className="relative flex flex-col items-center justify-center animate-float xl:mb-30 sm:mb-20 mb-10">
-        <h1 className="xl:text-[90px] md:text-[60px] sm:text-[36px] text-[26px] text-[#BEF3FC] font-nemo text-shadow-sm z-20 xl:-mb-8 sm:-mb-6 -mb-7 text-center px-4">
-          cd building: csuf cs 24-25
+        <h1 className="xl:text-[85px] md:text-[52px] sm:text-[31px] text-[23px] text-[#BEF3FC] font-nemo text-shadow-sm z-20 xl:-mb-8 sm:-mb-6 -mb-7 text-center px-4">
+          csuf cs building - april 18-19
         </h1>
 
         <div className="relative z-10 flex flex-col items-center justify-center xl:py-20 py-10 xl:px-55 px-10">
