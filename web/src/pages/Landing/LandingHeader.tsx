@@ -4,6 +4,7 @@ import Ceiling from "../../assets/LandingPage/Header/Ceiling.svg";
 import Logo from "../../assets/FullyHacksLogo.svg";
 import Submarine from "../../assets/LandingPage/Hero/Submarine.svg";
 import Hamburger from "../../assets/LandingPage/Header/Hamburger.svg";
+import MLH from "../../assets/LandingPage/Header/MLH.svg";
 
 const NAV_ITEMS = [
   { id: "about", label: "about" },
@@ -110,6 +111,11 @@ export function Header() {
 
   return (
     <div className="flex items-center justify-center text-slate-100 w-full relative py-12 h-[200px]">
+      <img
+        src={MLH}
+        alt="MLH logo"
+        className="absolute top-0 z-40 w-[50px] sm:w-[65px] md:w-[80px] right-16 sm:right-8 md:right-12"
+      />
       <img src={Ceiling} alt="Ocean Ceiling" className="absolute top-0 z-[-1] w-full" />
 
       <img
