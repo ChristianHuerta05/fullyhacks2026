@@ -271,6 +271,7 @@ export function ApplicationPage() {
   const [form, setForm] = useState(() => ({
     fullName: "",
     schoolEmail: "",
+    preferredEmail: "",
     school: "",
     schoolOther: "",
     githubUrl: githubUsername ? `https://github.com/${githubUsername}` : "",
@@ -286,6 +287,8 @@ export function ApplicationPage() {
     foodOther: "",
     shirtSize: "",
     isAdult: false,
+    mlhAgree: false,
+    mlhEmails: false,
   }));
 
   const [isSchoolOther, setIsSchoolOther] = useState(false);
@@ -395,6 +398,7 @@ export function ApplicationPage() {
     if (!form.shirtSize) errs.shirtSize = "Please select a shirt size";
 
     if (!form.isAdult) errs.isAdult = "You must be 18 or older by April 12th, 2026";
+    if (!form.mlhAgree) errs.mlhAgree = "You must agree to the MLH terms and conditions";
 
     if (!resumeFile) errs.resume = "Please attach your resume (PDF)";
 
@@ -495,6 +499,23 @@ export function ApplicationPage() {
           />
           {errors.schoolEmail && (
             <span className="font-baloo text-sm text-red-400">{errors.schoolEmail}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="font-baloo text-xl text-[#EFEFEF]">
+            Preferred Email <span className="text-[#EFEFEF]/50 text-base">(optional)</span>
+          </label>
+          <input
+            type="email"
+            value={form.preferredEmail}
+            onChange={(e) => updateField("preferredEmail", e.target.value.toLowerCase().trim())}
+            placeholder="johndoe@gmail.com"
+            className={errors.preferredEmail ? INPUT_ERROR_CLASS : INPUT_CLASS}
+            style={INPUT_STYLE}
+          />
+          {errors.preferredEmail && (
+            <span className="font-baloo text-sm text-red-400">{errors.preferredEmail}</span>
           )}
         </div>
 
@@ -855,6 +876,165 @@ export function ApplicationPage() {
           {errors.isAdult && (
             <span className="font-baloo text-sm text-red-400 ml-9">{errors.isAdult}</span>
           )}
+        </div>
+
+        <div className="flex flex-col gap-4 mt-4 p-4 md:p-6 rounded-[16px] md:rounded-[23px] bg-[#070710]/40 border border-[#72D6E6]/30">
+          <h3 className="font-baloo text-2xl text-[#FED220]">Terms and Conditions*</h3>
+          <ul className="flex flex-col gap-2 font-baloo text-sm md:text-base text-[#EFEFEF]/80 list-disc list-inside">
+            <li>
+              I have read the{" "}
+              <a
+                href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#72D6E6] underline"
+              >
+                MLH Code of Conduct
+              </a>{" "}
+              and agree to the terms and conditions listed
+            </li>
+            <li>
+              I authorize you to share my application/registration information with Major League
+              Hacking for event administration, ranking, and MLH administration in-line with the{" "}
+              <a
+                href="https://www.mlh.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#72D6E6] underline"
+              >
+                MLH Privacy Policy
+              </a>
+            </li>
+            <li>
+              I further agree to the terms of both the{" "}
+              <a
+                href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#72D6E6] underline"
+              >
+                MLH Contest Terms and Conditions
+              </a>{" "}
+              and the{" "}
+              <a
+                href="https://www.mlh.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#72D6E6] underline"
+              >
+                MLH Privacy Policy
+              </a>
+            </li>
+            <li>I consent to photographs being taken and being used for marketing purposes</li>
+            <li>
+              I consent to providing a safe space for hackers to learn and grow their interests in
+              computing
+            </li>
+            <li>
+              I consent to following the provided guidelines and rules instructed by the organizing
+              team
+            </li>
+            <li>
+              I understand that failure to comply with guidelines or creating an unsafe space will
+              result in my removal from the event
+            </li>
+            <li>
+              I understand this is an in person event taking place at UCR and I must attend in
+              person in order to participate
+            </li>
+          </ul>
+
+          <div className="flex flex-col gap-3 mt-2">
+            <label htmlFor="mlhAgree" className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                id="mlhAgree"
+                checked={form.mlhAgree}
+                onChange={(e) => updateField("mlhAgree", e.target.checked)}
+                className="sr-only"
+              />
+              <div
+                className={`w-8 h-8 rounded-[7px] shrink-0 flex items-center justify-center ${form.mlhAgree ? "bg-[#72D6E6]" : "bg-[#72D6E6]/50"}`}
+              >
+                {form.mlhAgree && (
+                  <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+                    <path
+                      d="M2 7L7 12L16 2"
+                      stroke="#1F5962"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </div>
+              <span className="font-baloo text-base md:text-xl text-[#EFEFEF]">
+                By selecting this I agree to all of the above terms
+              </span>
+            </label>
+            {errors.mlhAgree && (
+              <span className="font-baloo text-sm text-red-400 ml-11">{errors.mlhAgree}</span>
+            )}
+
+            <label htmlFor="mlhEmails" className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                id="mlhEmails"
+                checked={form.mlhEmails}
+                onChange={(e) => updateField("mlhEmails", e.target.checked)}
+                className="sr-only"
+              />
+              <div
+                className={`w-8 h-8 rounded-[7px] shrink-0 flex items-center justify-center ${form.mlhEmails ? "bg-[#72D6E6]" : "bg-[#72D6E6]/50"}`}
+              >
+                {form.mlhEmails && (
+                  <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+                    <path
+                      d="M2 7L7 12L16 2"
+                      stroke="#1F5962"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </div>
+              <span className="font-baloo text-base md:text-xl text-[#EFEFEF]">
+                I authorize MLH to send me occasional emails about relevant events, career
+                opportunities, and community announcements.
+              </span>
+            </label>
+          </div>
+
+          <div className="flex flex-col gap-1 mt-2">
+            <p className="font-baloo text-sm text-[#EFEFEF]/50">Resources</p>
+            <div className="flex flex-wrap gap-x-4 gap-y-1">
+              <a
+                href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-baloo text-sm text-[#72D6E6] underline"
+              >
+                MLH Code of Conduct
+              </a>
+              <a
+                href="https://www.mlh.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-baloo text-sm text-[#72D6E6] underline"
+              >
+                MLH Privacy Policy
+              </a>
+              <a
+                href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-baloo text-sm text-[#72D6E6] underline"
+              >
+                MLH Contest Terms and Conditions
+              </a>
+            </div>
+          </div>
         </div>
 
         <button
