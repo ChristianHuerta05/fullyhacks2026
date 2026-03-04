@@ -284,6 +284,7 @@ export function ApplicationPage() {
     whyJoin: "",
     foodChoice: "",
     foodOther: "",
+    shirtSize: "",
     isAdult: false,
   }));
 
@@ -390,6 +391,8 @@ export function ApplicationPage() {
     if (form.foodChoice === "other" && !form.foodOther.trim()) {
       errs.foodOther = "Please specify your dietary restriction";
     }
+
+    if (!form.shirtSize) errs.shirtSize = "Please select a shirt size";
 
     if (!form.isAdult) errs.isAdult = "You must be 18 or older by April 12th, 2026";
 
@@ -707,7 +710,6 @@ export function ApplicationPage() {
           )}
         </div>
 
-        {/* Resume Upload */}
         <div className="flex flex-col gap-2">
           <label className="font-baloo text-xl text-[#EFEFEF]">
             Resume <span className="text-[#EFEFEF]/50 text-base">(PDF only, max 5 MB)</span>
@@ -784,6 +786,43 @@ export function ApplicationPage() {
             )}
           </div>
         )}
+
+        <div className="flex flex-col gap-2">
+          <label className="font-baloo text-xl text-[#EFEFEF]">Shirt Size</label>
+          <select
+            value={form.shirtSize}
+            onChange={(e) => updateField("shirtSize", e.target.value)}
+            className={errors.shirtSize ? SELECT_ERROR_CLASS : SELECT_CLASS}
+          >
+            <option value="" disabled className="bg-[#1D244C] text-[#EFEFEF]">
+              Select your shirt size
+            </option>
+            <option value="XS" className="bg-[#1D244C] text-[#EFEFEF]">
+              XS
+            </option>
+            <option value="S" className="bg-[#1D244C] text-[#EFEFEF]">
+              S
+            </option>
+            <option value="M" className="bg-[#1D244C] text-[#EFEFEF]">
+              M
+            </option>
+            <option value="L" className="bg-[#1D244C] text-[#EFEFEF]">
+              L
+            </option>
+            <option value="XL" className="bg-[#1D244C] text-[#EFEFEF]">
+              XL
+            </option>
+            <option value="2XL" className="bg-[#1D244C] text-[#EFEFEF]">
+              2XL
+            </option>
+            <option value="3XL" className="bg-[#1D244C] text-[#EFEFEF]">
+              3XL
+            </option>
+          </select>
+          {errors.shirtSize && (
+            <span className="font-baloo text-sm text-red-400">{errors.shirtSize}</span>
+          )}
+        </div>
 
         <div className="flex flex-col gap-1 mt-2">
           <label htmlFor="isAdult" className="flex items-center gap-3 cursor-pointer">
