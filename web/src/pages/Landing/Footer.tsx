@@ -19,10 +19,10 @@ export function Footer() {
           Contact Us
         </h2>
         <a
-          href="mailto:fullyhacks@gmail.com"
+          href="mailto:fullyhacks@acmcsuf.com"
           className="text-[1em] md:text-[1.5em] lg:text-[2.5em] font-bold text-white hover:text-[#BEF3FC] transition-colors"
         >
-          fullyhacks@gmail.com
+          fullyhacks@acmcsuf.com
         </a>
       </div>
 
