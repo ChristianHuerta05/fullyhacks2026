@@ -939,7 +939,7 @@ export function ApplicationPage() {
               result in my removal from the event
             </li>
             <li>
-              I understand this is an in person event taking place at UCR and I must attend in
+              I understand this is an in person event taking place at CSUF and I must attend in
               person in order to participate
             </li>
           </ul>
