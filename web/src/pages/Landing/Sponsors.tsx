@@ -71,6 +71,20 @@ const sponsors = [
     href: "https://saily.com/",
     rel: "nofollow",
   },
+  {
+    label: "neon",
+    texture: "/sponsors/Neon.webp",
+    alt: "Neon - Fast Postgres Databases",
+    href: "https://neon.com/",
+    rel: "nofollow",
+  },
+  {
+    label: "notion",
+    texture: "/sponsors/Notion.webp",
+    alt: "Notion - AI Workspace",
+    href: "https://notion.com/",
+    rel: "nofollow",
+  },
 ];
 
 export function Sponsors() {
