@@ -1023,11 +1023,6 @@ export function ApplicationPage() {
 
         <div className="flex flex-col gap-4 p-4 md:p-6 rounded-[16px] md:rounded-[23px] bg-[#070710]/40 border border-[#72D6E6]/30">
           <h3 className="font-baloo text-2xl text-[#FED220]">MLH Notices*</h3>
-          <p className="font-baloo text-sm md:text-base text-[#EFEFEF]/60 italic">
-            We are currently in the process of partnering with MLH. The following 3 checkboxes are
-            for this partnership. If we do not end up partnering with MLH, your information will not
-            be shared.
-          </p>
 
           <div className="flex flex-col gap-4 mt-2">
             <label htmlFor="mlhCodeOfConduct" className="flex items-start gap-3 cursor-pointer">
