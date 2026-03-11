@@ -6,59 +6,40 @@ import { db, storage } from "../../firebase";
 import { useAuth } from "../../contexts/useAuth";
 import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
+import schoolsCsv from "./schools.csv?raw";
+import { COUNTRIES } from "./countries";
 
-const SCHOOLS = [
-  "California State University, Fullerton",
-  "California State University, Long Beach",
-  "California State University, Los Angeles",
-  "California State University, Northridge",
-  "California State University, Pomona",
-  "California State University, San Bernardino",
-  "California State University, Dominguez Hills",
-  "California State University, Channel Islands",
-  "California State University, Bakersfield",
-  "California State University, Fresno",
-  "California State University, Sacramento",
-  "California State University, San Diego",
-  "California State University, San Jose",
-  "California State University, Stanislaus",
-  "California State University, East Bay",
-  "California State University, Monterey Bay",
-  "California State University, San Marcos",
-  "California State University, Chico",
-  "California State University, Humboldt",
-  "California State University, Maritime Academy",
-  "California Polytechnic State University, San Luis Obispo",
-  "California Polytechnic State University, Pomona",
-  "University of California, Irvine",
-  "University of California, Los Angeles",
-  "University of California, Berkeley",
-  "University of California, San Diego",
-  "University of California, Davis",
-  "University of California, Santa Barbara",
-  "University of California, Santa Cruz",
-  "University of California, Riverside",
-  "University of California, Merced",
-  "University of Southern California",
-  "Stanford University",
-  "Massachusetts Institute of Technology",
-  "Georgia Institute of Technology",
-  "Carnegie Mellon University",
-  "University of Washington",
-  "University of Texas at Austin",
-  "University of Michigan",
-  "University of Illinois Urbana-Champaign",
-  "Purdue University",
-  "Arizona State University",
-  "Oregon State University",
-  "University of Colorado Boulder",
-  "San Diego State University",
-  "San Jose State University",
-  "Harvey Mudd College",
-  "Pomona College",
-  "Claremont McKenna College",
-  "Other",
-];
+const SCHOOLS: string[] = (() => {
+  const parsed = schoolsCsv
+    .split(/\r?\n/)
+    .slice(1)
+    .map((line) => line.replace(/"/g, "").trim())
+    .filter(Boolean);
+
+  parsed.sort((a, b) => a.localeCompare(b));
+
+  const topSchools = [
+    "California State University-Fullerton",
+    "California State University, Fullerton",
+    "Fullerton College",
+    "University of California Irvine",
+    "Chapman University",
+    "California State University-Long Beach",
+    "California State Polytechnic University, Pomona",
+    "Pomona College",
+  ];
+
+  for (let i = topSchools.length - 1; i >= 0; i--) {
+    const idx = parsed.indexOf(topSchools[i]);
+    if (idx > -1) {
+      const schoolStr = parsed[idx];
+      parsed.splice(idx, 1);
+      parsed.unshift(schoolStr);
+    }
+  }
+  if (!parsed.includes("Other")) parsed.push("Other");
+  return parsed;
+})();
 
 const MAJORS = [
   "Computer Science",
@@ -132,6 +113,22 @@ const MAJORS = [
   "Other",
 ];
 
+const LEVELS_OF_STUDY = [
+  "Less than Secondary / High School",
+  "Secondary / High School",
+  "Undergraduate University (2 year - community college or similar)",
+  "Undergraduate University (3+ year)",
+  "Graduate University (Masters, Professional, Doctoral, etc)",
+  "Code School / Bootcamp",
+  "Other Vocational / Trade Program or Apprenticeship",
+  "Post Doctorate",
+  "Other",
+  "I'm not currently a student",
+  "Prefer not to answer",
+];
+
+const AGES = Array.from({ length: 85 }, (_, i) => (i + 16).toString());
+
 function formatPhoneNumber(value: string): string {
   const digits = value.replace(/\D/g, "").slice(0, 10);
   if (digits.length === 0) return "";
@@ -188,7 +185,25 @@ function AutocompleteInput({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filtered = options.filter((opt) => opt.toLowerCase().includes(inputValue.toLowerCase()));
+  const filtered = options
+    .filter((opt) => {
+      const searchTerms = inputValue.toLowerCase().split(" ").filter(Boolean);
+      if (searchTerms.length === 0) return true;
+      const optLower = opt.toLowerCase();
+      return searchTerms.every((term) => optLower.includes(term));
+    })
+    .sort((a, b) => {
+      if (!inputValue) return 0;
+      const aLower = a.toLowerCase();
+      const bLower = b.toLowerCase();
+      const inputLower = inputValue.toLowerCase().trim();
+      const aStarts = aLower.startsWith(inputLower);
+      const bStarts = bLower.startsWith(inputLower);
+
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      return 0;
+    });
 
   return (
     <div className="flex flex-col gap-2 w-full" ref={wrapperRef}>
@@ -249,6 +264,28 @@ const SELECT_CLASS =
 const SELECT_ERROR_CLASS =
   "w-full px-4 py-3 md:px-6 md:py-5 rounded-[16px] md:rounded-[23px] bg-[#070710] border-4 md:border-[7px] border-red-400 text-[#EFEFEF] font-baloo text-base md:text-lg outline-none transition-colors appearance-none cursor-pointer";
 
+function CheckboxVisual({ checked }: { checked: boolean }) {
+  return (
+    <div
+      className={`w-8 h-8 rounded-[7px] shrink-0 flex items-center justify-center ${checked ? "bg-[#72D6E6]" : "bg-[#72D6E6]/50"}`}
+    >
+      {checked && (
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+          <path
+            d="M2 7L7 12L16 2"
+            stroke="#1F5962"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      )}
+    </div>
+  );
+}
+
+const STORAGE_KEY = "fullyhacks-application-draft";
+
 export function ApplicationPage() {
   const { user, loading, githubUsername } = useAuth();
   const navigate = useNavigate();
@@ -268,36 +305,73 @@ export function ApplicationPage() {
     checkExisting();
   }, [user, loading, navigate]);
 
-  const [form, setForm] = useState(() => ({
-    fullName: "",
-    schoolEmail: "",
-    preferredEmail: "",
-    school: "",
-    schoolOther: "",
-    githubUrl: githubUsername ? `https://github.com/${githubUsername}` : "",
-    pronouns: "",
-    phone: "",
-    major: "",
-    majorOther: "",
-    gradYear: "",
-    level: "",
-    skillLevel: "",
-    whyJoin: "",
-    foodChoice: "",
-    foodOther: "",
-    shirtSize: "",
-    isAdult: false,
-    mlhAgree: false,
-    mlhEmails: false,
-  }));
+  const [form, setForm] = useState(() => {
+    const defaults = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      school: "",
+      schoolOther: "",
+      githubUrl: githubUsername ? `https://github.com/${githubUsername}` : "",
+      linkedinUrl: "",
+      pronouns: "",
+      phone: "",
+      major: "",
+      majorOther: "",
+      gradYear: "",
+      age: "",
+      level: "",
+      country: "",
+      skillLevel: "",
+      whyJoin: "",
+      foodChoice: "",
+      foodOther: "",
+      shirtSize: "",
+      isAdult: false,
+      agreeTerms: false,
+      mlhCodeOfConduct: false,
+      mlhPrivacy: false,
+      mlhEmails: false,
+    };
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return { ...defaults, ...parsed.form };
+      }
+      // eslint-disable-next-line no-empty
+    } catch {}
+    return defaults;
+  });
 
-  const [isSchoolOther, setIsSchoolOther] = useState(false);
-  const [isMajorOther, setIsMajorOther] = useState(false);
+  const [isSchoolOther, setIsSchoolOther] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved).isSchoolOther ?? false;
+      // eslint-disable-next-line no-empty
+    } catch {}
+    return false;
+  });
+  const [isMajorOther, setIsMajorOther] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return JSON.parse(saved).isMajorOther ?? false;
+      // eslint-disable-next-line no-empty
+    } catch {}
+    return false;
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeError, setResumeError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const resumeInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ form, isSchoolOther, isMajorOther }));
+      // eslint-disable-next-line no-empty
+    } catch {}
+  }, [form, isSchoolOther, isMajorOther]);
 
   const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
@@ -324,10 +398,11 @@ export function ApplicationPage() {
   const wordCount = form.whyJoin
     .trim()
     .split(/\s+/)
-    .filter((w) => w.length > 0).length;
+    .filter((w: string) => w.length > 0).length;
 
   const updateField = (field: string, value: string | boolean) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setForm((prev: Record<string, any>) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => {
         const next = { ...prev };
@@ -340,12 +415,13 @@ export function ApplicationPage() {
   const validate = (): boolean => {
     const errs: Record<string, string> = {};
 
-    if (!form.fullName.trim()) errs.fullName = "Full name is required";
+    if (!form.firstName.trim()) errs.firstName = "First name is required";
+    if (!form.lastName.trim()) errs.lastName = "Last name is required";
 
-    if (!form.schoolEmail.trim()) {
-      errs.schoolEmail = "School email is required";
-    } else if (!isValidEmail(form.schoolEmail)) {
-      errs.schoolEmail = "Please enter a valid email address";
+    if (!form.email.trim()) {
+      errs.email = "Email is required";
+    } else if (!isValidEmail(form.email)) {
+      errs.email = "Please enter a valid email address";
     }
 
     if (isSchoolOther) {
@@ -381,7 +457,9 @@ export function ApplicationPage() {
       errs.gradYear = "Please enter a valid year (2025-2035)";
     }
 
-    if (!form.level) errs.level = "Please select your level";
+    if (!form.age) errs.age = "Age is required";
+    if (!form.level) errs.level = "Please select your level of study";
+    if (!form.country.trim()) errs.country = "Country of residence is required";
     if (!form.skillLevel) errs.skillLevel = "Please select your skill level";
 
     if (!form.whyJoin.trim()) {
@@ -397,8 +475,10 @@ export function ApplicationPage() {
 
     if (!form.shirtSize) errs.shirtSize = "Please select a shirt size";
 
-    if (!form.isAdult) errs.isAdult = "You must be 18 or older by April 12th, 2026";
-    if (!form.mlhAgree) errs.mlhAgree = "You must agree to the MLH terms and conditions";
+    if (!form.isAdult) errs.isAdult = "You must be 18 or older by April 18th, 2026";
+    if (!form.agreeTerms) errs.agreeTerms = "You must agree to the FullyHacks event terms";
+    if (!form.mlhCodeOfConduct) errs.mlhCodeOfConduct = "You must agree to the MLH Code of Conduct";
+    if (!form.mlhPrivacy) errs.mlhPrivacy = "You must agree to share information with MLH";
 
     if (!resumeFile) errs.resume = "Please attach your resume (PDF)";
 
@@ -432,9 +512,10 @@ export function ApplicationPage() {
         resumeUrl,
         status: "pending",
         userId: user.uid,
-        displayName: user.displayName || form.fullName,
+        displayName: user.displayName || `${form.firstName} ${form.lastName}`.trim(),
         submittedAt: serverTimestamp(),
       });
+      localStorage.removeItem(STORAGE_KEY);
       navigate("/profile");
     } catch (err) {
       console.error("Failed to submit application:", err);
@@ -472,53 +553,49 @@ export function ApplicationPage() {
         className="w-full max-w-5xl z-1 flex flex-col gap-5 md:gap-6 px-4 md:px-6 py-6 md:py-10"
         noValidate
       >
-        <div className="flex flex-col gap-2">
-          <label className="font-baloo text-xl text-[#EFEFEF]">Full Name</label>
-          <input
-            type="text"
-            value={form.fullName}
-            onChange={(e) => updateField("fullName", e.target.value)}
-            placeholder="John Doe"
-            className={errors.fullName ? INPUT_ERROR_CLASS : INPUT_CLASS}
-            style={INPUT_STYLE}
-          />
-          {errors.fullName && (
-            <span className="font-baloo text-sm text-red-400">{errors.fullName}</span>
-          )}
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+          <div className="flex flex-col gap-2">
+            <label className="font-baloo text-xl text-[#EFEFEF]">First Name</label>
+            <input
+              type="text"
+              value={form.firstName}
+              onChange={(e) => updateField("firstName", e.target.value)}
+              placeholder="John"
+              className={errors.firstName ? INPUT_ERROR_CLASS : INPUT_CLASS}
+              style={INPUT_STYLE}
+            />
+            {errors.firstName && (
+              <span className="font-baloo text-sm text-red-400">{errors.firstName}</span>
+            )}
+          </div>
 
+          <div className="flex flex-col gap-2">
+            <label className="font-baloo text-xl text-[#EFEFEF]">Last Name</label>
+            <input
+              type="text"
+              value={form.lastName}
+              onChange={(e) => updateField("lastName", e.target.value)}
+              placeholder="Doe"
+              className={errors.lastName ? INPUT_ERROR_CLASS : INPUT_CLASS}
+              style={INPUT_STYLE}
+            />
+            {errors.lastName && (
+              <span className="font-baloo text-sm text-red-400">{errors.lastName}</span>
+            )}
+          </div>
+        </div>
         <div className="flex flex-col gap-2">
-          <label className="font-baloo text-xl text-[#EFEFEF]">School Email</label>
+          <label className="font-baloo text-xl text-[#EFEFEF]">Email</label>
           <input
             type="email"
-            value={form.schoolEmail}
-            onChange={(e) => updateField("schoolEmail", e.target.value.toLowerCase().trim())}
-            placeholder="johndoe@csu.fullerton.edu"
-            className={errors.schoolEmail ? INPUT_ERROR_CLASS : INPUT_CLASS}
-            style={INPUT_STYLE}
-          />
-          {errors.schoolEmail && (
-            <span className="font-baloo text-sm text-red-400">{errors.schoolEmail}</span>
-          )}
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="font-baloo text-xl text-[#EFEFEF]">
-            Preferred Email <span className="text-[#EFEFEF]/50 text-base">(optional)</span>
-          </label>
-          <input
-            type="email"
-            value={form.preferredEmail}
-            onChange={(e) => updateField("preferredEmail", e.target.value.toLowerCase().trim())}
+            value={form.email}
+            onChange={(e) => updateField("email", e.target.value.toLowerCase().trim())}
             placeholder="johndoe@gmail.com"
-            className={errors.preferredEmail ? INPUT_ERROR_CLASS : INPUT_CLASS}
+            className={errors.email ? INPUT_ERROR_CLASS : INPUT_CLASS}
             style={INPUT_STYLE}
           />
-          {errors.preferredEmail && (
-            <span className="font-baloo text-sm text-red-400">{errors.preferredEmail}</span>
-          )}
+          {errors.email && <span className="font-baloo text-sm text-red-400">{errors.email}</span>}
         </div>
-
         {isSchoolOther ? (
           <div className="flex flex-col gap-2">
             <label className="font-baloo text-xl text-[#EFEFEF]">School (Other)</label>
@@ -569,6 +646,20 @@ export function ApplicationPage() {
           {errors.githubUrl && (
             <span className="font-baloo text-sm text-red-400">{errors.githubUrl}</span>
           )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="font-baloo text-xl text-[#EFEFEF]">
+            LinkedIn URL <span className="text-[#EFEFEF]/50 text-base">(optional)</span>
+          </label>
+          <input
+            type="url"
+            value={form.linkedinUrl}
+            onChange={(e) => updateField("linkedinUrl", e.target.value.trim())}
+            placeholder="https://linkedin.com/in/username"
+            className={errors.linkedinUrl ? INPUT_ERROR_CLASS : INPUT_CLASS}
+            style={INPUT_STYLE}
+          />
         </div>
 
         <div className="flex flex-col gap-2">
@@ -656,24 +747,51 @@ export function ApplicationPage() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="font-baloo text-xl text-[#EFEFEF]">Level</label>
+          <label className="font-baloo text-xl text-[#EFEFEF]">Age</label>
+          <select
+            value={form.age}
+            onChange={(e) => updateField("age", e.target.value)}
+            className={errors.age ? SELECT_ERROR_CLASS : SELECT_CLASS}
+          >
+            <option value="" disabled className="bg-[#1D244C] text-[#EFEFEF]">
+              Select your age
+            </option>
+            {AGES.map((a) => (
+              <option key={a} value={a} className="bg-[#1D244C] text-[#EFEFEF]">
+                {a}
+              </option>
+            ))}
+          </select>
+          {errors.age && <span className="font-baloo text-sm text-red-400">{errors.age}</span>}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className="font-baloo text-xl text-[#EFEFEF]">Level of Study</label>
           <select
             value={form.level}
             onChange={(e) => updateField("level", e.target.value)}
             className={errors.level ? SELECT_ERROR_CLASS : SELECT_CLASS}
           >
             <option value="" disabled className="bg-[#1D244C] text-[#EFEFEF]">
-              Select your level
+              Select your level of study
             </option>
-            <option value="undergraduate" className="bg-[#1D244C] text-[#EFEFEF]">
-              Undergraduate
-            </option>
-            <option value="graduate" className="bg-[#1D244C] text-[#EFEFEF]">
-              Graduate
-            </option>
+            {LEVELS_OF_STUDY.map((lvl) => (
+              <option key={lvl} value={lvl} className="bg-[#1D244C] text-[#EFEFEF]">
+                {lvl}
+              </option>
+            ))}
           </select>
           {errors.level && <span className="font-baloo text-sm text-red-400">{errors.level}</span>}
         </div>
+
+        <AutocompleteInput
+          label="Country of Residence"
+          options={COUNTRIES}
+          value={form.country}
+          onChange={(val) => updateField("country", val)}
+          placeholder="Start typing your country..."
+          error={errors.country}
+        />
 
         <div className="flex flex-col gap-2">
           <label className="font-baloo text-xl text-[#EFEFEF]">Skill Level</label>
@@ -775,7 +893,7 @@ export function ApplicationPage() {
               No Preference
             </option>
             <option value="vegetarian" className="bg-[#1D244C] text-[#EFEFEF]">
-              vegetarian
+              Vegetarian
             </option>
             <option value="vegan" className="bg-[#1D244C] text-[#EFEFEF]">
               Vegan
@@ -844,7 +962,6 @@ export function ApplicationPage() {
             <span className="font-baloo text-sm text-red-400">{errors.shirtSize}</span>
           )}
         </div>
-
         <div className="flex flex-col gap-1 mt-2">
           <label htmlFor="isAdult" className="flex items-center gap-3 cursor-pointer">
             <input
@@ -854,77 +971,19 @@ export function ApplicationPage() {
               onChange={(e) => updateField("isAdult", e.target.checked)}
               className="sr-only"
             />
-            <div
-              className={`w-8 h-8 rounded-[7px] shrink-0 flex items-center justify-center ${form.isAdult ? "bg-[#72D6E6]" : "bg-[#72D6E6]/50"}`}
-            >
-              {form.isAdult && (
-                <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-                  <path
-                    d="M2 7L7 12L16 2"
-                    stroke="#1F5962"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              )}
-            </div>
+            <CheckboxVisual checked={form.isAdult} />
             <span className="font-baloo text-xl text-[#EFEFEF]">
               I'm 18 or older by April 18th, 2026
             </span>
           </label>
           {errors.isAdult && (
-            <span className="font-baloo text-sm text-red-400 ml-9">{errors.isAdult}</span>
+            <span className="font-baloo text-sm text-red-400 ml-11">{errors.isAdult}</span>
           )}
         </div>
 
         <div className="flex flex-col gap-4 mt-4 p-4 md:p-6 rounded-[16px] md:rounded-[23px] bg-[#070710]/40 border border-[#72D6E6]/30">
-          <h3 className="font-baloo text-2xl text-[#FED220]">Terms and Conditions*</h3>
+          <h3 className="font-baloo text-2xl text-[#FED220]">Event Terms & Conditions*</h3>
           <ul className="flex flex-col gap-2 font-baloo text-sm md:text-base text-[#EFEFEF]/80 list-disc list-inside">
-            <li>
-              I have read the{" "}
-              <a
-                href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#72D6E6] underline"
-              >
-                MLH Code of Conduct
-              </a>{" "}
-              and agree to the terms and conditions listed
-            </li>
-            <li>
-              I authorize you to share my application/registration information with Major League
-              Hacking for event administration, ranking, and MLH administration in-line with the{" "}
-              <a
-                href="https://www.mlh.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#72D6E6] underline"
-              >
-                MLH Privacy Policy
-              </a>
-            </li>
-            <li>
-              I further agree to the terms of both the{" "}
-              <a
-                href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#72D6E6] underline"
-              >
-                MLH Contest Terms and Conditions
-              </a>{" "}
-              and the{" "}
-              <a
-                href="https://www.mlh.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#72D6E6] underline"
-              >
-                MLH Privacy Policy
-              </a>
-            </li>
             <li>I consent to photographs being taken and being used for marketing purposes</li>
             <li>
               I consent to providing a safe space for hackers to learn and grow their interests in
@@ -944,39 +1003,111 @@ export function ApplicationPage() {
             </li>
           </ul>
 
-          <div className="flex flex-col gap-3 mt-2">
-            <label htmlFor="mlhAgree" className="flex items-center gap-3 cursor-pointer">
+          <label htmlFor="agreeTerms" className="flex items-center gap-3 cursor-pointer mt-2">
+            <input
+              type="checkbox"
+              id="agreeTerms"
+              checked={form.agreeTerms}
+              onChange={(e) => updateField("agreeTerms", e.target.checked)}
+              className="sr-only"
+            />
+            <CheckboxVisual checked={form.agreeTerms} />
+            <span className="font-baloo text-base md:text-xl text-[#EFEFEF]">
+              I agree to the FullyHacks event terms above
+            </span>
+          </label>
+          {errors.agreeTerms && (
+            <span className="font-baloo text-sm text-red-400 ml-11">{errors.agreeTerms}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-4 p-4 md:p-6 rounded-[16px] md:rounded-[23px] bg-[#070710]/40 border border-[#72D6E6]/30">
+          <h3 className="font-baloo text-2xl text-[#FED220]">MLH Notices*</h3>
+          <p className="font-baloo text-sm md:text-base text-[#EFEFEF]/60 italic">
+            We are currently in the process of partnering with MLH. The following 3 checkboxes are
+            for this partnership. If we do not end up partnering with MLH, your information will not
+            be shared.
+          </p>
+
+          <div className="flex flex-col gap-4 mt-2">
+            <label htmlFor="mlhCodeOfConduct" className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
-                id="mlhAgree"
-                checked={form.mlhAgree}
-                onChange={(e) => updateField("mlhAgree", e.target.checked)}
+                id="mlhCodeOfConduct"
+                checked={form.mlhCodeOfConduct}
+                onChange={(e) => updateField("mlhCodeOfConduct", e.target.checked)}
                 className="sr-only"
               />
-              <div
-                className={`w-8 h-8 rounded-[7px] shrink-0 flex items-center justify-center ${form.mlhAgree ? "bg-[#72D6E6]" : "bg-[#72D6E6]/50"}`}
-              >
-                {form.mlhAgree && (
-                  <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-                    <path
-                      d="M2 7L7 12L16 2"
-                      stroke="#1F5962"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
+              <div className="mt-1">
+                <CheckboxVisual checked={form.mlhCodeOfConduct} />
               </div>
-              <span className="font-baloo text-base md:text-xl text-[#EFEFEF]">
-                By selecting this I agree to all of the above terms
+              <span className="font-baloo text-base md:text-lg text-[#EFEFEF]">
+                I have read and agree to the{" "}
+                <a
+                  href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#FED220] underline hover:text-[#ffe566] transition-colors"
+                >
+                  MLH Code of Conduct
+                </a>
+                .
               </span>
             </label>
-            {errors.mlhAgree && (
-              <span className="font-baloo text-sm text-red-400 ml-11">{errors.mlhAgree}</span>
+            {errors.mlhCodeOfConduct && (
+              <span className="font-baloo text-sm text-red-400 ml-11">
+                {errors.mlhCodeOfConduct}
+              </span>
             )}
 
-            <label htmlFor="mlhEmails" className="flex items-center gap-3 cursor-pointer">
+            <label htmlFor="mlhPrivacy" className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                id="mlhPrivacy"
+                checked={form.mlhPrivacy}
+                onChange={(e) => updateField("mlhPrivacy", e.target.checked)}
+                className="sr-only"
+              />
+              <div className="mt-1">
+                <CheckboxVisual checked={form.mlhPrivacy} />
+              </div>
+              <span className="font-baloo text-base md:text-lg text-[#EFEFEF]">
+                I authorize you to share my application/registration information with Major League
+                Hacking for event administration, ranking, and MLH administration in-line with the{" "}
+                <a
+                  href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#FED220] underline hover:text-[#ffe566] transition-colors"
+                >
+                  MLH Privacy Policy
+                </a>
+                . I further agree to the terms of both the{" "}
+                <a
+                  href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#FED220] underline hover:text-[#ffe566] transition-colors"
+                >
+                  MLH Contest Terms and Conditions
+                </a>{" "}
+                and the{" "}
+                <a
+                  href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#FED220] underline hover:text-[#ffe566] transition-colors"
+                >
+                  MLH Privacy Policy
+                </a>
+                .
+              </span>
+            </label>
+            {errors.mlhPrivacy && (
+              <span className="font-baloo text-sm text-red-400 ml-11">{errors.mlhPrivacy}</span>
+            )}
+
+            <label htmlFor="mlhEmails" className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 id="mlhEmails"
@@ -984,22 +1115,10 @@ export function ApplicationPage() {
                 onChange={(e) => updateField("mlhEmails", e.target.checked)}
                 className="sr-only"
               />
-              <div
-                className={`w-8 h-8 rounded-[7px] shrink-0 flex items-center justify-center ${form.mlhEmails ? "bg-[#72D6E6]" : "bg-[#72D6E6]/50"}`}
-              >
-                {form.mlhEmails && (
-                  <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-                    <path
-                      d="M2 7L7 12L16 2"
-                      stroke="#1F5962"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
+              <div className="mt-1">
+                <CheckboxVisual checked={form.mlhEmails} />
               </div>
-              <span className="font-baloo text-base md:text-xl text-[#EFEFEF]">
+              <span className="font-baloo text-base md:text-lg text-[#EFEFEF]">
                 I authorize MLH to send me occasional emails about relevant events, career
                 opportunities, and community announcements.
               </span>
@@ -1013,15 +1132,15 @@ export function ApplicationPage() {
                 href="https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-baloo text-sm text-[#72D6E6] underline"
+                className="font-baloo text-sm text-[#FED220] underline hover:text-[#ffe566] transition-colors"
               >
                 MLH Code of Conduct
               </a>
               <a
-                href="https://www.mlh.com/privacy"
+                href="https://github.com/MLH/mlh-policies/blob/main/privacy-policy.md"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-baloo text-sm text-[#72D6E6] underline"
+                className="font-baloo text-sm text-[#FED220] underline hover:text-[#ffe566] transition-colors"
               >
                 MLH Privacy Policy
               </a>
@@ -1029,7 +1148,7 @@ export function ApplicationPage() {
                 href="https://github.com/MLH/mlh-policies/blob/main/contest-terms.md"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-baloo text-sm text-[#72D6E6] underline"
+                className="font-baloo text-sm text-[#FED220] underline hover:text-[#ffe566] transition-colors"
               >
                 MLH Contest Terms and Conditions
               </a>
