@@ -71,6 +71,20 @@ const sponsors = [
     href: "https://saily.com/",
     rel: "nofollow",
   },
+  {
+    label: "neon",
+    texture: "/sponsors/Neon.webp",
+    alt: "Neon - Fast Postgres Databases",
+    href: "https://neon.com/",
+    rel: "nofollow",
+  },
+  {
+    label: "notion",
+    texture: "/sponsors/Notion.webp",
+    alt: "Notion - AI Workspace",
+    href: "https://notion.com/",
+    rel: "nofollow",
+  },
 ];
 
 export function Sponsors() {
@@ -129,14 +143,16 @@ export function Sponsors() {
             {(() => {
               const positions = [
                 { left: "8%", top: "12%", widthClass: "w-20 sm:w-28 md:w-36" },
-                { left: "55%", top: "9%", widthClass: "w-20 sm:w-28 md:w-36" },
-                { left: "30%", top: "24%", widthClass: "w-24 sm:w-32 md:w-40" },
-                { left: "62%", top: "25%", widthClass: "w-30 sm:w-32 md:w-50" },
-                { left: "5%", top: "46%", widthClass: "w-16 sm:w-20 md:w-28" },
-                { left: "42%", top: "44%", widthClass: "w-32 sm:w-40 md:w-52" },
-                { left: "12%", top: "68%", widthClass: "w-24 sm:w-32 md:w-40" },
-                { left: "60%", top: "68%", widthClass: "w-30 sm:w-40 md:w-52" },
+                { left: "70%", top: "7%", widthClass: "w-20 sm:w-28 md:w-36" },
+                { left: "40%", top: "10%", widthClass: "w-24 sm:w-32 md:w-40" },
+                { left: "62%", top: "30%", widthClass: "w-30 sm:w-32 md:w-50" },
+                { left: "30%", top: "35%", widthClass: "w-16 sm:w-20 md:w-28" },
+                { left: "32%", top: "47%", widthClass: "w-32 sm:w-40 md:w-52" },
+                { left: "6%", top: "70%", widthClass: "w-24 sm:w-32 md:w-40" },
+                { left: "60%", top: "75%", widthClass: "w-30 sm:w-40 md:w-52" },
                 { left: "38%", top: "80%", widthClass: "w-20 sm:w-28 md:w-36" },
+                { left: "65%", top: "48%", widthClass: "w-30 sm:w-40 md:w-52" },
+                { left: "5%", top: "42%", widthClass: "w-20 sm:w-28 md:w-36" },
               ];
               return (
                 <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none">
