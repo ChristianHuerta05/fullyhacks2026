@@ -7,7 +7,8 @@ import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
 
 interface ApplicationData {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   status: string;
   displayName: string;
 }
@@ -60,7 +61,11 @@ export function PortalPage() {
     );
   }
 
-  const displayName = appData?.fullName || appData?.displayName || user?.displayName || "Hacker";
+  const displayName =
+    (appData?.firstName && appData?.lastName ? `${appData.firstName} ${appData.lastName}` : null) ||
+    appData?.displayName ||
+    user?.displayName ||
+    "Hacker";
 
   const statusLabel =
     appData?.status === "pending"
