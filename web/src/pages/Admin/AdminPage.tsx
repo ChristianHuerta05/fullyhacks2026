@@ -106,7 +106,9 @@ function BoolField({ value, label }: { value?: boolean; label: string }) {
   if (value === undefined || value === null) return null;
   return (
     <div className="flex items-center gap-2">
-      <span className={`w-4 h-4 rounded-full flex-shrink-0 ${value ? "bg-green-400" : "bg-red-400"}`} />
+      <span
+        className={`w-4 h-4 rounded-full flex-shrink-0 ${value ? "bg-green-400" : "bg-red-400"}`}
+      />
       <span className="text-slate-300 text-sm">{label}</span>
     </div>
   );
@@ -122,7 +124,13 @@ function DetailRow({ label, value }: { label: string; value?: string | null }) {
   );
 }
 
-function DonutChart({ data, size = 180 }: { data: { label: string; value: number; color: string }[]; size?: number }) {
+function DonutChart({
+  data,
+  size = 180,
+}: {
+  data: { label: string; value: number; color: string }[];
+  size?: number;
+}) {
   const total = data.reduce((s, d) => s + d.value, 0);
   if (total === 0) return <p className="font-baloo text-slate-400 text-sm">No data</p>;
 
@@ -137,6 +145,7 @@ function DonutChart({ data, size = 180 }: { data: { label: string; value: number
     .map((d) => {
       const start = angle;
       const sweep = (d.value / total) * Math.PI * 2;
+      // eslint-disable-next-line
       angle += sweep;
       const end = angle;
       const x1 = cx + r * Math.cos(start);
@@ -158,10 +167,25 @@ function DonutChart({ data, size = 180 }: { data: { label: string; value: number
         {slices.map((s, i) => (
           <path key={i} d={s.path} fill={s.color} />
         ))}
-        <text x={cx} y={cy - 6} textAnchor="middle" fill="#e2e8f0" fontSize="22" fontWeight="bold" fontFamily="sans-serif">
+        <text
+          x={cx}
+          y={cy - 6}
+          textAnchor="middle"
+          fill="#e2e8f0"
+          fontSize="22"
+          fontWeight="bold"
+          fontFamily="sans-serif"
+        >
           {total}
         </text>
-        <text x={cx} y={cy + 14} textAnchor="middle" fill="#94a3b8" fontSize="11" fontFamily="sans-serif">
+        <text
+          x={cx}
+          y={cy + 14}
+          textAnchor="middle"
+          fill="#94a3b8"
+          fontSize="11"
+          fontFamily="sans-serif"
+        >
           total
         </text>
       </svg>
@@ -185,7 +209,9 @@ function HBarChart({ data, max }: { data: { label: string; value: number }[]; ma
     <div className="space-y-2">
       {data.map((d, i) => (
         <div key={i} className="flex items-center gap-3">
-          <span className="font-baloo text-slate-300 text-xs w-40 truncate text-right flex-shrink-0">{d.label}</span>
+          <span className="font-baloo text-slate-300 text-xs w-40 truncate text-right flex-shrink-0">
+            {d.label}
+          </span>
           <div className="flex-1 bg-white/10 rounded-full h-5 overflow-hidden">
             <div
               className="h-full rounded-full bg-[#72D6E6]/70"
@@ -209,7 +235,9 @@ function StatSection({ title, children }: { title: string; children: React.React
         boxShadow: "4px 4px 0px rgba(0,0,0,0.15)",
       }}
     >
-      <h3 className="font-baloo text-[#72D6E6] text-sm uppercase tracking-widest font-semibold mb-4">{title}</h3>
+      <h3 className="font-baloo text-[#72D6E6] text-sm uppercase tracking-widest font-semibold mb-4">
+        {title}
+      </h3>
       {children}
     </div>
   );
@@ -217,33 +245,97 @@ function StatSection({ title, children }: { title: string; children: React.React
 
 function StatsView({ applications }: { applications: AppData[] }) {
   const statusData = [
-    { label: "Pending", value: applications.filter((a) => a.status === "pending").length, color: "#FBBF24" },
-    { label: "Accepted", value: applications.filter((a) => a.status === "accepted").length, color: "#4ADE80" },
-    { label: "Rejected", value: applications.filter((a) => a.status === "rejected").length, color: "#F87171" },
+    {
+      label: "Pending",
+      value: applications.filter((a) => a.status === "pending").length,
+      color: "#FBBF24",
+    },
+    {
+      label: "Accepted",
+      value: applications.filter((a) => a.status === "accepted").length,
+      color: "#4ADE80",
+    },
+    {
+      label: "Rejected",
+      value: applications.filter((a) => a.status === "rejected").length,
+      color: "#F87171",
+    },
   ];
 
   const skillData = [
-    { label: "No Experience", value: applications.filter((a) => a.skillLevel === "no-experience").length, color: "#60A5FA" },
-    { label: "Some Experience", value: applications.filter((a) => a.skillLevel === "some-experience").length, color: "#34D399" },
-    { label: "Experienced", value: applications.filter((a) => a.skillLevel === "experienced").length, color: "#A78BFA" },
-    { label: "Very Experienced", value: applications.filter((a) => a.skillLevel === "very-experienced").length, color: "#F472B6" },
+    {
+      label: "No Experience",
+      value: applications.filter((a) => a.skillLevel === "no-experience").length,
+      color: "#60A5FA",
+    },
+    {
+      label: "Some Experience",
+      value: applications.filter((a) => a.skillLevel === "some-experience").length,
+      color: "#34D399",
+    },
+    {
+      label: "Experienced",
+      value: applications.filter((a) => a.skillLevel === "experienced").length,
+      color: "#A78BFA",
+    },
+    {
+      label: "Very Experienced",
+      value: applications.filter((a) => a.skillLevel === "very-experienced").length,
+      color: "#F472B6",
+    },
   ];
 
   const foodData = [
-    { label: "No Preference", value: applications.filter((a) => !a.foodChoice || a.foodChoice === "no-preference").length, color: "#94A3B8" },
-    { label: "Vegetarian", value: applications.filter((a) => a.foodChoice === "vegetarian").length, color: "#4ADE80" },
-    { label: "Vegan", value: applications.filter((a) => a.foodChoice === "vegan").length, color: "#34D399" },
-    { label: "Halal", value: applications.filter((a) => a.foodChoice === "halal").length, color: "#60A5FA" },
-    { label: "Kosher", value: applications.filter((a) => a.foodChoice === "kosher").length, color: "#A78BFA" },
-    { label: "Gluten Free", value: applications.filter((a) => a.foodChoice === "gluten-free").length, color: "#FB923C" },
-    { label: "Other", value: applications.filter((a) => a.foodChoice && !["no-preference","vegetarian","vegan","halal","kosher","gluten-free"].includes(a.foodChoice)).length, color: "#F472B6" },
+    {
+      label: "No Preference",
+      value: applications.filter((a) => !a.foodChoice || a.foodChoice === "no-preference").length,
+      color: "#94A3B8",
+    },
+    {
+      label: "Vegetarian",
+      value: applications.filter((a) => a.foodChoice === "vegetarian").length,
+      color: "#4ADE80",
+    },
+    {
+      label: "Vegan",
+      value: applications.filter((a) => a.foodChoice === "vegan").length,
+      color: "#34D399",
+    },
+    {
+      label: "Halal",
+      value: applications.filter((a) => a.foodChoice === "halal").length,
+      color: "#60A5FA",
+    },
+    {
+      label: "Kosher",
+      value: applications.filter((a) => a.foodChoice === "kosher").length,
+      color: "#A78BFA",
+    },
+    {
+      label: "Gluten Free",
+      value: applications.filter((a) => a.foodChoice === "gluten-free").length,
+      color: "#FB923C",
+    },
+    {
+      label: "Other",
+      value: applications.filter(
+        (a) =>
+          a.foodChoice &&
+          !["no-preference", "vegetarian", "vegan", "halal", "kosher", "gluten-free"].includes(
+            a.foodChoice,
+          ),
+      ).length,
+      color: "#F472B6",
+    },
   ].filter((d) => d.value > 0);
 
-  const shirtData = ["XS","S","M","L","XL","XXL"].map((size, i) => ({
-    label: size,
-    value: applications.filter((a) => a.shirtSize === size).length,
-    color: ["#60A5FA","#34D399","#FBBF24","#F87171","#A78BFA","#FB923C"][i],
-  })).filter((d) => d.value > 0);
+  const shirtData = ["XS", "S", "M", "L", "XL", "XXL"]
+    .map((size, i) => ({
+      label: size,
+      value: applications.filter((a) => a.shirtSize === size).length,
+      color: ["#60A5FA", "#34D399", "#FBBF24", "#F87171", "#A78BFA", "#FB923C"][i],
+    }))
+    .filter((d) => d.value > 0);
 
   const schoolCounts = applications.reduce<Record<string, number>>((acc, a) => {
     const s = a.school || "Unknown";
@@ -335,7 +427,11 @@ function StatsView({ applications }: { applications: AppData[] }) {
             { label: "18+", value: adultCount },
             { label: "Total", value: applications.length },
           ].map((f) => (
-            <div key={f.label} className="rounded-xl p-3 text-center" style={{ background: "rgba(0,0,0,0.2)" }}>
+            <div
+              key={f.label}
+              className="rounded-xl p-3 text-center"
+              style={{ background: "rgba(0,0,0,0.2)" }}
+            >
               <div className="font-baloo text-2xl font-bold text-[#72D6E6]">{f.value}</div>
               <div className="font-baloo text-slate-400 text-xs mt-0.5">{f.label}</div>
             </div>
@@ -373,7 +469,9 @@ function ApplicantCard({
     >
       <div className="p-4 flex flex-col sm:flex-row sm:items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-[#72D6E6]/30 border border-[#72D6E6]/50 flex items-center justify-center flex-shrink-0">
-          <span className="font-baloo font-bold text-[#72D6E6] text-sm">{name.charAt(0).toUpperCase()}</span>
+          <span className="font-baloo font-bold text-[#72D6E6] text-sm">
+            {name.charAt(0).toUpperCase()}
+          </span>
         </div>
 
         <div className="flex-1 min-w-0">
@@ -416,9 +514,10 @@ function ApplicantCard({
           disabled={updating || app.status === "accepted"}
           onClick={() => onStatusChange(app.userId, "accepted")}
           className={`font-baloo text-sm px-4 py-1.5 rounded-xl border transition-colors cursor-pointer
-            ${app.status === "accepted"
-              ? "bg-green-400/30 text-green-300 border-green-400/50 cursor-default opacity-70"
-              : "bg-green-400/10 text-green-300 border-green-400/30 hover:bg-green-400/25"
+            ${
+              app.status === "accepted"
+                ? "bg-green-400/30 text-green-300 border-green-400/50 cursor-default opacity-70"
+                : "bg-green-400/10 text-green-300 border-green-400/30 hover:bg-green-400/25"
             } disabled:opacity-50`}
         >
           ✓ Accept
@@ -427,9 +526,10 @@ function ApplicantCard({
           disabled={updating || app.status === "rejected"}
           onClick={() => onStatusChange(app.userId, "rejected")}
           className={`font-baloo text-sm px-4 py-1.5 rounded-xl border transition-colors cursor-pointer
-            ${app.status === "rejected"
-              ? "bg-red-400/30 text-red-300 border-red-400/50 cursor-default opacity-70"
-              : "bg-red-400/10 text-red-300 border-red-400/30 hover:bg-red-400/25"
+            ${
+              app.status === "rejected"
+                ? "bg-red-400/30 text-red-300 border-red-400/50 cursor-default opacity-70"
+                : "bg-red-400/10 text-red-300 border-red-400/30 hover:bg-red-400/25"
             } disabled:opacity-50`}
         >
           ✕ Reject
@@ -444,7 +544,9 @@ function ApplicantCard({
           </button>
         )}
         {updating && (
-          <span className="font-baloo text-xs text-slate-400 self-center animate-pulse">Saving…</span>
+          <span className="font-baloo text-xs text-slate-400 self-center animate-pulse">
+            Saving…
+          </span>
         )}
       </div>
 
@@ -452,7 +554,9 @@ function ApplicantCard({
         <div className="px-4 pb-4 pt-2 border-t" style={{ borderColor: "rgba(239,239,239,0.15)" }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="space-y-3">
-              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">Contact</h4>
+              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">
+                Contact
+              </h4>
               <DetailRow label="Email" value={getEmail(app)} />
               <DetailRow label="School Email" value={app.schoolEmail} />
               <DetailRow label="Phone" value={app.phone} />
@@ -462,7 +566,9 @@ function ApplicantCard({
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">Academic</h4>
+              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">
+                Academic
+              </h4>
               <DetailRow label="School" value={app.school} />
               {app.schoolOther && <DetailRow label="School (other)" value={app.schoolOther} />}
               <DetailRow label="Major" value={app.major} />
@@ -471,27 +577,40 @@ function ApplicantCard({
               <DetailRow label="Grad Year" value={app.gradYear} />
               <div>
                 <span className="text-slate-400 text-xs uppercase tracking-wider">Skill Level</span>
-                <p className="text-slate-100 text-sm mt-0.5"><SkillBadge skill={app.skillLevel} /></p>
+                <p className="text-slate-100 text-sm mt-0.5">
+                  <SkillBadge skill={app.skillLevel} />
+                </p>
               </div>
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">Logistics</h4>
+              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">
+                Logistics
+              </h4>
               <DetailRow label="Shirt Size" value={app.shirtSize} />
               <DetailRow
                 label="Food Preference"
-                value={app.foodChoice === "no-preference" ? "No preference" : app.foodChoice || null}
+                value={
+                  app.foodChoice === "no-preference" ? "No preference" : app.foodChoice || null
+                }
               />
               {app.foodOther && <DetailRow label="Food (other)" value={app.foodOther} />}
             </div>
 
             <div className="space-y-3">
-              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">Links</h4>
+              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">
+                Links
+              </h4>
               {app.githubUrl ? (
                 <div>
                   <span className="text-slate-400 text-xs uppercase tracking-wider">GitHub</span>
                   <p>
-                    <a href={app.githubUrl} target="_blank" rel="noreferrer" className="text-[#72D6E6] text-sm hover:underline break-all">
+                    <a
+                      href={app.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#72D6E6] text-sm hover:underline break-all"
+                    >
                       {app.githubUrl}
                     </a>
                   </p>
@@ -503,7 +622,12 @@ function ApplicantCard({
                 <div>
                   <span className="text-slate-400 text-xs uppercase tracking-wider">LinkedIn</span>
                   <p>
-                    <a href={app.linkedinUrl} target="_blank" rel="noreferrer" className="text-[#72D6E6] text-sm hover:underline break-all">
+                    <a
+                      href={app.linkedinUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#72D6E6] text-sm hover:underline break-all"
+                    >
                       {app.linkedinUrl}
                     </a>
                   </p>
@@ -513,7 +637,12 @@ function ApplicantCard({
                 <div>
                   <span className="text-slate-400 text-xs uppercase tracking-wider">Resume</span>
                   <p>
-                    <a href={app.resumeUrl} target="_blank" rel="noreferrer" className="text-[#72D6E6] text-sm hover:underline">
+                    <a
+                      href={app.resumeUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-[#72D6E6] text-sm hover:underline"
+                    >
                       View PDF ↗
                     </a>
                   </p>
@@ -523,13 +652,17 @@ function ApplicantCard({
 
             {app.whyJoin && (
               <div className="sm:col-span-2 space-y-1">
-                <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">Why Join</h4>
+                <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">
+                  Why Join
+                </h4>
                 <p className="text-slate-200 text-sm leading-relaxed">{app.whyJoin}</p>
               </div>
             )}
 
             <div className="space-y-2">
-              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">Agreements</h4>
+              <h4 className="font-baloo text-[#72D6E6] text-xs uppercase tracking-widest font-semibold">
+                Agreements
+              </h4>
               <BoolField value={app.isAdult} label="18+" />
               <BoolField value={app.agreeTerms} label="Agreed to Terms" />
               <BoolField value={app.mlhCodeOfConduct} label="MLH Code of Conduct" />
@@ -637,7 +770,9 @@ export function AdminPage() {
     setUpdatingId(userId);
     try {
       await updateDoc(doc(db, "applications", userId), { status: newStatus });
-      setApplications((prev) => prev.map((a) => (a.userId === userId ? { ...a, status: newStatus } : a)));
+      setApplications((prev) =>
+        prev.map((a) => (a.userId === userId ? { ...a, status: newStatus } : a)),
+      );
     } catch (err) {
       console.error("Failed to update status:", err);
     } finally {
@@ -675,7 +810,14 @@ export function AdminPage() {
         const major = (a.major || "").toLowerCase();
         const why = (a.whyJoin || "").toLowerCase();
         const phone = (a.phone || "").toLowerCase();
-        return name.includes(q) || email.includes(q) || school.includes(q) || major.includes(q) || why.includes(q) || phone.includes(q);
+        return (
+          name.includes(q) ||
+          email.includes(q) ||
+          school.includes(q) ||
+          major.includes(q) ||
+          why.includes(q) ||
+          phone.includes(q)
+        );
       });
     }
 
@@ -700,7 +842,10 @@ export function AdminPage() {
 
   if (loading || isAdmin === null) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}
+      >
         <p className="font-baloo text-2xl text-slate-100 animate-pulse">Checking access…</p>
       </div>
     );
@@ -708,17 +853,27 @@ export function AdminPage() {
 
   if (fetching) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}
+      >
         <p className="font-baloo text-2xl text-slate-100 animate-pulse">Loading applications…</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen text-slate-100" style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}>
+    <div
+      className="min-h-screen text-slate-100"
+      style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}
+    >
       <div
         className="sticky top-0 z-20 px-4 py-3 flex items-center justify-between"
-        style={{ background: "rgba(28, 70, 100, 0.9)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(239,239,239,0.1)" }}
+        style={{
+          background: "rgba(28, 70, 100, 0.9)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(239,239,239,0.1)",
+        }}
       >
         <div className="flex items-center gap-3">
           <img src={FullyHacksLogo} alt="FullyHacks" className="w-8 h-8" />
@@ -734,7 +889,9 @@ export function AdminPage() {
                 key={t}
                 onClick={() => setTab(t)}
                 className={`font-baloo text-sm px-4 py-1.5 transition-colors cursor-pointer capitalize ${
-                  tab === t ? "bg-[#72D6E6]/30 text-[#72D6E6]" : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                  tab === t
+                    ? "bg-[#72D6E6]/30 text-[#72D6E6]"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
                 }`}
               >
                 {t}
@@ -756,10 +913,34 @@ export function AdminPage() {
         ) : (
           <>
             <div className="flex flex-wrap gap-3">
-              <StatCard label="Total" count={stats.total} color="text-[#72D6E6]" onClick={() => setStatusFilter("all")} active={statusFilter === "all"} />
-              <StatCard label="Pending" count={stats.pending} color="text-yellow-300" onClick={() => setStatusFilter("pending")} active={statusFilter === "pending"} />
-              <StatCard label="Accepted" count={stats.accepted} color="text-green-300" onClick={() => setStatusFilter("accepted")} active={statusFilter === "accepted"} />
-              <StatCard label="Rejected" count={stats.rejected} color="text-red-300" onClick={() => setStatusFilter("rejected")} active={statusFilter === "rejected"} />
+              <StatCard
+                label="Total"
+                count={stats.total}
+                color="text-[#72D6E6]"
+                onClick={() => setStatusFilter("all")}
+                active={statusFilter === "all"}
+              />
+              <StatCard
+                label="Pending"
+                count={stats.pending}
+                color="text-yellow-300"
+                onClick={() => setStatusFilter("pending")}
+                active={statusFilter === "pending"}
+              />
+              <StatCard
+                label="Accepted"
+                count={stats.accepted}
+                color="text-green-300"
+                onClick={() => setStatusFilter("accepted")}
+                active={statusFilter === "accepted"}
+              />
+              <StatCard
+                label="Rejected"
+                count={stats.rejected}
+                color="text-red-300"
+                onClick={() => setStatusFilter("rejected")}
+                active={statusFilter === "rejected"}
+              />
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
@@ -769,7 +950,10 @@ export function AdminPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="flex-1 min-w-[200px] font-baloo text-sm px-4 py-2.5 rounded-xl text-slate-100 placeholder-slate-400 outline-none focus:ring-2 focus:ring-[#72D6E6]/50"
-                style={{ background: "rgba(53, 120, 167, 0.35)", border: "1.5px solid rgba(239,239,239,0.2)" }}
+                style={{
+                  background: "rgba(53, 120, 167, 0.35)",
+                  border: "1.5px solid rgba(239,239,239,0.2)",
+                }}
               />
               <select
                 value={statusFilter}
@@ -790,7 +974,9 @@ export function AdminPage() {
               >
                 <option value="all">All Schools</option>
                 {uniqueSchools.map((s) => (
-                  <option key={s} value={s}>{s}</option>
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
                 ))}
               </select>
               <select
@@ -809,11 +995,15 @@ export function AdminPage() {
             <div className="flex items-center justify-between">
               <p className="font-baloo text-slate-400 text-sm">
                 Showing <span className="text-slate-200 font-semibold">{filtered.length}</span> of{" "}
-                <span className="text-slate-200 font-semibold">{applications.length}</span> applicants
+                <span className="text-slate-200 font-semibold">{applications.length}</span>{" "}
+                applicants
               </p>
               {(search || schoolFilter !== "all") && (
                 <button
-                  onClick={() => { setSearch(""); setSchoolFilter("all"); }}
+                  onClick={() => {
+                    setSearch("");
+                    setSchoolFilter("all");
+                  }}
                   className="font-baloo text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
                 >
                   Clear filters ✕
