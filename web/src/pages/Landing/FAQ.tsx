@@ -4,6 +4,7 @@ import AnchorChain from "../../assets/LandingPage/FAQ/AnchorChain.svg";
 type FAQType = {
   question: string;
   answer: string;
+  answerLink?: { text: string; url: string };
 };
 
 const faqList: FAQType[] = [
@@ -55,6 +56,15 @@ const faqList: FAQType[] = [
     answer:
       "All applications will be reviewed on a rolling basis until April 3rd, you can check application status in your user portal.",
   },
+  {
+    question: "What is the MLH Code of Conduct?",
+    answer:
+      "FullyHacks is an MLH Member Event, and all participants must adhere to the Major League Hacking (MLH) Code of Conduct, which ensures an inclusive and safe environment for everyone. You can find the full text of the MLH Code of Conduct here:",
+    answerLink: {
+      text: "MLH Code of Conduct",
+      url: "https://github.com/MLH/mlh-policies/blob/main/code-of-conduct.md",
+    },
+  },
 ];
 
 export function FAQ() {
@@ -69,8 +79,10 @@ export function FAQ() {
       <div className="flex flex-col gap-6 w-full max-w-400 px-4 ">
         {faqList.map((faqListItem, index) => (
           <FAQDropdown
+            key={index}
             question={faqListItem.question}
             answer={faqListItem.answer}
+            answerLink={faqListItem.answerLink}
             idx={index}
             openedFAQ={openedFAQ}
             setOpenedFAQ={setOpenedFAQ}
@@ -84,12 +96,14 @@ export function FAQ() {
 function FAQDropdown({
   question,
   answer,
+  answerLink,
   idx,
   openedFAQ,
   setOpenedFAQ,
 }: {
   question: string;
   answer: string;
+  answerLink?: { text: string; url: string };
   idx: number;
   openedFAQ: number | null;
   setOpenedFAQ: (val: number | null) => void;
@@ -106,14 +120,27 @@ function FAQDropdown({
     >
       <div className="flex flex-col max-w-[calc(100%-40px)]">
         {/* displays the question */}
-
+                
         <p className="flex justify-start text-teal-500 text-xl sm:text-3xl md:text-5xl font-nemo wrap-break-word">
           {question}
         </p>
 
         {openedFAQ === idx && (
           <p className="text-base sm:text-xl md:text-4xl font-baloo wrap-break-word text-left">
-            {answer}
+            <>
+              {answer}{" "}
+              {answerLink && (
+                <a
+                  href={answerLink.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-teal-400 underline hover:text-teal-300 transition-colors duration-200"
+                >
+                  {answerLink.text}
+                </a>
+              )}
+            </>
           </p>
         )}
       </div>
