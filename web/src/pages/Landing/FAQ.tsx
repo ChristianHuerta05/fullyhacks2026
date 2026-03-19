@@ -120,7 +120,7 @@ function FAQDropdown({
     >
       <div className="flex flex-col max-w-[calc(100%-40px)]">
         {/* displays the question */}
-                
+
         <p className="flex justify-start text-teal-500 text-xl sm:text-3xl md:text-5xl font-nemo wrap-break-word">
           {question}
         </p>
