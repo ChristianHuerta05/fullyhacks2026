@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export function Hero() {
   const calculateTimeLeft = () => {
-    const difference = +new Date("2026-03-20T23:59:59-08:00") - +new Date();
+    const difference = +new Date("2026-03-27T23:59:59-08:00") - +new Date();
     if (difference > 0) {
       return {
         d: Math.floor(difference / (1000 * 60 * 60 * 24)),
