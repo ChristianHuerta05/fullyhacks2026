@@ -79,10 +79,10 @@ const sponsors = [
     rel: "nofollow",
   },
   {
-    label: "notion",
-    texture: "/sponsors/Notion.webp",
-    alt: "Notion - AI Workspace",
-    href: "https://notion.com/",
+    label: "esri",
+    texture: "/sponsors/Esri.webp",
+    alt: "Esri - Geographic Information System (GIS) Software",
+    href: "https://www.esri.com/",
     rel: "nofollow",
   },
 ];
