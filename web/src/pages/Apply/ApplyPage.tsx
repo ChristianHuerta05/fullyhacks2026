@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/useAuth";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { isApplicationsClosed } from "../../lib/deadline";
 
 export function ApplyPage() {
   const { user, loading, signInWithGitHub } = useAuth();
@@ -21,7 +22,7 @@ export function ApplyPage() {
     if (loading || !user) return;
     const checkAndRedirect = async () => {
       const docSnap = await getDoc(doc(db, "applications", user.uid));
-      navigate(docSnap.exists() ? "/profile" : "/application");
+      navigate(docSnap.exists() || isApplicationsClosed() ? "/profile" : "/application");
     };
     checkAndRedirect();
   }, [user, loading, navigate]);

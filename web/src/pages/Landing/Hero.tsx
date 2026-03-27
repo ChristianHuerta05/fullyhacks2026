@@ -7,10 +7,11 @@ import Bubbles1 from "../../assets/LandingPage/Hero/Bubbles1.svg";
 import Bubbles2 from "../../assets/LandingPage/Hero/Bubbles2.svg";
 import Bubbles3 from "../../assets/LandingPage/Hero/Bubbles3.svg";
 import { Link } from "react-router-dom";
+import { APPLICATION_DEADLINE, isApplicationsClosed } from "../../lib/deadline";
 
 export function Hero() {
   const calculateTimeLeft = () => {
-    const difference = +new Date("2026-03-27T23:59:59-08:00") - +new Date();
+    const difference = +APPLICATION_DEADLINE - +new Date();
     if (difference > 0) {
       return {
         d: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -22,13 +23,16 @@ export function Hero() {
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [closed, setClosed] = useState(isApplicationsClosed());
 
   useEffect(() => {
+    if (closed) return;
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
+      if (isApplicationsClosed()) setClosed(true);
     }, 30000);
     return () => clearInterval(timer);
-  }, []);
+  }, [closed]);
 
   return (
     <div className="min-h-screen flex flex-col items-center text-slate-100 w-full relative mt-5">
@@ -77,7 +81,7 @@ export function Hero() {
           </h1>
 
           <h1 className="font-bagel text-blue-200 sm:text-[24px] md:text-[35px] text-[18px] xl:text-[60px] xl:mx-0 md:mx-24 sm:mx-24 mx-12 eading-none md:-mt-4 xl:-translate-x-35 md:-translate-x-18 sm:-translate-x-14 -translate-x-8">
-            until applications close
+            {closed ? "applications are closed" : "until applications close"}
           </h1>
         </div>
       </div>
@@ -93,7 +97,7 @@ export function Hero() {
         </a>
         <Link to="/apply">
           <button className="animate-float text-[#BEF3FC] shadow-[0px_4px_4px_rgba(255,255,255,0.25)] font-bagel xl:text-[48px] md:text-[36px] text-[24px] font-bold px-5 py-3 rounded-3xl cursor-pointer backdrop-blur-[100px] border border-[#FFFFFF]/30 rotate-[30deg]">
-            Apply
+            {closed ? "Sign In" : "Apply"}
           </button>
         </Link>
       </div>

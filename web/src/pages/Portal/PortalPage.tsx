@@ -5,6 +5,7 @@ import { db } from "../../firebase";
 import { useAuth } from "../../contexts/useAuth";
 import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
+import { isApplicationsClosed } from "../../lib/deadline";
 
 interface ApplicationData {
   firstName: string;
@@ -115,14 +116,18 @@ export function PortalPage() {
           {!appData && (
             <div className="flex flex-col items-center gap-3">
               <p className="font-baloo text-base text-[#EFEFEF]/70 text-center">
-                You haven't submitted an application yet.
+                {isApplicationsClosed()
+                  ? "Applications are now closed."
+                  : "You haven't submitted an application yet."}
               </p>
-              <button
-                onClick={() => navigate("/application")}
-                className="font-baloo text-lg px-6 py-2 rounded-2xl bg-[#72D6E6] text-[#246B8A] hover:bg-[#5bc0d0] transition-colors cursor-pointer"
-              >
-                Start Application
-              </button>
+              {!isApplicationsClosed() && (
+                <button
+                  onClick={() => navigate("/application")}
+                  className="font-baloo text-lg px-6 py-2 rounded-2xl bg-[#72D6E6] text-[#246B8A] hover:bg-[#5bc0d0] transition-colors cursor-pointer"
+                >
+                  Start Application
+                </button>
+              )}
             </div>
           )}
         </div>

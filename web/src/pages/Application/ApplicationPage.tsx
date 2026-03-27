@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase";
@@ -8,6 +8,7 @@ import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
 import schoolsCsv from "./schools.csv?raw";
 import { COUNTRIES } from "./countries";
+import { isApplicationsClosed } from "../../lib/deadline";
 
 const SCHOOLS: string[] = (() => {
   const parsed = schoolsCsv
@@ -524,6 +525,34 @@ export function ApplicationPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (isApplicationsClosed()) {
+    return (
+      <div
+        className="min-h-screen flex flex-col items-center justify-center text-slate-100 relative px-4 "
+        style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}
+      >
+        <img src={FullyHacksLogo} alt="FullyHacksLogo" className="w-36 md:w-60 mb-8 z-10" />
+        <h1 className="font-baloo text-3xl md:text-5xl text-center mb-4 z-10">
+          Applications are closed
+        </h1>
+        <p className="font-baloo text-lg md:text-2xl text-center text-[#EFEFEF]/80 mb-8 z-10">
+          Sorry, applications have been closed. Apply next year!
+        </p>
+        <Link
+          to="/"
+          className="font-baloo text-xl px-8 py-3 rounded-2xl border-2 border-[#EFEFEF] text-[#EFEFEF] hover:bg-[#EFEFEF]/10 transition-colors z-10"
+        >
+          Back to Home
+        </Link>
+        <img
+          src={Background}
+          alt="Background"
+          className="w-full absolute bottom-0 z-0 pointer-events-none "
+        />
+      </div>
+    );
+  }
 
   if (loading) {
     return (
