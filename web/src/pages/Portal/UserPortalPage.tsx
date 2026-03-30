@@ -57,48 +57,36 @@ export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) 
         className="absolute top-20 right-20 w-[100px] pointer-events-none hidden lg:block"
       />
 
-      <div className="lg:hidden flex items-center justify-between px-4 py-3 relative z-30">
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="text-[#EFEFEF] cursor-pointer p-2"
-        >
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {menuOpen ? (
-              <path
-                d="M6 6L18 18M6 18L18 6"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-              />
-            ) : (
-              <>
-                <path d="M3 6H21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M3 12H21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M3 18H21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-              </>
-            )}
-          </svg>
-        </button>
+      {!menuOpen && (
+        <div className="lg:hidden flex items-center justify-between px-4 py-3 relative z-30">
+          <button onClick={() => setMenuOpen(true)} className="text-[#EFEFEF] cursor-pointer p-2">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M3 6H21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M3 12H21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <path d="M3 18H21" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+            </svg>
+          </button>
 
-        <img src={FullyHacksLogo} className="w-[120px]" />
+          <img src={FullyHacksLogo} className="w-[120px]" />
 
-        <div className="w-[44px]" />
-      </div>
+          <div className="w-11" />
+        </div>
+      )}
 
       {menuOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-20 flex flex-col items-center justify-center gap-6 p-8"
+          className="lg:hidden fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 p-8 overflow-hidden"
           style={{ background: "linear-gradient(180deg, #2EB2EF 0%, #163474 100%)" }}
         >
           <button
             onClick={() => setMenuOpen(false)}
-            className="absolute top-4 right-4 text-[#EFEFEF] cursor-pointer p-2"
+            className="absolute top-4 left-4 text-[#EFEFEF] cursor-pointer p-2"
           >
             <svg
               width="28"
