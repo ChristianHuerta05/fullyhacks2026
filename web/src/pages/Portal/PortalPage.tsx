@@ -6,6 +6,7 @@ import { useAuth } from "../../contexts/useAuth";
 import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
 import { isApplicationsClosed } from "../../lib/deadline";
+import { UserPortalPage } from "./UserPortalPage";
 
 interface ApplicationData {
   firstName: string;
@@ -68,23 +69,54 @@ export function PortalPage() {
     user?.displayName ||
     "Hacker";
 
-  const statusLabel =
-    appData?.status === "pending"
-      ? "Pending"
-      : appData?.status === "accepted"
-        ? "Accepted"
-        : appData?.status === "rejected"
-          ? "Rejected"
-          : appData
-            ? "Pending"
-            : "No Application";
+  if (appData?.status === "accepted") {
+    return <UserPortalPage displayName={displayName} onSignOut={handleSignOut} />;
+  }
 
-  const statusColor =
-    appData?.status === "accepted"
-      ? "text-green-400"
-      : appData?.status === "rejected"
-        ? "text-red-400"
-        : "text-yellow-400";
+  if (appData?.status === "rejected") {
+    return (
+      <div
+        className="min-h-screen flex flex-col items-center justify-center text-slate-100 relative"
+        style={{ background: "linear-gradient(180deg, #2C739A 0%, #1D244C 100%)" }}
+      >
+        <div className="flex flex-col items-center gap-8 z-1 px-4 max-w-lg text-center">
+          <img src={FullyHacksLogo} alt="FullyHacksLogo" className="w-36 md:w-60" />
+
+          <div
+            className="w-full max-w-md rounded-2xl p-8 flex flex-col items-center gap-4"
+            style={{
+              background: "rgba(53, 120, 167, 0.5)",
+              border: "3px solid #EFEFEF",
+              boxShadow: "10px 10px 0px rgba(0, 0, 0, 0.25)",
+            }}
+          >
+            <h2 className="font-baloo text-2xl text-[#EFEFEF]">Application Status</h2>
+            <div className="font-baloo text-4xl font-bold text-red-400">Rejected</div>
+            <p className="font-baloo text-base text-[#EFEFEF]/70 text-center leading-relaxed">
+              Unfortunately we weren't able to offer you a spot at FullyHacks this year. We truly
+              appreciate your interest and encourage you to apply again next year.
+            </p>
+          </div>
+
+          <button
+            onClick={handleSignOut}
+            className="font-baloo text-lg px-8 py-3 rounded-2xl border-2 border-[#EFEFEF] text-[#EFEFEF] hover:bg-[#EFEFEF]/10 transition-colors cursor-pointer"
+          >
+            Sign Out
+          </button>
+        </div>
+
+        <img
+          src={Background}
+          alt="Background"
+          className="w-full absolute bottom-0 z-0 pointer-events-none"
+        />
+      </div>
+    );
+  }
+
+  const statusLabel =
+    appData?.status === "pending" ? "Pending" : appData ? "Pending" : "No Application";
 
   return (
     <div
@@ -107,7 +139,7 @@ export function PortalPage() {
           }}
         >
           <h2 className="font-baloo text-2xl text-[#EFEFEF]">Application Status</h2>
-          <div className={`font-baloo text-4xl font-bold ${statusColor}`}>{statusLabel}</div>
+          <div className="font-baloo text-4xl font-bold text-yellow-400">{statusLabel}</div>
           {appData?.status === "pending" && (
             <p className="font-baloo text-base text-[#EFEFEF]/70 text-center">
               Your application is being reviewed. We'll notify you soon!
