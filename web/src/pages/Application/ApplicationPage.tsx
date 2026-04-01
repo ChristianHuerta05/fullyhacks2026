@@ -25,7 +25,6 @@ import {
 } from "../../data/formConstants";
 import { AutocompleteInput } from "../../components/AutocompleteInput";
 
-
 function CheckboxVisual({ checked }: { checked: boolean }) {
   return (
     <div

@@ -40,13 +40,29 @@ interface ApplicationData {
 }
 
 const REQUIRED_FIELDS: (keyof ApplicationData)[] = [
-  "firstName", "lastName", "email", "school", "githubUrl", "pronouns",
-  "phone", "major", "gradYear", "age", "level", "country", "skillLevel",
-  "whyJoin", "foodChoice", "shirtSize",
+  "firstName",
+  "lastName",
+  "email",
+  "school",
+  "githubUrl",
+  "pronouns",
+  "phone",
+  "major",
+  "gradYear",
+  "age",
+  "level",
+  "country",
+  "skillLevel",
+  "whyJoin",
+  "foodChoice",
+  "shirtSize",
 ];
 
 const REQUIRED_BOOL_FIELDS: (keyof ApplicationData)[] = [
-  "isAdult", "agreeTerms", "mlhCodeOfConduct", "mlhPrivacy",
+  "isAdult",
+  "agreeTerms",
+  "mlhCodeOfConduct",
+  "mlhPrivacy",
 ];
 
 function getMissingFields(data: ApplicationData): string[] {
@@ -119,8 +135,6 @@ export function PortalPage() {
 
   if (appData?.status === "accepted") {
     const missingFields = getMissingFields(appData);
-    console.log("[MissingFields] appData:", appData);
-    console.log("[MissingFields] missing:", missingFields);
     const showModal = missingFields.length > 0 && !fieldsCompleted;
     return (
       <>
@@ -130,7 +144,9 @@ export function PortalPage() {
             missingFields={missingFields}
             uid={user!.uid}
             onComplete={(updatedData) => {
-              setAppData((prev) => prev ? { ...prev, ...(updatedData as Partial<ApplicationData>) } : prev);
+              setAppData((prev) =>
+                prev ? { ...prev, ...(updatedData as Partial<ApplicationData>) } : prev,
+              );
               setFieldsCompleted(true);
             }}
           />

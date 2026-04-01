@@ -840,7 +840,6 @@ export function AdminPage() {
     navigate("/");
   };
 
-
   if (loading || isAdmin === null) {
     return (
       <div
@@ -899,7 +898,7 @@ export function AdminPage() {
               </button>
             ))}
           </div>
-<button
+          <button
             onClick={handleSignOut}
             className="font-baloo text-sm px-4 py-1.5 rounded-xl border border-white/20 text-slate-300 hover:bg-white/10 transition-colors cursor-pointer"
           >
