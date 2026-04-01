@@ -119,6 +119,8 @@ export function PortalPage() {
 
   if (appData?.status === "accepted") {
     const missingFields = getMissingFields(appData);
+    console.log("[MissingFields] appData:", appData);
+    console.log("[MissingFields] missing:", missingFields);
     const showModal = missingFields.length > 0 && !fieldsCompleted;
     return (
       <>
