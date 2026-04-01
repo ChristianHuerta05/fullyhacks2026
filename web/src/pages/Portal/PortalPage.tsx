@@ -7,12 +7,59 @@ import FullyHacksLogo from "../../assets/FullyHacksLogo.svg";
 import Background from "../../assets/ApplicationPage/Background.svg";
 import { isApplicationsClosed } from "../../lib/deadline";
 import { UserPortalPage } from "./UserPortalPage";
+import { MissingFieldsModal } from "../../components/MissingFieldsModal";
 
 interface ApplicationData {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  school?: string;
+  schoolOther?: string;
+  githubUrl?: string;
+  pronouns?: string;
+  phone?: string;
+  major?: string;
+  majorOther?: string;
+  gradYear?: string;
+  age?: string;
+  level?: string;
+  country?: string;
+  skillLevel?: string;
+  whyJoin?: string;
+  foodChoice?: string;
+  shirtSize?: string;
+  resumeUrl?: string;
+  isAdult?: boolean;
+  agreeTerms?: boolean;
+  mlhCodeOfConduct?: boolean;
+  mlhPrivacy?: boolean;
+  mlhEmails?: boolean;
   status: string;
-  displayName: string;
+  displayName?: string;
+  userId?: string;
+}
+
+const REQUIRED_FIELDS: (keyof ApplicationData)[] = [
+  "firstName", "lastName", "email", "school", "githubUrl", "pronouns",
+  "phone", "major", "gradYear", "age", "level", "country", "skillLevel",
+  "whyJoin", "foodChoice", "shirtSize",
+];
+
+const REQUIRED_BOOL_FIELDS: (keyof ApplicationData)[] = [
+  "isAdult", "agreeTerms", "mlhCodeOfConduct", "mlhPrivacy",
+];
+
+function getMissingFields(data: ApplicationData): string[] {
+  const missingStrings = REQUIRED_FIELDS.filter((field) => {
+    if (field === "school") return !data.school && !data.schoolOther;
+    if (field === "major") return !data.major && !data.majorOther;
+    const val = data[field];
+    return val === undefined || val === null || val === "";
+  });
+  const missingBools = REQUIRED_BOOL_FIELDS.filter((field) => data[field] !== true);
+  // Only show mlhEmails if it was never set (undefined) — false means they opted out intentionally
+  const missingOptional = data.mlhEmails === undefined ? ["mlhEmails"] : [];
+  return [...missingStrings, ...(missingBools as string[]), ...missingOptional];
 }
 
 export function PortalPage() {
@@ -20,6 +67,7 @@ export function PortalPage() {
   const navigate = useNavigate();
   const [appData, setAppData] = useState<ApplicationData | null>(null);
   const [fetching, setFetching] = useState(true);
+  const [fieldsCompleted, setFieldsCompleted] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -70,7 +118,23 @@ export function PortalPage() {
     "Hacker";
 
   if (appData?.status === "accepted") {
-    return <UserPortalPage displayName={displayName} onSignOut={handleSignOut} />;
+    const missingFields = getMissingFields(appData);
+    const showModal = missingFields.length > 0 && !fieldsCompleted;
+    return (
+      <>
+        <UserPortalPage displayName={displayName} onSignOut={handleSignOut} />
+        {showModal && (
+          <MissingFieldsModal
+            missingFields={missingFields}
+            uid={user!.uid}
+            onComplete={(updatedData) => {
+              setAppData((prev) => prev ? { ...prev, ...(updatedData as Partial<ApplicationData>) } : prev);
+              setFieldsCompleted(true);
+            }}
+          />
+        )}
+      </>
+    );
   }
 
   if (appData?.status === "rejected") {

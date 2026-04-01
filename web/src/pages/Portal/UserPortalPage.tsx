@@ -104,7 +104,7 @@ export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) 
             </svg>
           </button>
 
-          <img src={FullyHacksLogo} className="w-[160px] mb-4" />
+          <img src={FullyHacksLogo} className="w-[90px] mb-4" />
 
           <p className="font-baloo text-2xl text-[#EFEFEF] text-center">Welcome, {displayName}</p>
 
