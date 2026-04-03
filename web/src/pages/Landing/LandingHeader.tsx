@@ -82,7 +82,7 @@ export function Header() {
   };
 
   const handleMouseLeave = () => {
-    closeTimeoutRef.current = setTimeout(() => {
+    closeTimeoutRef.current = window.setTimeout(() => {
       setIsHovered(false);
     }, 300);
   };
