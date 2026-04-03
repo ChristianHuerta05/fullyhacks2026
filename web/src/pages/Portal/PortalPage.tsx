@@ -138,7 +138,13 @@ export function PortalPage() {
     const showModal = missingFields.length > 0 && !fieldsCompleted;
     return (
       <>
-        <UserPortalPage displayName={displayName} onSignOut={handleSignOut} />
+        <UserPortalPage
+          displayName={displayName}
+          onSignOut={handleSignOut}
+          uid={user!.uid}
+          firstName={appData.firstName || ""}
+          lastName={appData.lastName || ""}
+        />
         {showModal && (
           <MissingFieldsModal
             missingFields={missingFields}

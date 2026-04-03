@@ -7,30 +7,33 @@ import discordLogo from "../../assets/PortalPage/Shared/discordLogo.svg";
 
 import { Home } from "./Home";
 import { Events } from "./Events";
-import { JudgeInfo } from "./JudgeInfo";
 import { TracksPrizes } from "./TracksPrizes";
 import { Fullypacks } from "./Fullypacks";
 import { FAQ } from "./FAQ";
-import { Resources } from "./Resources";
-import { Profile } from "./Profile";
 
 interface UserPortalPageProps {
   displayName: string;
   onSignOut: () => void;
+  uid: string;
+  firstName: string;
+  lastName: string;
 }
 
 const NAV_ITEMS = [
   { key: "home", label: "home" },
-  { key: "judges information", label: "judges information" },
-  { key: "events", label: "events" },
+  { key: "events", label: "schedule" },
   { key: "tracks and prizes", label: "tracks and prizes" },
   { key: "fullypacks", label: "fullypacks" },
-  { key: "resources", label: "resources" },
   { key: "faq", label: "faq" },
-  { key: "profile", label: "profile" },
 ];
 
-export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) {
+export function UserPortalPage({
+  displayName,
+  onSignOut,
+  uid,
+  firstName,
+  lastName,
+}: UserPortalPageProps) {
   const [currentPage, setCurrentPage] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -41,7 +44,7 @@ export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) 
 
   return (
     <div
-      className="flex flex-col lg:flex-row w-full h-full min-h-dvh min-w-dvw relative"
+      className="flex flex-col lg:flex-row w-full h-dvh min-w-dvw relative overflow-hidden"
       style={{ background: "linear-gradient(180deg, #2EB2EF 0%, #163474 100%)" }}
     >
       <img
@@ -81,7 +84,7 @@ export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) 
 
       {menuOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 p-8 overflow-hidden"
+          className="lg:hidden fixed inset-0 z-40 flex flex-col items-center justify-center gap-6 p-8 overflow-y-auto"
           style={{ background: "linear-gradient(180deg, #2EB2EF 0%, #163474 100%)" }}
         >
           <button
@@ -139,7 +142,7 @@ export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) 
         </div>
       )}
 
-      <div className="hidden lg:flex flex-col items-end pl-20 shrink-0">
+      <div className="hidden lg:flex flex-col items-end pl-20 shrink-0 overflow-y-auto">
         <img src={FullyHacksLogo} className="w-[250px] self-center pb-10 pt-10" />
         <p className="font-baloo text-4xl whitespace-nowrap pb-10 self-center">
           Welcome, {displayName}
@@ -169,15 +172,12 @@ export function UserPortalPage({ displayName, onSignOut }: UserPortalPageProps) 
         </a>
       </div>
 
-      <div className="flex flex-col items-center flex-1 min-w-0 z-10 overflow-y-auto">
-        {currentPage === "home" && <Home />}
-        {currentPage === "judges information" && <JudgeInfo />}
+      <div className="flex flex-col items-center flex-1 min-w-0 z-10 overflow-y-auto ">
+        {currentPage === "home" && <Home uid={uid} firstName={firstName} lastName={lastName} />}
         {currentPage === "events" && <Events />}
         {currentPage === "tracks and prizes" && <TracksPrizes />}
         {currentPage === "fullypacks" && <Fullypacks />}
-        {currentPage === "resources" && <Resources />}
         {currentPage === "faq" && <FAQ />}
-        {currentPage === "profile" && <Profile />}
       </div>
     </div>
   );

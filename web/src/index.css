@@ -8,6 +8,7 @@
   --font-picture: "BlackAndWhitePicture", sans-serif;
   --font-bagel: "BagelFatOne", sans-serif;
   --font-baloo: "Baloo", sans-serif;
+  --font-coheadline: "CoHeadline", sans-serif;
 
   /* ============================================
    * CUSTOM COLORS
@@ -371,6 +372,13 @@
 @font-face {
   font-family: "Baloo";
   src: url("./assets/fonts/Baloo.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CoHeadline";
+  src: url("./assets/fonts/CoHeadline.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }

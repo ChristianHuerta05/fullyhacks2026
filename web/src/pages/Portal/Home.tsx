@@ -1,29 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import QRCode from "qrcode";
 
 const TODO_ITEMS = [
-  { id: 1, label: "Join the Discord server", defaultChecked: false },
-  { id: 2, label: "Fill out your profile information", defaultChecked: false },
-  { id: 3, label: "Find teammates in #team-finding", defaultChecked: false },
-  { id: 4, label: "Review the hackathon rules & code of conduct", defaultChecked: false },
-  { id: 5, label: "Check the event schedule", defaultChecked: false },
-  { id: 6, label: "Set up your development environment", defaultChecked: false },
-  { id: 7, label: "Brainstorm project ideas", defaultChecked: false },
-  { id: 8, label: "RSVP for the opening ceremony", defaultChecked: false },
+  { label: "Check out the Hacker Guide" },
+  { label: "Join the FullyHacks Discord" },
+  { label: "Find teammates in #team-finding" },
+  { label: "Review the hackathon rules & code of conduct" },
+  { label: "Check the event schedule" },
+  { label: "Brainstorm project ideas" },
 ];
 
-export function Home() {
-  const [showBanner, setShowBanner] = useState(true);
-  const [showQR, setShowQR] = useState(false);
-  const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
+interface HomeProps {
+  uid: string;
+  firstName: string;
+  lastName: string;
+}
 
-  const toggleItem = (id: number) => {
-    setCheckedItems((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+export function Home({ uid, firstName, lastName }: HomeProps) {
+  const [showBanner, setShowBanner] = useState(() => {
+    return localStorage.getItem("fullyhacks-banner-dismissed") !== "true";
+  });
+  const [showQR, setShowQR] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const dismissBanner = () => {
+    setShowBanner(false);
+    localStorage.setItem("fullyhacks-banner-dismissed", "true");
   };
+
+  useEffect(() => {
+    if (showQR && canvasRef.current) {
+      const qrData = JSON.stringify({
+        uid,
+        firstName,
+        lastName,
+      });
+      QRCode.toCanvas(canvasRef.current, qrData, {
+        width: 256,
+        margin: 2,
+        color: {
+          dark: "#246B8A",
+          light: "#FFFFFF",
+        },
+      });
+    }
+  }, [showQR, uid, firstName, lastName]);
 
   return (
     <div className="w-full h-full px-6 md:px-20 pt-10 md:pt-20 pb-20 flex flex-col gap-8 items-center md:items-start">
@@ -42,7 +64,7 @@ export function Home() {
         >
           <div className="flex flex-col gap-2">
             <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-bold">
-              🎉 Congratulations!
+              Congratulations!
             </h2>
             <p className="font-baloo text-sm md:text-base text-[#EFEFEF]/80">
               You have been accepted to FullyHacks 2026! This is your hacker portal. Check back here
@@ -50,7 +72,7 @@ export function Home() {
             </p>
           </div>
           <button
-            onClick={() => setShowBanner(false)}
+            onClick={dismissBanner}
             className="font-baloo text-sm px-4 py-2 rounded-xl border-2 border-[#EFEFEF]/50 text-[#EFEFEF]/70 hover:bg-[#EFEFEF]/10 transition-colors cursor-pointer whitespace-nowrap self-end sm:self-center"
           >
             Dismiss
@@ -76,82 +98,49 @@ export function Home() {
       >
         <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-bold">To Do</h2>
         <ul className="flex flex-col gap-3">
-          {TODO_ITEMS.map((item) => (
-            <li key={item.id} className="flex items-center gap-3">
-              <button
-                onClick={() => toggleItem(item.id)}
-                className="w-6 h-6 min-w-6 rounded-md border-2 border-[#72D6E6] flex items-center justify-center cursor-pointer transition-colors"
-                style={{
-                  background: checkedItems.has(item.id) ? "#72D6E6" : "transparent",
-                }}
-              >
-                {checkedItems.has(item.id) && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M2 7L5.5 10.5L12 3.5"
-                      stroke="#246B8A"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </button>
-              <span
-                className={`font-baloo text-sm md:text-base transition-all ${
-                  checkedItems.has(item.id) ? "text-[#EFEFEF]/40 line-through" : "text-[#EFEFEF]/90"
-                }`}
-              >
+          {TODO_ITEMS.map((item, index) => (
+            <li key={index} className="flex items-center gap-3">
+              <span className="text-[#72D6E6] text-lg">•</span>
+              <span className="font-baloo text-sm md:text-base text-[#EFEFEF]/90">
                 {item.label}
               </span>
             </li>
           ))}
         </ul>
-        <p className="font-baloo text-xs text-[#EFEFEF]/40 mt-2">
-          {checkedItems.size} / {TODO_ITEMS.length} completed
-        </p>
       </div>
 
-      {showQR && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0, 0, 0, 0.8)" }}
-          onClick={() => setShowQR(false)}
-        >
+      {showQR &&
+        createPortal(
           <div
-            className="relative bg-white rounded-3xl p-8 md:p-12 flex flex-col items-center gap-6 max-w-sm w-full"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+            style={{ background: "rgba(0, 0, 0, 0.8)" }}
+            onClick={() => setShowQR(false)}
           >
-            <button
-              onClick={() => setShowQR(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl cursor-pointer font-bold leading-none"
-            >
-              ✕
-            </button>
-
-            <h2 className="font-baloo text-2xl text-[#246B8A] font-bold">Your QR Code</h2>
-
             <div
-              className="w-56 h-56 md:w-64 md:h-64 rounded-2xl flex items-center justify-center"
-              style={{ background: "#E5E7EB" }}
+              className="relative bg-white rounded-3xl p-8 md:p-12 flex flex-col items-center gap-6 max-w-sm w-full"
+              onClick={(e) => e.stopPropagation()}
             >
-              <p className="font-baloo text-base text-gray-400 text-center px-4">
-                QR Code Placeholder
-              </p>
-            </div>
+              <button
+                onClick={() => setShowQR(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl cursor-pointer font-bold leading-none"
+              >
+                ✕
+              </button>
 
-            <p className="font-baloo text-sm text-gray-500 text-center">
-              Show this at check-in to get your badge
-            </p>
-          </div>
-        </div>
-      )}
+              <h2 className="font-baloo text-2xl text-[#246B8A] font-bold">Your QR Code</h2>
+
+              <canvas ref={canvasRef} className="rounded-2xl" />
+
+              <div className="flex flex-col items-center gap-1">
+                <p className="font-baloo text-lg text-[#246B8A] font-semibold">
+                  {firstName} {lastName}
+                </p>
+                <p className="font-baloo text-xs text-gray-400 select-all">{uid}</p>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
