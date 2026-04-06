@@ -65,8 +65,7 @@ function FullypackCard({
   url: string;
 }) {
   return (
-    <div className="aspect-square w-full relative">
-      <div className="absolute inset-0 flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-between overflow-hidden">
+    <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-between min-h-[260px] min-w-[260px]">
         <div className="flex flex-col gap-1 sm:gap-2">
           <h3 className="font-baloo text-xs sm:text-base md:text-lg lg:text-xl text-[#BEF3FC] leading-tight">
             {name}
@@ -100,7 +99,6 @@ function FullypackCard({
             </span>
           </a>
         </div>
-      </div>
     </div>
   );
 }
@@ -116,7 +114,7 @@ export function Fullypacks() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">
+      <div className="grid gap-2 sm:gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
         {FULLYPACKS.map((pack) => (
           <FullypackCard
             key={pack.name}
