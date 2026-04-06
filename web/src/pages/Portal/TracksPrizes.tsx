@@ -41,13 +41,11 @@ const TRACKS = [
   },
   {
     title: "Esri's Sponsored Track",
-    description:
-      "More info coming soon...",
+    description: "More info coming soon...",
   },
   {
     title: "MLH Track",
-    description:
-      "More info coming soon...",
+    description: "More info coming soon...",
   },
 ];
 
@@ -75,7 +73,10 @@ export function TracksPrizes() {
 
       <div className="flex flex-col gap-4">
         <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-semibold">Tracks</h2>
-        <div className="grid gap-2 sm:gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+        <div
+          className="grid gap-2 sm:gap-4"
+          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}
+        >
           {TRACKS.map((track) => (
             <TrackCard key={track.title} title={track.title} description={track.description} />
           ))}
