@@ -54,7 +54,7 @@ const faqList: FAQType[] = [
   {
     question: "When will I know my application status?",
     answer:
-      "All applications will be reviewed on a rolling basis until April 3rd, you can check application status in your user portal.",
+      "All applications will be reviewed on a rolling basis until April 5th, you can check application status in your user portal.",
   },
   {
     question: "What is the MLH Code of Conduct?",
