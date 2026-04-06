@@ -164,7 +164,7 @@ export function UserPortalPage({
         </ul>
         <div className="bg-[#72D6E6] h-[5px] w-full mt-6 rounded-full" />
         <a
-          href="https://acmcsuf.com/"
+          href="https://discord.gg/N6yykApS6h"
           className="font-baloo text-2xl mt-6 flex flex-row gap-5 items-center self-center"
         >
           <img src={discordLogo} className="w-[60px]" />
