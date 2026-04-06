@@ -65,8 +65,7 @@ function FullypackCard({
   url: string;
 }) {
   return (
-    <div className="aspect-square w-full relative">
-      <div className="absolute inset-0 flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-between overflow-hidden">
+    <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-between min-h-[260px] min-w-[260px]">
         <div className="flex flex-col gap-1 sm:gap-2">
           <h3 className="font-baloo text-xs sm:text-base md:text-lg lg:text-xl text-[#BEF3FC] leading-tight">
             {name}
@@ -100,7 +99,6 @@ function FullypackCard({
             </span>
           </a>
         </div>
-      </div>
     </div>
   );
 }

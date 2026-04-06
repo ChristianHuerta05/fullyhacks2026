@@ -133,7 +133,7 @@ export function UserPortalPage({
           <div className="bg-[#72D6E6] h-[4px] w-48 mt-4 rounded-full" />
 
           <a
-            href="https://acmcsuf.com/"
+            href="https://discord.gg/N6yykApS6h"
             className="font-baloo text-xl mt-2 flex flex-row gap-3 items-center"
           >
             <img src={discordLogo} className="w-[40px]" />

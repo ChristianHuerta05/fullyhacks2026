@@ -39,19 +39,27 @@ const TRACKS = [
     description:
       "Prioritize the human at the other side of the screen by designing a seamless, beautiful, and intuitive interface that makes navigation feel like second nature.",
   },
+  {
+    title: "Esri's Sponsored Track",
+    description:
+      "More info coming soon...",
+  },
+  {
+    title: "MLH Track",
+    description:
+      "More info coming soon...",
+  },
 ];
 
 function TrackCard({ title, description }: { title: string; description: string }) {
   return (
-    <div className="aspect-square w-full relative">
-      <div className="absolute inset-0 flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] overflow-hidden">
-        <h3 className="font-baloo text-sm sm:text-xl md:text-2xl lg:text-2xl text-[#EFEFEF] text-center leading-tight">
-          {title}
-        </h3>
-        <p className="font-coheadline text-[0.6rem] leading-tight sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
-          {description}
-        </p>
-      </div>
+    <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] min-h-[260px] min-w-[260px]">
+      <h3 className="font-baloo text-sm sm:text-xl md:text-2xl lg:text-2xl text-[#EFEFEF] text-center leading-tight">
+        {title}
+      </h3>
+      <p className="font-coheadline text-[0.6rem] leading-tight sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
+        {description}
+      </p>
     </div>
   );
 }
