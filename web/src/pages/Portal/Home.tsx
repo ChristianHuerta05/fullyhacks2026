@@ -3,10 +3,13 @@ import { createPortal } from "react-dom";
 import QRCode from "qrcode";
 
 const TODO_ITEMS = [
-  { label: "Join the FullyHacks Discord" },
+  { label: "Join the FullyHacks Discord", link: "https://discord.gg/N6yykApS6h" },
   { label: "Find teammates in #team-finding" },
-  { label: "Review the hackathon rules & code of conduct" },
-  { label: "Check the event schedule" },
+  {
+    label: "Review the hackathon rules & code of conduct",
+    link: "https://github.com/MLH/mlh-policies/tree/main",
+  },
+  { label: "Check out the event schedule" },
   { label: "Brainstorm project ideas" },
 ];
 
@@ -101,7 +104,13 @@ export function Home({ uid, firstName, lastName }: HomeProps) {
             <li key={index} className="flex items-center gap-3">
               <span className="text-[#72D6E6] text-lg">•</span>
               <span className="font-baloo text-sm md:text-base text-[#EFEFEF]/90">
-                {item.label}
+                {item.link ? (
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    {item.label}
+                  </a>
+                ) : (
+                  item.label
+                )}
               </span>
             </li>
           ))}
