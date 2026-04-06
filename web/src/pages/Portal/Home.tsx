@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import QRCode from "qrcode";
 
 const TODO_ITEMS = [
-  { label: "Check out the Hacker Guide" },
   { label: "Join the FullyHacks Discord" },
   { label: "Find teammates in #team-finding" },
   { label: "Review the hackathon rules & code of conduct" },
