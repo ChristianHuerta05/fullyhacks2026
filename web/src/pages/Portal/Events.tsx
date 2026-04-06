@@ -53,7 +53,12 @@ const SCHEDULE: ScheduleDay[] = [
     events: [
       { time: "4:00 PM", type: "checkin", title: "Check-In", location: "SGMH Lobby" },
       { time: "5:00 PM", type: "ceremony", title: "Opening Ceremony", location: "SGMH 1502" },
-      { time: "6:00 PM", type: "activity", title: "Hacking Begins", location: "Hacking Rooms: CS 101, CS 102B, CS 104, CS 200, CS 202, CS 300, CS 401, CS 408" },
+      {
+        time: "6:00 PM",
+        type: "activity",
+        title: "Hacking Begins",
+        location: "Hacking Rooms: CS 101, CS 102B, CS 104, CS 200, CS 202, CS 300, CS 401, CS 408",
+      },
       { time: "6:15 PM", type: "activity", title: "Team Forming Event", location: "ECS Quad" },
       { time: "7:45 PM", type: "food", title: "Dinner", location: "ECS Quad" },
       { time: "8:00 PM", type: "workshop", title: "Workshop", location: "CS 401", note: "TBD" },
@@ -89,7 +94,12 @@ const SCHEDULE: ScheduleDay[] = [
         title: "Devpost Submission Deadline",
         note: "Check submission rules & forms. You may continue to work after this time, but your project must be submitted by 4 PM to be judged.",
       },
-      { time: "6:00 PM", type: "activity", title: "Hacking Ends", location: "Hacking Rooms: CS 101, CS 102B, CS 104, CS 200, CS 202, CS 300, CS 401, CS 408" },
+      {
+        time: "6:00 PM",
+        type: "activity",
+        title: "Hacking Ends",
+        location: "Hacking Rooms: CS 101, CS 102B, CS 104, CS 200, CS 202, CS 300, CS 401, CS 408",
+      },
       {
         time: "6:00 PM",
         type: "judging",
