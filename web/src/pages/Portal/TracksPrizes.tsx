@@ -43,15 +43,13 @@ const TRACKS = [
 
 function TrackCard({ title, description }: { title: string; description: string }) {
   return (
-    <div className="aspect-square w-full relative">
-      <div className="absolute inset-0 flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] overflow-hidden">
-        <h3 className="font-baloo text-sm sm:text-xl md:text-2xl lg:text-2xl text-[#EFEFEF] text-center leading-tight">
-          {title}
-        </h3>
-        <p className="font-coheadline text-[0.6rem] leading-tight sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
-          {description}
-        </p>
-      </div>
+    <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] min-h-[260px] min-w-[260px]">
+      <h3 className="font-baloo text-sm sm:text-xl md:text-2xl lg:text-2xl text-[#EFEFEF] text-center leading-tight">
+        {title}
+      </h3>
+      <p className="font-coheadline text-[0.6rem] leading-tight sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
+        {description}
+      </p>
     </div>
   );
 }
@@ -67,7 +65,7 @@ export function TracksPrizes() {
 
       <div className="flex flex-col gap-4">
         <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-semibold">Tracks</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-4">
+        <div className="grid gap-2 sm:gap-4" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
           {TRACKS.map((track) => (
             <TrackCard key={track.title} title={track.title} description={track.description} />
           ))}
