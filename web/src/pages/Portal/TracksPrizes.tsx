@@ -39,6 +39,16 @@ const TRACKS = [
     description:
       "Prioritize the human at the other side of the screen by designing a seamless, beautiful, and intuitive interface that makes navigation feel like second nature.",
   },
+  {
+    title: "Esri's Sponsored Track",
+    description:
+      "More info coming soon...",
+  },
+  {
+    title: "MLH Track",
+    description:
+      "More info coming soon...",
+  },
 ];
 
 function TrackCard({ title, description }: { title: string; description: string }) {
