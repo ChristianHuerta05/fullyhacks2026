@@ -146,11 +146,6 @@ const teamData: TeamData = {
       role: "Operations",
       photo: "/organizers/operations/BrandonParra.webp",
     },
-    {
-      name: "Yves Velasquez Vega",
-      role: "Operations",
-      photo: "/organizers/operations/YvesVelasquezVega.webp",
-    },
     { name: "Jacob Sii", role: "Operations", photo: "/organizers/operations/JacobSii.webp" },
     {
       name: "Cyril Youssef",
