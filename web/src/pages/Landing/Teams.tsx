@@ -152,6 +152,41 @@ const teamData: TeamData = {
       role: "Operations",
       photo: "/organizers/operations/CyrilYoussef.webp",
     },
+    {
+      name: "Taymas",
+      role: "Operations",
+      photo: "/organizers/operations/Taymas.webp",
+    },
+    {
+      name: "Celine",
+      role: "Operations",
+      photo: "/organizers/operations/Celine.webp",
+    },
+    {
+      name: "Kunj",
+      role: "Operations",
+      photo: "/organizers/operations/Kunj.webp",
+    },
+    {
+      name: "Iracema",
+      role: "Operations",
+      photo: "/organizers/operations/Iracema.webp",
+    },
+    {
+      name: "Cassandra",
+      role: "Operations",
+      photo: "/organizers/operations/Cassandra.webp",
+    },
+    {
+      name: "LordAwesome",
+      role: "Operations",
+      photo: "/organizers/operations/LordAwesome.webp",
+    },
+    {
+      name: "Tracy",
+      role: "Operations",
+      photo: "/organizers/operations/Tracy.webp",
+    },
   ],
 };
 
