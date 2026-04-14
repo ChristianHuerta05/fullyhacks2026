@@ -98,6 +98,87 @@ export function Home({ uid, firstName, lastName }: HomeProps) {
           boxShadow: "10px 10px 0px rgba(0, 0, 0, 0.25)",
         }}
       >
+        <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-bold">
+          Event Location & Parking
+        </h2>
+        <ul className="flex flex-col gap-4">
+          <li className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <span className="font-baloo text-base md:text-lg font-bold text-[#EFEFEF]">
+                CSUF Address:
+              </span>
+              <span className="font-baloo text-sm md:text-base hover:text-[#72D6E6] underline">
+                <a
+                  href="https://maps.app.goo.gl/ubCjexiBagyiwmRd6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  800 N State College Blvd, Fullerton, CA 92831
+                </a>
+              </span>
+            </div>
+          </li>
+          <li className="flex flex-col gap-1">
+            <div className="flex flex-col gap-3">
+              <span className="font-baloo text-base md:text-lg font-bold text-[#EFEFEF]">
+                Event Buildings:
+              </span>
+            </div>
+            <div className="font-baloo text-sm md:text-base text-[#EFEFEF]/90">
+              <p>
+                <b>Mihaylo Hall (SGMH)</b> for Check-in and Opening/Closing Ceremonies
+              </p>
+              <p>
+                <b>Computer Science Building (CS)</b> for Hacking/Workshops/Judging
+              </p>
+            </div>
+          </li>
+          <li className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <span className="font-baloo text-base md:text-lg font-bold text-[#EFEFEF]">
+                Parking{" "}
+                <span className="text-[#72D6E6] text-sm mt-1">
+                  (<b>Free</b> on weekends)
+                </span>
+              </span>
+            </div>
+            <div className="font-baloo text-sm md:text-base text-[#EFEFEF]/90">
+              <p>
+                Park in lots <b>E1</b>, <b>Eastside North Parking Structure</b> (ENPS), or{" "}
+                <b>Eastside South Parking Structure</b> (ESPS). Reference the map below for lot
+                locations.
+              </p>
+            </div>
+          </li>
+          <li className="flex flex-col gap-1">
+            <div className="flex items-center gap-3">
+              <span className="font-baloo text-base md:text-lg font-bold text-[#EFEFEF]">
+                Campus Map
+              </span>
+            </div>
+            <div className="font-baloo text-sm md:text-base text-[#EFEFEF]/90">
+              <span className="font-baloo text-sm md:text-base hover:text-[#72D6E6] underline">
+                <a
+                  href="https://parking.fullerton.edu/_resources/pdfs/campus-parking-map.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Access the CSUF Campus Map here!{" "}
+                </a>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div
+        className="w-full max-w-2xl rounded-2xl p-6 md:p-8 flex flex-col gap-4"
+        style={{
+          background: "rgba(53, 120, 167, 0.5)",
+          border: "3px solid #EFEFEF",
+          boxShadow: "10px 10px 0px rgba(0, 0, 0, 0.25)",
+        }}
+      >
         <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-bold">To Do</h2>
         <ul className="flex flex-col gap-3">
           {TODO_ITEMS.map((item, index) => (
@@ -105,9 +186,11 @@ export function Home({ uid, firstName, lastName }: HomeProps) {
               <span className="text-[#72D6E6] text-lg">•</span>
               <span className="font-baloo text-sm md:text-base text-[#EFEFEF]/90">
                 {item.link ? (
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    {item.label}
-                  </a>
+                  <span className="font-baloo text-sm md:text-base hover:text-[#72D6E6] underline">
+                    <a href={item.link} target="_blank" rel="noopener noreferrer">
+                      {item.label}
+                    </a>
+                  </span>
                 ) : (
                   item.label
                 )}
