@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase";
 import bubblesL from "../../assets/PortalPage/Shared/bubblesL.svg";
 import bubblesR from "../../assets/PortalPage/Shared/bubblesR.svg";
 import plant from "../../assets/PortalPage/Shared/plant.svg";
@@ -10,6 +12,7 @@ import { Events } from "./Events";
 import { TracksPrizes } from "./TracksPrizes";
 import { Fullypacks } from "./Fullypacks";
 import { FAQ } from "./FAQ";
+import { OrganizerTools } from "./OrganizerTools";
 
 interface UserPortalPageProps {
   displayName: string;
@@ -36,6 +39,13 @@ export function UserPortalPage({
 }: UserPortalPageProps) {
   const [currentPage, setCurrentPage] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isOperations, setIsOperations] = useState(false);
+
+  useEffect(() => {
+    getDoc(doc(db, "operations", uid)).then((snap) => {
+      setIsOperations(snap.exists());
+    });
+  }, [uid]);
 
   const navigateTo = (page: string) => {
     setCurrentPage(page);
@@ -121,6 +131,14 @@ export function UserPortalPage({
                 {item.label}
               </li>
             ))}
+            {isOperations && (
+              <li
+                onClick={() => navigateTo("organizer")}
+                className={`cursor-pointer transition-colors font-bold ${currentPage === "organizer" ? "text-[#F59E0B]" : "text-[#F59E0B]/70"}`}
+              >
+                organizer tools
+              </li>
+            )}
           </ul>
 
           <button
@@ -158,6 +176,14 @@ export function UserPortalPage({
               {item.label}
             </li>
           ))}
+          {isOperations && (
+            <li
+              onClick={() => navigateTo("organizer")}
+              className={`cursor-pointer transition-colors font-bold text-3xl ${currentPage === "organizer" ? "text-[#F59E0B]" : "text-[#F59E0B]/70 hover:text-[#F59E0B]"}`}
+            >
+              organizer
+            </li>
+          )}
           <button className="font-baloo text-3xl cursor-pointer" onClick={onSignOut}>
             Sign Out
           </button>
@@ -178,6 +204,7 @@ export function UserPortalPage({
         {currentPage === "tracks and prizes" && <TracksPrizes />}
         {currentPage === "fullypacks" && <Fullypacks />}
         {currentPage === "faq" && <FAQ />}
+        {currentPage === "organizer" && isOperations && <OrganizerTools />}
       </div>
     </div>
   );
