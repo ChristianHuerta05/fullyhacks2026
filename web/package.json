@@ -20,6 +20,7 @@
     "@types/qrcode": "^1.5.6",
     "firebase": "^12.9.0",
     "framer-motion": "^12.33.0",
+    "html5-qrcode": "^2.3.8",
     "matter-js": "^0.20.0",
     "qrcode": "^1.5.4",
     "react": "^19.2.0",
