@@ -146,16 +146,46 @@ const teamData: TeamData = {
       role: "Operations",
       photo: "/organizers/operations/BrandonParra.webp",
     },
-    {
-      name: "Yves Velasquez Vega",
-      role: "Operations",
-      photo: "/organizers/operations/YvesVelasquezVega.webp",
-    },
     { name: "Jacob Sii", role: "Operations", photo: "/organizers/operations/JacobSii.webp" },
     {
       name: "Cyril Youssef",
       role: "Operations",
       photo: "/organizers/operations/CyrilYoussef.webp",
+    },
+    {
+      name: "Taymas Nguyen",
+      role: "Operations",
+      photo: "/organizers/operations/TaymasNguyen.webp",
+    },
+    {
+      name: "Celine Truong",
+      role: "Operations",
+      photo: "/organizers/operations/CelineTruong.webp",
+    },
+    {
+      name: "Kunj Patel",
+      role: "Operations",
+      photo: "/organizers/operations/KunjPatel.webp",
+    },
+    {
+      name: "Iracema Cobian",
+      role: "Operations",
+      photo: "/organizers/operations/IracemaCobian.webp",
+    },
+    {
+      name: "Cassandra Santillano",
+      role: "Operations",
+      photo: "/organizers/operations/CassandraSantillano.webp",
+    },
+    {
+      name: "Alyaan Mir",
+      role: "Operations",
+      photo: "/organizers/operations/AlyaanMir.webp",
+    },
+    {
+      name: "Tracy Tran",
+      role: "Operations",
+      photo: "/organizers/operations/TracyTran.webp",
     },
   ],
 };
