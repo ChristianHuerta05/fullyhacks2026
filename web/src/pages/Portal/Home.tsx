@@ -4,6 +4,10 @@ import QRCode from "qrcode";
 
 const TODO_ITEMS = [
   { label: "Join the FullyHacks Discord", link: "https://discord.gg/N6yykApS6h" },
+  {
+    label: "Claim your Free $100 Credits from Neon",
+    link: "https://console.neon.tech/app/?promo=fully-hacks-2026-with-neon",
+  },
   { label: "Find teammates in #team-finding" },
   {
     label: "Review the hackathon rules & code of conduct",
