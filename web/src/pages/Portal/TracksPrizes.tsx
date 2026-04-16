@@ -35,7 +35,7 @@ const TRACKS = [
   {
     title: "Best Beginner Project",
     description:
-      "Jump into the deep end for your first hackathon by focusing on learning new skills, documenting your journey, and shipping a functional foundation. (Team must be >50% first-time hackers)",
+      "Jump into the deep end for your first hackathon by focusing on learning new skills, documenting your journey, and shipping a functional foundation. (Team must be more than 51% first-time hackers)",
   },
   {
     title: "Most Technical",
@@ -114,11 +114,11 @@ const prizes = [
 
 function TrackCard({ title, description }: { title: string; description: string }) {
   return (
-    <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] min-h-[260px] min-w-[260px]">
-      <h3 className="font-baloo text-sm sm:text-xl md:text-2xl lg:text-2xl text-[#EFEFEF] text-center leading-tight">
+    <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] min-h-[260px] min-w-[200px]">
+      <h3 className="font-baloo text-2xl text-[#EFEFEF] text-center leading-tight">
         {title}
       </h3>
-      <p className="font-coheadline text-[0.6rem] leading-tight sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
+      <p className="font-coheadline leading-tight text-base sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
         {description}
       </p>
     </div>
@@ -128,11 +128,11 @@ function TrackCard({ title, description }: { title: string; description: string 
 function PrizeCard({ prize, title, track }: { prize: string; title: string; track: string }) {
   return (
     <div className="flex flex-col items-center w-full shrink-0 px-4 overflow-hidden">
-      <div className="relative w-full max-w-2xl aspect-[16/10] mx-auto">
+      <div className="relative w-full max-w-2xl aspect-16/10 mx-auto">
         <img
           src={prizebox}
           alt="Prize box"
-          className="absolute -inset-x-8 w-full h-full object-fill"
+          className="absolute -inset-x-8 sm:-inset-x-10 w-full h-full object-fill"
         />
         <div className="absolute inset-0 flex items-center justify-center pl-[3%] pt-[15%]">
           <img
