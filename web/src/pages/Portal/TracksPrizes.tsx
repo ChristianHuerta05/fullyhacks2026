@@ -115,9 +115,7 @@ const prizes = [
 function TrackCard({ title, description }: { title: string; description: string }) {
   return (
     <div className="flex flex-col gap-1 sm:gap-3 bg-[#2162B1]/40 rounded-lg p-2 sm:p-5 justify-center items-center border-2 border-[#BEF3FC] min-h-[260px] min-w-[200px]">
-      <h3 className="font-baloo text-2xl text-[#EFEFEF] text-center leading-tight">
-        {title}
-      </h3>
+      <h3 className="font-baloo text-2xl text-[#EFEFEF] text-center leading-tight">{title}</h3>
       <p className="font-coheadline leading-tight text-base sm:text-sm md:text-base lg:text-base text-center sm:leading-snug">
         {description}
       </p>
