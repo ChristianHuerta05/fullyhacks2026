@@ -1,5 +1,5 @@
 import prizebox from "../../assets/PortalPage/Shared/prizebox.svg";
-import arrow from "../../assets/PortalPage/Shared/nextarrow.svg";
+import arrow from "../../assets/PortalPage/Shared/NextArrow.svg";
 import { useState } from "react";
 
 const TRACKS = [
