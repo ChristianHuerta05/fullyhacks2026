@@ -4,24 +4,28 @@ import { useState } from "react";
 
 const TRACKS = [
   {
-    title: "Best Entertainment",
+    title: "Entertainment",
     description:
       "Build a project that captivates your audience through immersive gaming, creative digital media, or a unique interactive storytelling experience.",
+    main: true,
   },
   {
-    title: "Best Health & Wellness",
+    title: "Health & Wellness",
     description:
       "Develop a solution that empowers individuals to improve their lives, focusing on physical fitness, mental well-being, or medical accessibility.",
+    main: true,
   },
   {
-    title: "Best Education & Social Justice",
+    title: "Education & Social Justice",
     description:
       "Create a tool that breaks down barriers to learning or directly addresses systemic inequities to champion a fairer society.",
+    main: true,
   },
   {
-    title: "Best Social Impact & Sustainability",
+    title: "Social Impact & Sustainability",
     description:
       "Engineer a hack that tackles urgent global challenges, from protecting our environment to driving meaningful change in your local community.",
+    main: true,
   },
   {
     title: "Best Use of AI/ML",
@@ -44,11 +48,16 @@ const TRACKS = [
       "Prioritize the human at the other side of the screen by designing a seamless, beautiful, and intuitive interface that makes navigation feel like second nature.",
   },
   {
-    title: "Esri's Sponsored Track",
+    title: "Best Use of ArcGIS (Esri's Sponsored Track)",
+    description:
+      "Build a project that effectively, creatively, and comprehensively leverages Esri’s ArcGIS platform to solve real-world problems.",
+  },
+  {
+    title: "MLH Track(s)",
     description: "More info coming soon...",
   },
   {
-    title: "MLH Track",
+    title: "Human Delta Track",
     description: "More info coming soon...",
   },
 ];
@@ -158,28 +167,32 @@ export function TracksPrizes() {
         <h1 className="font-nemo text-4xl md:text-6xl lg:text-7xl text-[#BEF3FC]">
           tracks and prizes
         </h1>
+        <p className="font-coheadline text-sm sm:text-base md:text-lg text-[#EFEFEF]/60">
+          Hackers have to build their projects around one of the 4 main tracks: Entertainment,
+          Health/Wellness, Education/Social Justice, and Social Impact/Sustainability. There are
+          also additional 4 special tracks that hackers can win, as well as sponsor tracks!
+        </p>
       </div>
 
       <div className="flex flex-col gap-4">
-        <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-semibold">Tracks</h2>
+        <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-semibold">Main Tracks</h2>
         <div
           className="grid gap-2 sm:gap-4"
           style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}
         >
-          {TRACKS.map((track) => (
+          {TRACKS.filter((track) => track.main).map((track) => (
             <TrackCard key={track.title} title={track.title} description={track.description} />
           ))}
         </div>
       </div>
 
       <div className="flex flex-col gap-4">
-        <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-semibold">Prizes</h2>
+        <h2 className="font-baloo text-xl md:text-2xl text-[#EFEFEF] font-semibold">
+          Additional Tracks
+        </h2>
         <div
-          className="rounded-2xl p-5"
-          style={{
-            background: "rgba(53, 120, 167, 0.3)",
-            border: "1px solid rgba(239, 239, 239, 0.2)",
-          }}
+          className="grid gap-2 sm:gap-4"
+          style={{ gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}
         >
           {TRACKS.filter((track) => !track.main).map((track) => (
             <TrackCard key={track.title} title={track.title} description={track.description} />
