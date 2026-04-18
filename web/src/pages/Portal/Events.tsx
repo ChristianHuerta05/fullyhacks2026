@@ -137,7 +137,7 @@ const SCHEDULE: ScheduleDay[] = [
         time: "5:00 PM",
         type: "activity",
         title: "Hacking Ends - Devpost Submission Deadline",
-        note: "Check submission rules & forms. You may continue to work after this time, but your project must be submitted by 4 PM to be judged.",
+        note: "Grab Dinner and head to your assigned room/table when announced for presentation.",
       },
       { time: "5:00 PM", type: "food", title: "Dinner", location: "ECS Quad" },
       {
