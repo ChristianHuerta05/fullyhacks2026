@@ -64,9 +64,9 @@ const SCHEDULE: ScheduleDay[] = [
       {
         time: "8PM-9PM",
         type: "workshop",
-        title: "Esri Workshop",
+        title: "Intro to ArcGIS for Hackathon Projects",
         location: "CS 102B",
-        note: "More info TBA",
+        note: "This beginner-friendly workshop is designed for teams who want to incorporate maps, location data, and spatial analysis into their hackathon projects. We'll introduce ArcGIS tools available to CSUF students—such as ArcGIS Online and ArcGIS Pro—and show how they can be used to quickly add location intelligence to web apps, data visualizations, and storytelling projects. Attendees will learn how to access ArcGIS resources, explore datasets, create interactive maps, and brainstorm practical ways to apply GIS to real-world problems commonly tackled at hackathons. The session will include a short demo and time for questions, with a focus on helping teams get started and confidently use ArcGIS in their hackathon projects.",
       },
       {
         time: "9PM-10PM",
@@ -144,7 +144,7 @@ const SCHEDULE: ScheduleDay[] = [
         time: "6-8 PM",
         type: "judging",
         title: "Judging/Presentation",
-        location: "CS 104, 401, 300, 401, 408",
+        location: "CS 104, 300, 401, 408",
         note: "See Discord for your Assigned Room",
       },
       { time: "8:30-9:30PM", type: "ceremony", title: "Closing Ceremony", location: "SGMH 1502" },
