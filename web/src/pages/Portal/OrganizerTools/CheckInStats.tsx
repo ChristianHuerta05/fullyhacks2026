@@ -29,9 +29,22 @@ export function CheckInStats({ participants, onRefresh, refreshing }: CheckInSta
     return acc;
   }, {});
 
+  const foodCheckedInCounts = participants
+    .filter((p) => !!p.checkedIn)
+    .reduce<Record<string, number>>((acc, p) => {
+      const key = p.foodChoice?.toLowerCase() ?? "none";
+      acc[key] = (acc[key] ?? 0) + 1;
+      return acc;
+    }, {});
+
   const foodEntries = Object.entries(foodCounts)
-    .map(([key, count]) => ({ key, label: FOOD_LABELS[key] ?? key, count }))
-    .sort((a, b) => b.count - a.count);
+    .map(([key, count]) => ({
+      key,
+      label: FOOD_LABELS[key] ?? key,
+      count,
+      checkedInCount: foodCheckedInCounts[key] ?? 0,
+    }))
+    .sort((a, b) => b.checkedInCount - a.checkedInCount);
 
   return (
     <div className="flex flex-col gap-6">
@@ -139,25 +152,39 @@ export function CheckInStats({ participants, onRefresh, refreshing }: CheckInSta
                 Dietary Preferences
               </p>
               <div
-                className="rounded-xl p-4 flex flex-col gap-2"
+                className="rounded-xl p-4 flex flex-col gap-3"
                 style={{
                   background: "rgba(53, 120, 167, 0.25)",
                   border: "1.5px solid rgba(239,239,239,0.15)",
                 }}
               >
-                {foodEntries.map(({ key, label, count }) => {
-                  const pct = Math.round((count / total) * 100);
+                {/* column headers */}
+                <div className="flex items-center gap-3">
+                  <p className="font-baloo text-[#EFEFEF]/40 text-xs w-32 shrink-0" />
+                  <p className="flex-1 font-baloo text-[#EFEFEF]/40 text-xs">
+                    of {checkedInCount} checked in
+                  </p>
+                  <p className="font-baloo text-[#EFEFEF]/40 text-xs w-16 text-right">/ accepted</p>
+                </div>
+                {foodEntries.map(({ key, label, count, checkedInCount: foodCheckedIn }) => {
+                  const pctOfCheckedIn =
+                    checkedInCount > 0 ? Math.round((foodCheckedIn / checkedInCount) * 100) : 0;
                   return (
                     <div key={key} className="flex items-center gap-3">
                       <p className="font-baloo text-[#EFEFEF]/80 text-sm w-32 shrink-0">{label}</p>
-                      <div className="flex-1 h-2 rounded-full bg-white/10">
-                        <div
-                          className="h-2 rounded-full bg-[#2EB2EF] transition-all duration-500"
-                          style={{ width: `${pct}%` }}
-                        />
+                      <div className="flex-1 flex items-center gap-2">
+                        <div className="flex-1 h-2 rounded-full bg-white/10">
+                          <div
+                            className="h-2 rounded-full bg-[#2EB2EF] transition-all duration-500"
+                            style={{ width: `${pctOfCheckedIn}%` }}
+                          />
+                        </div>
+                        <p className="font-baloo text-[#EFEFEF] text-sm font-bold w-6 text-right">
+                          {foodCheckedIn}
+                        </p>
                       </div>
-                      <p className="font-baloo text-[#EFEFEF] text-sm font-bold w-8 text-right">
-                        {count}
+                      <p className="font-baloo text-[#EFEFEF]/40 text-xs w-16 text-right">
+                        / {count}
                       </p>
                     </div>
                   );
