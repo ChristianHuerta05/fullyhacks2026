@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import type { ParticipantData, CheckInType } from "./OrganizerTools/types";
@@ -13,41 +13,46 @@ type StandardMode = "none" | "scan" | "search";
 export function OrganizerTools() {
   const [participants, setParticipants] = useState<ParticipantData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [standardMode, setStandardMode] = useState<StandardMode>("none");
   const [selectedParticipant, setSelectedParticipant] = useState<ParticipantData | null>(null);
   const [activeTab, setActiveTab] = useState<"tools" | "stats">("tools");
 
-  useEffect(() => {
-    const fetchParticipants = async () => {
-      try {
-        const snap = await getDocs(collection(db, "applications"));
-        const accepted: ParticipantData[] = [];
-        snap.forEach((d) => {
-          const data = d.data();
-          if (data.status === "accepted") {
-            accepted.push({
-              userId: d.id,
-              firstName: data.firstName ?? "",
-              lastName: data.lastName ?? "",
-              email: data.email,
-              school: data.school,
-              major: data.major,
-              foodChoice: data.foodChoice,
-              checkedIn: data.checkedIn ?? false,
-              saturdayDinner: data.saturdayDinner ?? false,
-              sundayBreakfast: data.sundayBreakfast ?? false,
-              sundayLunch: data.sundayLunch ?? false,
-              sundayDinner: data.sundayDinner ?? false,
-            });
-          }
-        });
-        setParticipants(accepted);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchParticipants();
+  const fetchParticipants = useCallback(async (isRefresh = false) => {
+    if (isRefresh) setRefreshing(true);
+    else setLoading(true);
+    try {
+      const snap = await getDocs(collection(db, "applications"));
+      const accepted: ParticipantData[] = [];
+      snap.forEach((d) => {
+        const data = d.data();
+        if (data.status === "accepted") {
+          accepted.push({
+            userId: d.id,
+            firstName: data.firstName ?? "",
+            lastName: data.lastName ?? "",
+            email: data.email,
+            school: data.school,
+            major: data.major,
+            foodChoice: data.foodChoice,
+            checkedIn: data.checkedIn ?? false,
+            saturdayDinner: data.saturdayDinner ?? false,
+            sundayBreakfast: data.sundayBreakfast ?? false,
+            sundayLunch: data.sundayLunch ?? false,
+            sundayDinner: data.sundayDinner ?? false,
+          });
+        }
+      });
+      setParticipants(accepted);
+    } finally {
+      if (isRefresh) setRefreshing(false);
+      else setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchParticipants();
+  }, [fetchParticipants]);
 
   const handleCheckIn = async (userId: string, type: CheckInType) => {
     await updateDoc(doc(db, "applications", userId), { [type]: true });
@@ -114,7 +119,13 @@ export function OrganizerTools() {
         ))}
       </div>
 
-      {activeTab === "stats" && <CheckInStats participants={participants} />}
+      {activeTab === "stats" && (
+        <CheckInStats
+          participants={participants}
+          onRefresh={() => fetchParticipants(true)}
+          refreshing={refreshing}
+        />
+      )}
 
       {activeTab === "tools" && (
         <div className="flex flex-col gap-6">
