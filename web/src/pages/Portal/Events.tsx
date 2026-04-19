@@ -80,7 +80,7 @@ const SCHEDULE: ScheduleDay[] = [
         type: "workshop",
         title: "ChatGPT Lab",
         location: "CS 102B",
-        note: "This is a relaxed, peer-led show-and-tell—not a lecture, ChatGPT Prompt Books and Raffle: 3 ChatGPT Plus subscriptions!"
+        note: "This is a relaxed, peer-led show-and-tell—not a lecture, ChatGPT Prompt Books and Raffle: 3 ChatGPT Plus subscriptions!",
       },
       {
         time: "10:30 PM",
