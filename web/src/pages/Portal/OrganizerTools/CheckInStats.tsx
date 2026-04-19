@@ -44,7 +44,7 @@ export function CheckInStats({ participants, onRefresh, refreshing }: CheckInSta
       count,
       checkedInCount: foodCheckedInCounts[key] ?? 0,
     }))
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => b.checkedInCount - a.checkedInCount);
 
   return (
     <div className="flex flex-col gap-6">
@@ -161,30 +161,30 @@ export function CheckInStats({ participants, onRefresh, refreshing }: CheckInSta
                 {/* column headers */}
                 <div className="flex items-center gap-3">
                   <p className="font-baloo text-[#EFEFEF]/40 text-xs w-32 shrink-0" />
-                  <p className="flex-1 font-baloo text-[#EFEFEF]/40 text-xs text-center">
-                    Checked in
+                  <p className="flex-1 font-baloo text-[#EFEFEF]/40 text-xs">
+                    of {checkedInCount} checked in
                   </p>
-                  <p className="font-baloo text-[#EFEFEF]/40 text-xs w-16 text-right">Total</p>
+                  <p className="font-baloo text-[#EFEFEF]/40 text-xs w-16 text-right">/ accepted</p>
                 </div>
-                {foodEntries.map(({ key, label, count, checkedInCount }) => {
-                  const checkedInPct =
-                    checkedInCount > 0 ? Math.round((checkedInCount / count) * 100) : 0;
+                {foodEntries.map(({ key, label, count, checkedInCount: foodCheckedIn }) => {
+                  const pctOfCheckedIn =
+                    checkedInCount > 0 ? Math.round((foodCheckedIn / checkedInCount) * 100) : 0;
                   return (
                     <div key={key} className="flex items-center gap-3">
                       <p className="font-baloo text-[#EFEFEF]/80 text-sm w-32 shrink-0">{label}</p>
-                      <div className="flex-1 flex flex-col gap-0.5">
+                      <div className="flex-1 flex items-center gap-2">
                         <div className="flex-1 h-2 rounded-full bg-white/10">
                           <div
                             className="h-2 rounded-full bg-[#2EB2EF] transition-all duration-500"
-                            style={{ width: `${checkedInPct}%` }}
+                            style={{ width: `${pctOfCheckedIn}%` }}
                           />
                         </div>
-                        <p className="font-baloo text-[#EFEFEF]/40 text-xs text-center">
-                          {checkedInCount}/{count} ({checkedInPct}%)
+                        <p className="font-baloo text-[#EFEFEF] text-sm font-bold w-6 text-right">
+                          {foodCheckedIn}
                         </p>
                       </div>
-                      <p className="font-baloo text-[#EFEFEF] text-sm font-bold w-16 text-right">
-                        {count}
+                      <p className="font-baloo text-[#EFEFEF]/40 text-xs w-16 text-right">
+                        / {count}
                       </p>
                     </div>
                   );
