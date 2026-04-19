@@ -53,12 +53,28 @@ const TRACKS = [
       "Build a project that effectively, creatively, and comprehensively leverages Esri’s ArcGIS platform to solve real-world problems.",
   },
   {
-    title: "MLH Track(s)",
-    description: "More info coming soon...",
+    title: "Human Delta Sponsored Track",
+    description: "Best Use of Human Delta Services",
   },
   {
-    title: "Human Delta Track",
-    description: "More info coming soon...",
+    title: "MLH Track(s)",
+    description: "Best Use of Gemini API - Prize: Google Swag",
+  },
+  {
+    title: "MLH Track(s)",
+    description: "Best Use of Solana - Prize: Ledger Nano S Plus",
+  },
+  {
+    title: "MLH Track(s)",
+    description: "Best Use of MongoDB Atlas - Prize: M5Stack IoT Kit",
+  },
+  {
+    title: "MLH Track(s)",
+    description: "Best Use of ElevenLabs - Prize: Wireless Earbuds",
+  },
+  {
+    title: "MLH Track(s)",
+    description: "Best Use of DigitalOcean - Prize: Retro Wireless Mouse",
   },
 ];
 
